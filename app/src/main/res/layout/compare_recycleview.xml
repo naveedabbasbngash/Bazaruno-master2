@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/back"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_below="@id/applayout"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@id/basit"
+                android:orientation="horizontal">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+            <androidx.cardview.widget.CardView
+                android:layout_centerHorizontal="true"
+                android:layout_width="250dp"
+                android:layout_height="340dp"
+                app:cardCornerRadius="5dp"
+                android:background="@color/colorPrimaryDark">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ss">
+
+
+                        <ImageView
+                            android:layout_width="155dp"
+                            android:layout_height="207dp"
+                            android:layout_centerHorizontal="true"
+                            android:id="@+id/image"
+                            android:src="@drawable/demo"
+                            android:scaleType="fitXY" />
+
+                        <ProgressBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:id="@id/progress"
+                            android:indeterminate="true"
+                            android:indeterminateTintMode="src_atop"
+                            android:indeterminateTint="@color/back"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="University Road T-shir"
+                        android:gravity="center"
+                        android:id="@+id/name"
+                        android:textColor="#515C6F"
+                        android:layout_below="@id/ss"
+                        android:lines="2"
+                        android:textSize="18sp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/name"
+                        android:layout_marginTop="8dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$2.43"
+                            android:layout_weight="4.8"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:textColor="#000"
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/price_card"/>
+
+                        <TextView
+                            android:layout_width="34dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="#fff"
+                            android:id="@+id/rating_card"
+                            android:background="@drawable/rating_background"
+                            android:textSize="12dp"
+                            android:layout_marginRight="10dp"
+                            android:text="4.4"/>
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_below="@+id/basit"
+                android:layout_marginTop="20dp">
+
+                <!-- Type -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:textColor="#000"
+                        android:background="@drawable/compare_text"
+                        android:layout_height="70dp"
+                        android:text="Type:"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:id="@+id/type"
+                        android:gravity="center"
+                        android:textColor="#000"
+                        android:background="@drawable/edit_compare"/>
+
+                </LinearLayout>
+
+
+                <!-- Price -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-2dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:textColor="#000"
+                        android:background="@drawable/compare_text"
+                        android:layout_height="70dp"
+                        android:text="Price:"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:gravity="center"
+                        android:id="@+id/price"
+                        android:textColor="#000"
+                        android:inputType="number"
+                        android:background="@drawable/edit_compare"/>
+
+                </LinearLayout>
+
+
+                <!-- Color -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-2dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:textColor="#000"
+                        android:background="@drawable/compare_text"
+                        android:layout_height="70dp"
+                        android:text="Color:"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:gravity="center"
+                        android:id="@+id/color"
+                        android:textColor="#000"
+                        android:inputType="text"
+                        android:background="@drawable/edit_compare"/>
+
+                </LinearLayout>
+
+
+                <!-- Size -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-2dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:textColor="#000"
+                        android:background="@drawable/compare_text"
+                        android:layout_height="70dp"
+                        android:text="Size:"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:gravity="center"
+                        android:id="@+id/size"
+                        android:textColor="#000"
+                        android:inputType="text"
+                        android:background="@drawable/edit_compare"/>
+
+                </LinearLayout>
+
+                <!-- Item Rating -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-2dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:textColor="#000"
+                        android:background="@drawable/compare_text"
+                        android:layout_height="70dp"
+                        android:text="Item Rating:"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:gravity="center"
+                        android:textColor="#000"
+                        android:id="@+id/rating"
+                        android:inputType="text"
+                        android:background="@drawable/edit_compare"/>
+
+                </LinearLayout>
+
+                <!-- Shop rating -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="100dp"
+                    android:layout_marginTop="-2dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:textColor="#000"
+                        android:background="@drawable/compare_text"
+                        android:layout_height="70dp"
+                        android:text="Shop Rating:"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:gravity="center"
+                        android:textColor="#000"
+                        android:id="@+id/shop_rating"
+                        android:background="@drawable/edit_compare"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

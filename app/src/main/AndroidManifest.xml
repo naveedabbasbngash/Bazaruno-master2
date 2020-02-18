@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.bazaruno">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".Shop_Details_Activity"
+            android:theme="@style/AppTheme.Basit" />
+        <activity
+            android:name=".Favorites"
+            android:label="Favorities"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.Basit" />
+        <activity
+            android:name=".Account_More"
+            android:label="Account"
+            android:theme="@style/AppTheme.Basit" />
+        <activity
+            android:name=".More_Option"
+            android:label="More Options"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.Basit" />
+        <activity
+            android:name=".Compare_Activity"
+            android:label="Compare"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.Basit" />
+        <activity
+            android:name=".Search_Activity"
+            android:label="Search"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Basit" />
+        <activity
+            android:name=".SignUp"
+            android:label="Sign Up"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Basit" />
+        <activity
+            android:name=".ForgotPassword"
+            android:label="Forgot Password"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Basit" />
+        <activity
+            android:name=".Login"
+            android:label="Log in"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Basit" />
+        <activity
+            android:name=".Account_Activity"
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".For_Man_Clothes"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SplashScreen"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+    </application>
+
+</manifest>

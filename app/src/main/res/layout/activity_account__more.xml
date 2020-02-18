@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/back"
+    android:layout_height="match_parent"
+    tools:context=".Account_More"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/applayout"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:theme="@style/ToolbarTheme"
+        app:titleTextColor="#000"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_below="@id/applayout">
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+           <ImageView
+               android:layout_width="match_parent"
+               android:layout_height="250dp"
+               android:id="@+id/image"
+               android:src="@drawable/demo"
+               android:scaleType="fitXY"/>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/image"
+               android:id="@+id/basit"
+               android:layout_marginTop="10dp"
+               android:layout_marginBottom="15dp"
+               android:layout_marginLeft="20dp"
+               android:layout_marginRight="20dp"
+               android:orientation="horizontal">
+
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="0"
+                   android:orientation="vertical">
+
+                   <TextView
+                       android:id="@+id/owner_name"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textColor="#000"
+                       android:textSize="20dp"
+                       android:textStyle="bold"
+                       android:text="Wadud Sons"/>
+
+                   <TextView
+                       android:id="@+id/area"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Peshawar Saddar"
+                       android:textColor="#000"/>
+
+               </LinearLayout>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"/>
+
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="0"
+                   android:id="@+id/icon"
+                   android:src="@drawable/edit_icons"/>
+
+           </LinearLayout>
+
+
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_centerHorizontal="true"
+               android:orientation="vertical"
+               android:layout_below="@id/basit"
+               android:layout_height="wrap_content">
+
+           <EditText
+               android:layout_width="325dp"
+               android:hint="Your E-mail"
+               android:id="@+id/email"
+               android:layout_marginTop="2dp"
+               android:gravity="center"
+               android:paddingLeft="10dp"
+               android:inputType="textEmailAddress"
+               android:drawableLeft="@drawable/b_email"
+               android:background="@drawable/edit_background"
+               android:layout_height="60dp"/>
+
+           <EditText
+               android:layout_width="325dp"
+               android:hint="Your Full Name"
+               android:id="@+id/name"
+               android:inputType="text"
+               android:layout_marginTop="2dp"
+               android:gravity="center"
+               android:paddingLeft="10dp"
+               android:drawableLeft="@drawable/b_name"
+               android:background="@drawable/edit_background"
+               android:layout_height="60dp"/>
+
+           <EditText
+               android:layout_width="325dp"
+               android:hint="Your Mobile Number"
+               android:id="@+id/phone"
+               android:inputType="text"
+               android:layout_marginTop="2dp"
+               android:gravity="center"
+               android:paddingLeft="10dp"
+               android:drawableLeft="@drawable/b_phone"
+               android:background="@drawable/edit_background"
+               android:layout_height="60dp"/>
+
+           <EditText
+               android:layout_width="325dp"
+               android:hint="Your CNIC Number"
+               android:id="@+id/cnic"
+               android:inputType="text"
+               android:layout_marginTop="2dp"
+               android:gravity="center"
+               android:paddingLeft="10dp"
+               android:drawableLeft="@drawable/b_cnic"
+               android:background="@drawable/edit_background"
+               android:layout_height="60dp"/>
+
+           <EditText
+               android:layout_width="325dp"
+               android:hint="Your Shop Name"
+               android:id="@+id/shop_name"
+               android:inputType="text"
+               android:layout_marginTop="2dp"
+               android:gravity="center"
+               android:paddingLeft="10dp"
+               android:drawableLeft="@drawable/b_shop"
+               android:background="@drawable/edit_background"
+               android:layout_height="60dp"/>
+
+           <EditText
+               android:layout_width="325dp"
+               android:hint="Enter Shop Full Address"
+               android:id="@+id/shop_full_address"
+               android:inputType="text"
+               android:layout_marginTop="2dp"
+               android:gravity="center"
+               android:paddingLeft="10dp"
+               android:drawableLeft="@drawable/full_add"
+               android:background="@drawable/edit_background"
+               android:layout_height="60dp"/>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_marginTop="20dp"
+               android:layout_marginBottom="20dp">
+
+               <Spinner
+                   android:id="@+id/sp_city"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:prompt="@string/city_spinner"
+                   android:entries="@array/city_array">
+               </Spinner>
+
+               <Spinner
+                   android:id="@+id/sp_area"
+                   android:layout_width="wrap_content"
+                   android:layout_weight="1"
+                   android:layout_height="wrap_content"
+                   android:prompt="@string/area_spinner"
+                   android:entries="@array/area_array">
+               </Spinner>
+
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:paddingLeft="10dp"
+               android:background="@drawable/edit_background"
+               android:orientation="horizontal">
+
+               <RelativeLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:layout_weight="0">
+                   <ImageView
+                       android:layout_width="30dp"
+                       android:layout_centerInParent="true"
+                       android:layout_height="30dp"
+                       android:src="@drawable/b_bazar"/>
+               </RelativeLayout>
+
+               <Spinner
+                   android:id="@+id/sp_bazzar"
+                   android:layout_width="match_parent"
+                   android:layout_weight="1"
+                   android:layout_height="wrap_content"
+                   android:gravity="center"
+                   android:paddingLeft="10dp"
+                   android:paddingTop="10dp"
+                   android:paddingBottom="10dp"
+                   android:prompt="@string/bazar_spinner"
+                   android:entries="@array/bazar_array"/>
+
+           </LinearLayout>
+
+
+           <EditText
+               android:layout_width="325dp"
+               android:hint="Password"
+               android:id="@+id/pass"
+               android:layout_marginTop="2dp"
+               android:gravity="center"
+               android:inputType="textPassword"
+               android:paddingLeft="10dp"
+               android:drawableLeft="@drawable/b_pass"
+               android:background="@drawable/edit_background"
+               android:layout_height="60dp"
+               android:layout_marginBottom="100dp"/>
+
+
+
+           </LinearLayout>
+
+
+       </RelativeLayout>
+
+   </ScrollView>
+
+
+</RelativeLayout>

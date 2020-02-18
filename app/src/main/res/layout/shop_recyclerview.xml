@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/last"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        android:layout_height="230dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:paddingTop="25dp"
+                android:id="@+id/basit"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="T-Shirts"
+                        android:id="@+id/shop_title"
+                        android:textColor="#000"
+                        android:textSize="20dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:id="@+id/city"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="3dp"
+                        android:textColor="#000"
+                        android:text="Wadud Sons"
+                        />
+
+                </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_weight="0"
+                    android:layout_marginRight="20dp"
+                    android:layout_height="wrap_content">
+
+                    <ProgressBar
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:backgroundTint="@color/back"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/progress"/>
+                    <ImageView
+                        android:layout_width="156dp"
+                        android:layout_height="128dp"
+                        android:id="@+id/shop_image"
+                        android:src="@drawable/demo"
+                        android:fitsSystemWindows="true"
+                        android:scaleType="fitXY"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/basit"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:textAllCaps="false"
+                    android:id="@+id/visit"
+                    android:textColor="@color/main_color_icon"
+                    android:background="@color/back"
+                    android:text="Visit"/>
+
+                <Button
+                    android:layout_width="82dp"
+                    android:layout_height="30dp"
+                    android:textAllCaps="false"
+                    android:id="@+id/shop_location"
+                    android:textColor="@color/main_color_icon"
+                    android:layout_marginLeft="20dp"
+                    android:background="@color/back"
+                    android:text="Location"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

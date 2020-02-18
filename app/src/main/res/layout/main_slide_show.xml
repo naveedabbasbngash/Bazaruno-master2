@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:background="@color/back"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        app:cardBackgroundColor="#fff"
+        android:layout_height="220dp"
+
+        app:cardCornerRadius="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/relative">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="177dp"
+                android:id="@+id/basit">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="177dp"
+                android:id="@+id/image"
+                android:src="@drawable/demo"
+                android:scaleType="fitXY"/>
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:id="@id/progress"
+                    android:indeterminate="true"
+                    android:indeterminateTintMode="src_atop"
+                    android:indeterminateTint="@color/back"
+                    />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="University Road"
+                android:id="@+id/text"
+                android:textSize="17sp"
+                android:layout_below="@id/basit"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="9dp"
+                />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

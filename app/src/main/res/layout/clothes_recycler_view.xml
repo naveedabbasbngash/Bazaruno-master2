@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="180dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    android:layout_marginLeft="10dp"
+    android:layout_height="153dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        app:cardCornerRadius="5dp"
+        android:layout_gravity="center"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:id="@+id/basit"
+                android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="130dp"
+        android:src="@drawable/demo"
+        android:id="@+id/image"
+        android:scaleType="fitXY"/>
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/progress"
+                    android:backgroundTint="@color/main_color_icon"/>
+
+            </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_below="@id/basit"
+        android:paddingLeft="5dp"
+        android:lines="1"
+        android:textSize="13sp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/text"
+        android:text="University Road"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

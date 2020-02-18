@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+
+    <!-- The main content to be added in the page -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recl"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bazars"
+            android:id="@+id/bazar"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+           <androidx.viewpager.widget.ViewPager
+               android:layout_width="match_parent"
+               android:layout_height="220dp"
+               android:id="@+id/bazars"
+               android:focusableInTouchMode="true"
+               android:layout_centerHorizontal="true"
+               android:layout_below="@id/bazar"
+               android:layout_marginTop="9dp">
+
+           </androidx.viewpager.widget.ViewPager>
+    </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Trending"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15sp"
+                android:layout_below="@+id/recl"
+                android:id="@+id/trending"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <com.example.bazaruno.ExpandableHeightGridView
+                android:id="@+id/girdview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
+                android:padding="10dp"
+                android:layout_marginBottom="100dp"
+                android:layout_below="@+id/trending"
+                android:gravity="center"
+                android:foregroundGravity="center"
+                android:horizontalSpacing="10dp"
+                android:isScrollContainer="false"
+                android:numColumns="auto_fit"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="10dp"
+                android:layout_centerHorizontal="true">
+            </com.example.bazaruno.ExpandableHeightGridView>
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:labelVisibilityMode="labeled"
+            android:layout_gravity="bottom|end"
+            app:theme="@style/bottom_navigation_view"
+            app:menu="@menu/nav_bottom_view"
+            android:background="#fff"
+            />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+
+
+</RelativeLayout>

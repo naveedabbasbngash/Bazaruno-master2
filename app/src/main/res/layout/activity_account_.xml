@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#fff"
+    android:layout_height="match_parent"
+    tools:context=".Account_Activity">
+    
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="137dp"
+                android:layout_height="172dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/image"
+                android:src="@drawable/icon"
+                android:scaleType="fitXY" />
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="60dp"
+                android:textSize="14sp"
+
+                android:textAllCaps="false"
+                android:gravity="center"
+                android:layout_below="@id/image"
+                android:background="@drawable/login_back"
+                android:textColor="#fff"
+                android:id="@+id/login"
+                android:paddingRight="10dp"
+                android:layout_centerHorizontal="true"
+                android:text="Login"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="or"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:layout_below="@id/login"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/orr"
+                />
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="46dp"
+                android:id="@+id/signup"
+                android:background="@drawable/login_back"
+                android:textColor="#fff"
+                android:textAllCaps="false"
+                android:paddingRight="10dp"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:layout_below="@id/orr"
+                android:layout_centerHorizontal="true"
+                android:text="SignUp"/>
+
+            <Button
+                android:layout_width="165dp"
+                android:layout_height="46dp"
+                android:textAllCaps="false"
+                android:id="@+id/thanks"
+                android:background="@drawable/no_thanks"
+                android:textColor="#343F53"
+                android:textSize="14sp"
+                android:drawableRight="@drawable/no_thanks_icon"
+                android:paddingRight="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/signup"
+                android:layout_centerHorizontal="true"
+                android:text="No Thanks !"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

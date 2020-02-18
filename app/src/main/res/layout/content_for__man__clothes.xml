@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".For_Man_Clothes"
+    android:background="#FAFAFA"
+    tools:showIn="@layout/app_bar_for__man__clothes">
+
+
+    <!-- Main content of for man Clothes -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Man Clothing in Peshawar"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:textSize="20dp"
+                android:id="@+id/texts"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_below="@+id/texts"
+        android:id="@+id/recycleview">
+    </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Man Clothing by Category"
+                android:paddingLeft="10dp"
+                android:layout_below="@id/recycleview"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="2dp"
+                android:textSize="20dp"
+                android:id="@+id/textss"/>
+
+
+            <com.example.bazaruno.ExpandableHeightGridView
+                android:id="@+id/girdview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="7dp"
+                android:padding="10dp"
+                android:layout_marginBottom="100dp"
+                android:layout_below="@+id/textss"
+                android:gravity="center"
+                android:foregroundGravity="center"
+                android:horizontalSpacing="10dp"
+                android:isScrollContainer="false"
+                android:numColumns="auto_fit"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="10dp"
+                android:layout_centerHorizontal="true"
+                android:scrollbars="vertical">
+            </com.example.bazaruno.ExpandableHeightGridView>
+
+
+        </RelativeLayout>
+
+</ScrollView>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:labelVisibilityMode="labeled"
+            android:layout_gravity="bottom|end"
+            app:theme="@style/bottom_navigation_view"
+            app:menu="@menu/nav_bottom_view"
+            android:background="#fff"
+            />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</RelativeLayout>
