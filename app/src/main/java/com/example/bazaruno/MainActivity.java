@@ -63,8 +63,9 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Any thing you can do with this...", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(MainActivity.this,Upload_Product.class));
+//                Snackbar.make(view, "Any thing you can do with this...", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
 

@@ -25,4 +25,12 @@ public class AppConstant {
             "Mian Khel","old Bazzar","Tehsil Gate","Sonehri Bazzar"," Ander Shehr"
     };
     public static String[] cities={"Select City","Peshawar","Kohat","Karachi","Islamabad","Lahore","Mardan"};
+
+    public static String[] cat={"Select Category","Fashion & Wear","Mobile & Tablets","Laptops & Computer"
+    ,"Laptops & Computers","Electronics","Home Furniture","Car & Wheels","Tools & Machinery"};
+
+    public static String[] fashion_sub_cat_1={"For Men","For Womens","For Kids"};
+    public static String[] fashion_sub_cat_2={"Clothings","Shoes","Accessories"};
+
+
 }
