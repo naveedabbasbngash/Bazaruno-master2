@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.bazaruno.Helpers.MySharePreferences;
+
 import java.util.ArrayList;
 
 public class More_Recycleview extends RecyclerView.Adapter<More_Recycleview.View_Holder> {
@@ -85,6 +87,13 @@ public class More_Recycleview extends RecyclerView.Adapter<More_Recycleview.View
             else if (getLayoutPosition() == 4)
             {
                 context.startActivity(new Intent(context,Account_More.class));
+            }
+            else if (getLayoutPosition() == 5)
+            {
+                MySharePreferences mySharePreferences=new MySharePreferences();
+                mySharePreferences.setLoginStatus(context,false);
+                context.startActivity(new Intent(context,Login.class));
+                context.finish();
             }
         }
     }

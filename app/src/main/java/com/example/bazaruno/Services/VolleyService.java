@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class VolleyService {
 
-    Context mContext;
+    private Context mContext;
 
     public VolleyService(Context mContext) {
         this.mContext = mContext;
@@ -146,6 +146,57 @@ public class VolleyService {
 
     }
 
+    public void SignInNow(String url, final Users user, final VolleyResponseListener volleyResponseListener){
+        try {
+            final RequestQueue queue = Volley.newRequestQueue(mContext);
+
+            StringRequest req = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            volleyResponseListener.onSuccess(s);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyResponseListener.onError(volleyError);
+                    Log.v("see error responce",volleyError.toString());
+                }
+            })
+
+            {
+
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    Log.v("see error responce",response.toString());
+                    return super.parseNetworkResponse(response);
+
+
+                }
+
+                @Override
+                protected Map<String, String> getParams(){
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("email",user.getEmail());
+                    params.put("password",user.getPassword());
+                    params.put("status",user.getStatus());
+
+
+
+                    return params;
+                }
+            };
+            queue.add(req);
+
+
+
+        }catch (Exception e){
+            Log.v("see error responce",e.toString());
+
+        }
+
+    }
 
 
 

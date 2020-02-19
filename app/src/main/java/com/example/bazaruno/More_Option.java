@@ -103,12 +103,14 @@ public class More_Option extends AppCompatActivity implements BottomNavigationVi
         name.add("My Product Reivews");
         name.add("Payment");
         name.add("Account Settings");
+        name.add("Logout");
 
         image.add(R.drawable.m_shop_icon);
         image.add(R.drawable.m_notification_icon);
         image.add(R.drawable.m_review_icon);
         image.add(R.drawable.m_payment_icon);
         image.add(R.drawable.m_account_icon);
+        image.add(R.drawable.logout);
 
         recyclerView.setHasFixedSize(true);
         More_Recycleview adapter=new More_Recycleview(this,name,image);

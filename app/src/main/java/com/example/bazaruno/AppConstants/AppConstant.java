@@ -6,6 +6,8 @@ public class AppConstant {
     public static String DomainName="https://kheloaurjeeto.net";
     public static String Dir="/bazarona/php/";
     public static String registerUser="registeruser.php";
+    public static String login_now="login_now.php";
+
     public static String[] peshawarAreas={"Select Area",
             "Hashtnagri","Saddar","University Road","Board"
     };

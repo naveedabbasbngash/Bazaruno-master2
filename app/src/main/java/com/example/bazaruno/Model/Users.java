@@ -1,7 +1,7 @@
 package com.example.bazaruno.Model;
 
 public class Users {
-    String email,username,mobile_no,cnic,shop_name,shop_address,shop_lat_lang,city,city_area
+    private String id, email,username,mobile_no,cnic,shop_name,shop_address,shop_lat_lang,city,city_area
             ,bazzar,password,status,type;
 
     public Users() {
@@ -26,6 +26,14 @@ public class Users {
 
     public String getType() {
         return type;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setType(String type) {
