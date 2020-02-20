@@ -25,12 +25,17 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ScrollView
+        android:layout_above="@+id/submit_item"
+        android:layout_below="@+id/applayout"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:orientation="vertical"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/applayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -75,7 +80,7 @@
             <TextView
                 android:layout_marginTop="10dp"
                 android:paddingLeft="15dp"
-                android:text="Select Category"
+                android:text="Select Sub Category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></TextView>
             <Spinner
@@ -84,7 +89,80 @@
                 android:hint="Product Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></Spinner>
-        </LinearLayout>
-    </LinearLayout>
 
+            <TextView
+                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
+                android:text="Select Sub Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+            <Spinner
+                android:id="@+id/sp_sub_sub_cat"
+                android:padding="15dp"
+                android:hint="Product Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></Spinner>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
+                android:text="Size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+            <Spinner
+                android:id="@+id/sp_size"
+                android:padding="15dp"
+                android:hint="Product Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></Spinner>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
+                android:text="Color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+            <EditText
+                android:backgroundTint="@color/back"
+                android:padding="15dp"
+                android:hint="Color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></EditText>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
+                android:text="Brand Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+            <EditText
+                android:backgroundTint="@color/back"
+                android:padding="15dp"
+                android:hint="Brand Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></EditText>
+        </LinearLayout>
+
+        <TextView
+            android:onClick="addImages"
+            android:gravity="center"
+            android:padding="10dp"
+            android:drawableLeft="@drawable/add_icon"
+            android:text="Add Images Max(5)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></TextView>
+  <androidx.recyclerview.widget.RecyclerView
+      android:layout_marginBottom="30dp"
+      android:id="@+id/item_images"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/submit_item"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Button>
 </RelativeLayout>

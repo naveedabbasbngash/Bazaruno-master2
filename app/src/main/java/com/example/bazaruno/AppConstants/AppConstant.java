@@ -16,9 +16,8 @@ public class AppConstant {
             "KDA","Kohat Main","Pindi Road","Sonehri Bazzar"
     };
 
-    public static String[] peshawarBazzar={
-            "Select Bazzar",
-            "Khyber bazzar","Notia","RA Bazzar","Mina Bazzar","Shaheen Bazzar"
+    public static String[] peshawarBazzar={"Select Bazzar","Khyber bazzar","Notia","RA Bazzar",
+            "Mina Bazzar","Shaheen Bazzar"
     };
     public static String[] kohatBazzar={
             "Select Bazzar",
@@ -30,7 +29,13 @@ public class AppConstant {
     ,"Laptops & Computers","Electronics","Home Furniture","Car & Wheels","Tools & Machinery"};
 
     public static String[] fashion_sub_cat_1={"For Men","For Womens","For Kids"};
-    public static String[] fashion_sub_cat_2={"Clothings","Shoes","Accessories"};
+    public static String[] fashion_sub_cat_2={"Clothings","Shoes","Accessories","Beauty And Care"};
+
+    public static String[] mobile_tablet_cat1={"Android","Iphone"};
+    public static String[] mobile_sub_cat_2={"samsung","huawei","oppo","Iphone 5s"};
+    public static String[] mobile_sub_cat_3={"Iphone 5s","Iphone 6","Iphone 6s","Iphone 6 plus"};
+    public static String[] size={"select size","Medium","Large","Extra Large"};
+
 
 
 }
