@@ -8,20 +8,33 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.bazaruno.Adapters.MoviesAdapter;
 import com.example.bazaruno.AppConstants.AppConstant;
+import com.example.bazaruno.Helpers.MyCommand;
 import com.kosalgeek.android.photoutil.GalleryPhoto;
+import com.kosalgeek.android.photoutil.ImageBase64;
+import com.kosalgeek.android.photoutil.PhotoLoader;
 import com.nabinbhandari.android.permissions.PermissionHandler;
 import com.nabinbhandari.android.permissions.Permissions;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Upload_Product extends AppCompatActivity {
     Spinner sp_cat;
@@ -31,8 +44,11 @@ public class Upload_Product extends AppCompatActivity {
     final int GALLERY_REQUEST = 1200;
     private MoviesAdapter mAdapter;
     private RecyclerView recyclerView;
-    private ArrayList movieList=new ArrayList();
+    private ArrayList<String> movieList=new ArrayList();
     private GalleryPhoto galleryPhoto;
+    private String imagepaths="";
+    private int counter=0;
+    private MyCommand myCommand;
 
 
     @Override
@@ -58,12 +74,12 @@ public class Upload_Product extends AppCompatActivity {
         sp_sub_sub_cat=findViewById(R.id.sp_sub_sub_cat);
         sp_size=findViewById(R.id.sp_size);
         recyclerView = (RecyclerView) findViewById(R.id.item_images);
-
+        myCommand = new MyCommand(getApplicationContext());
         galleryPhoto = new GalleryPhoto(getApplicationContext());
         mAdapter = new MoviesAdapter(movieList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
-
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
@@ -183,4 +199,47 @@ public class Upload_Product extends AppCompatActivity {
 
         }
     }
-}
+
+    public void addItems(View view) {
+        for (final String imagePath : movieList) {
+
+            try {
+                Bitmap bitmap = PhotoLoader.init().from(imagePath).requestSize(512, 512).getBitmap();
+                final String encodedString = ImageBase64.encode(bitmap);
+
+                String url = "http://kheloaurjeeto.net/imageuploadtest/upload.php";
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                        Log.d("my images paths", response);
+                        imagepaths = imagepaths + "," + response;
+                        if (counter++ == movieList.size() - 1) {
+                            Log.d("my images paths here", imagepaths);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), "Error while uploading image", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("image", encodedString);
+                        return params;
+                    }
+                };
+
+                myCommand.add(stringRequest);
+
+            } catch (FileNotFoundException e) {
+                Toast.makeText(getApplicationContext(), "Error while loading image", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+        myCommand.execute();
+    }
+    }
+

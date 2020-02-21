@@ -26,6 +26,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
+        android:layout_marginBottom="10dp"
         android:layout_above="@+id/submit_item"
         android:layout_below="@+id/applayout"
 
@@ -132,6 +133,32 @@
             <TextView
                 android:layout_marginTop="10dp"
                 android:paddingLeft="15dp"
+                android:text="Item Price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+            <EditText
+                android:backgroundTint="@color/back"
+                android:padding="15dp"
+                android:hint="Item Price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></EditText>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
+                android:text="Item Discount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></TextView>
+            <EditText
+                android:backgroundTint="@color/back"
+                android:padding="15dp"
+                android:hint="Item Discount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></EditText>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
                 android:text="Brand Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></TextView>
@@ -161,6 +188,14 @@
     </ScrollView>
 
     <Button
+        android:onClick="addItems"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:text="Add Item"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/login_back"
+
         android:id="@+id/submit_item"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
