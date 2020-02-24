@@ -10,6 +10,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.bazaruno.Model.ItemModel;
 import com.example.bazaruno.Model.Users;
 
 import java.util.ArrayList;
@@ -28,6 +29,10 @@ public class VolleyService {
     public VolleyService(Context mContext) {
         this.mContext = mContext;
     }
+
+    /*
+    * Register In Seller
+    * */
 
     public void RegisterUser(String url, final Users user, final VolleyResponseListener volleyResponseListener){
         try {
@@ -91,7 +96,9 @@ public class VolleyService {
 
     }
 
-
+    /*
+    * Register Buyer
+    * */
     public void RegisterUserBuyer(String url, final Users user, final VolleyResponseListener volleyResponseListener){
         try {
             final RequestQueue queue = Volley.newRequestQueue(mContext);
@@ -145,7 +152,9 @@ public class VolleyService {
         }
 
     }
-
+/*
+* sign Seller And Buyer
+* */
     public void SignInNow(String url, final Users user, final VolleyResponseListener volleyResponseListener){
         try {
             final RequestQueue queue = Volley.newRequestQueue(mContext);
@@ -181,6 +190,70 @@ public class VolleyService {
                     params.put("email",user.getEmail());
                     params.put("password",user.getPassword());
                     params.put("status",user.getStatus());
+
+
+
+                    return params;
+                }
+            };
+            queue.add(req);
+
+
+
+        }catch (Exception e){
+            Log.v("see error responce",e.toString());
+
+        }
+
+    }
+
+    /*
+    * Add Item By Buyer
+    * */
+    public void AddItem(String url, final ItemModel itemModel, final VolleyResponseListener volleyResponseListener){
+        try {
+            final RequestQueue queue = Volley.newRequestQueue(mContext);
+
+            StringRequest req = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            volleyResponseListener.onSuccess(s);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyResponseListener.onError(volleyError);
+                    Log.v("see error responce",volleyError.toString());
+                }
+            })
+
+            {
+
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    Log.v("see error responce",response.toString());
+                    return super.parseNetworkResponse(response);
+
+
+                }
+
+                @Override
+                protected Map<String, String> getParams(){
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("shop_Id",itemModel.getId());
+                    params.put("item_name",itemModel.getItem_name());
+                    params.put("shop_name",itemModel.getShop_name());
+                    params.put("main_cat",itemModel.getMain_cat());
+                    params.put("sub_cat",itemModel.getSub_cat());
+                    params.put("sub_sub_cat",itemModel.getSub_sub_cat());
+                    params.put("size",itemModel.getSize());
+                    params.put("brand_name",itemModel.getBrand_name());
+                    params.put("item_images_url",itemModel.getItem_images_url());
+                    params.put("item_price",itemModel.getItem_price());
+                    params.put("item_descount",itemModel.getItem_descount());
+                    params.put("color",itemModel.getColor());
 
 
 

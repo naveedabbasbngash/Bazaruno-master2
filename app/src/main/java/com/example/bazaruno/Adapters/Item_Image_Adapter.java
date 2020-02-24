@@ -2,23 +2,19 @@ package com.example.bazaruno.Adapters;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Movie;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bazaruno.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder> {
+public class Item_Image_Adapter extends RecyclerView.Adapter<Item_Image_Adapter.MyViewHolder> {
 
     public ArrayList moviesList=new ArrayList();
 
@@ -33,7 +29,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
     }
 
 
-    public MoviesAdapter(ArrayList moviesList) {
+    public Item_Image_Adapter(ArrayList moviesList) {
         this.moviesList = moviesList;
     }
 

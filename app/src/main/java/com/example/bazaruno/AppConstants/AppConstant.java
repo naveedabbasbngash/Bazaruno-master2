@@ -7,6 +7,8 @@ public class AppConstant {
     public static String Dir="/bazarona/php/";
     public static String registerUser="registeruser.php";
     public static String login_now="login_now.php";
+    public static String upload="upload.php";
+    public static String additem="additem.php";
 
     public static String[] peshawarAreas={"Select Area",
             "Hashtnagri","Saddar","University Road","Board"
@@ -35,7 +37,6 @@ public class AppConstant {
     public static String[] mobile_sub_cat_2={"samsung","huawei","oppo","Iphone 5s"};
     public static String[] mobile_sub_cat_3={"Iphone 5s","Iphone 6","Iphone 6s","Iphone 6 plus"};
     public static String[] size={"select size","Medium","Large","Extra Large"};
-
 
 
 }

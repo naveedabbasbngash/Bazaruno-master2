@@ -157,6 +157,7 @@ public class Login extends AppCompatActivity {
                                 else {
                                     MySharePreferences mySharePreferences=new MySharePreferences();
                                     Users sellerUsers1=new Users();
+                                    sellerUsers1.setId(jsonObject.getString("id"));
                                     sellerUsers1.setEmail(jsonObject.getString("email"));
                                     sellerUsers1.setUsername(jsonObject.getString("username"));
                                     sellerUsers1.setMobile_no(jsonObject.getString("mobile_no"));
