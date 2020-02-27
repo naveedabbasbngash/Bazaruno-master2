@@ -63,6 +63,8 @@ public class Upload_Product extends AppCompatActivity {
     EditText item_product_name,item_color,item_price,item_discount,item_brand_name;
     private VolleyService volleyServices;
 
+    MySharePreferences checMySharePreferences=new MySharePreferences();
+    Users users=new Users();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,8 @@ public class Upload_Product extends AppCompatActivity {
 
                     }
                 });
+        users=checMySharePreferences.getUserData(this);
+
 
         sp_cat=findViewById(R.id.sp_cat);
         sp_sub_cat=findViewById(R.id.sp_sub_cat);
@@ -245,13 +249,15 @@ public class Upload_Product extends AppCompatActivity {
 
             MySharePreferences idMySharePreferences=new MySharePreferences();
 
-            Users itemModelId=new Users();
+            Users itemModelId;
             itemModelId=idMySharePreferences.getUserData(Upload_Product.this);
             final ItemModel itemModelAdd=new ItemModel();
 
             itemModelAdd.setId(itemModelId.getId());
             itemModelAdd.setItem_name(item_product_name.getText().toString().trim());
-            itemModelAdd.setShop_name(itemModelId.getShop_name());
+            itemModelAdd.setShop_name(users.getShop_name());
+            itemModelAdd.setItem_city(users.getCity());
+            itemModelAdd.setItem_bazzar(users.getBazzar());
             itemModelAdd.setMain_cat(sp_cat.getSelectedItem().toString());
             itemModelAdd.setSub_cat(sp_sub_cat.getSelectedItem().toString());
             itemModelAdd.setSub_sub_cat(sp_sub_sub_cat.getSelectedItem().toString());

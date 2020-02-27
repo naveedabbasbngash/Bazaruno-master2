@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import androidx.annotation.NonNull;
+
+import com.example.bazaruno.AppConstants.AppConstant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,8 +15,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +29,12 @@ public class Search_Activity extends AppCompatActivity implements BottomNavigati
 
     BottomNavigationView bottomNavigationView;
     Search_Database database;
+    Spinner citySpinner;
+    Spinner bazar;
+    Spinner category;
+    private String city_string;
+    private String bazzar_string;
+    private String cat_string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +49,46 @@ public class Search_Activity extends AppCompatActivity implements BottomNavigati
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        citySpinner=findViewById(R.id.city);
+        bazar=findViewById(R.id.bazar);
+        category=findViewById(R.id.category);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, AppConstant.cities);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        citySpinner.setAdapter(adapter);
+
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, AppConstant.cat);
+
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        citySpinner.setAdapter(adapter3);
+
+        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (citySpinner.getSelectedItemPosition()==1){
+                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(
+                            Search_Activity.this, android.R.layout.simple_spinner_item, AppConstant.peshawarBazzar);
+
+                    adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    bazar.setAdapter(adapter1);
+                }
+                else if (citySpinner.getSelectedItemPosition()==2){
+                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(
+                            Search_Activity.this, android.R.layout.simple_spinner_item, AppConstant.kohatBazzar);
+
+                    adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    bazar.setAdapter(adapter1);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
         bottomNavigationView=(BottomNavigationView) findViewById(R.id.bottom_nav_view);
@@ -69,13 +120,21 @@ public class Search_Activity extends AppCompatActivity implements BottomNavigati
                         String url=searchedit.getText().toString();
                         if (!url.equals(""))
                         {
-                            database.insert(url);
-                            searchedit.getText().clear();
-                            final InputMethodManager inputManager = (InputMethodManager)
-                                    getSystemService(Context.INPUT_METHOD_SERVICE);
-                            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                                    InputMethodManager.HIDE_NOT_ALWAYS);
-                            searchedit.clearFocus();
+                            if (citySpinner.getSelectedItemPosition()==0){
+                                city_string="";
+                            }
+                            if (bazar.getSelectedItemPosition()==0){
+                                bazzar_string="";
+                            }
+                            if (category.getSelectedItemPosition()==0){
+                                cat_string="";
+                            }
+                            startActivity(new Intent(Search_Activity.this,Search_Items.class)
+                                    .putExtra("city",city_string)
+                                    .putExtra("bazzar",bazzar_string)
+                            .        putExtra("cat",cat_string)
+                            .        putExtra("search",searchedit.getText().toString()));
+
                         }
                         else {
                             Toast.makeText(Search_Activity.this, "Please enter value for search", Toast.LENGTH_SHORT).show();
@@ -103,8 +162,8 @@ public class Search_Activity extends AppCompatActivity implements BottomNavigati
             history.setVisibility(View.VISIBLE);
         }
         else {
-            Search_ListView adapter=new Search_ListView(this,list);
-            listView.setAdapter(adapter);
+         /*   Search_ListView adapter=new Search_ListView(this,list);
+            listView.setAdapter(adapter);*/
         }
 
         TextView clear_history=(TextView) findViewById(R.id.clear_history);

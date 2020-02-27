@@ -93,7 +93,7 @@ public class More_Recycleview extends RecyclerView.Adapter<More_Recycleview.View
                 MySharePreferences mySharePreferences=new MySharePreferences();
                 mySharePreferences.setLoginStatus(context,false);
                 context.startActivity(new Intent(context,Login.class));
-                context.finish();
+                context.finishAffinity();
             }
         }
     }

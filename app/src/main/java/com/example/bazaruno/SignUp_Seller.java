@@ -171,7 +171,7 @@ public class SignUp_Seller extends Fragment {
         sp_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), "here" + " " + i + " " + sp_city.getSelectedItem(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "here" + " " + i + " " + sp_city.getSelectedItem(), Toast.LENGTH_SHORT).show();
 
                 if (i == 1) {
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(

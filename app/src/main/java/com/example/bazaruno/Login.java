@@ -148,9 +148,12 @@ public class Login extends AppCompatActivity {
                                     Users users1=new Users();
                                     MySharePreferences mySharePreferences=new MySharePreferences();
                                     users1.setId(jsonObject.getString("id"));
+                                    users1.setType("buyer");
                                     users1.setEmail(jsonObject.getString("email"));
                                     users1.setUsername(jsonObject.getString("username"));
                                     mySharePreferences.SaveUserAds(Login.this,users1);
+                                    Toast.makeText(Login.this, "Login Successfully. . ", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(Login.this,MainActivity.class));
 
 
                                 }
@@ -158,6 +161,7 @@ public class Login extends AppCompatActivity {
                                     MySharePreferences mySharePreferences=new MySharePreferences();
                                     Users sellerUsers1=new Users();
                                     sellerUsers1.setId(jsonObject.getString("id"));
+                                    sellerUsers1.setType("seller");
                                     sellerUsers1.setEmail(jsonObject.getString("email"));
                                     sellerUsers1.setUsername(jsonObject.getString("username"));
                                     sellerUsers1.setMobile_no(jsonObject.getString("mobile_no"));

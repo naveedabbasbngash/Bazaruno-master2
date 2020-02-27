@@ -254,6 +254,8 @@ public class VolleyService {
                     params.put("item_price",itemModel.getItem_price());
                     params.put("item_descount",itemModel.getItem_descount());
                     params.put("color",itemModel.getColor());
+                    params.put("item_city",itemModel.getItem_city());
+                    params.put("item_bazzar",itemModel.getItem_bazzar());
 
 
 
@@ -445,6 +447,61 @@ public class VolleyService {
 
     }
 
+/*search item*/
+
+    public void SearchItem(String url, final String city, final String bazzar, final String cat, final String search , final VolleyResponseListener volleyResponseListener){
+        try {
+            final RequestQueue queue = Volley.newRequestQueue(mContext);
+
+            StringRequest req = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            volleyResponseListener.onSuccess(s);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyResponseListener.onError(volleyError);
+                    Log.v("see error responce",volleyError.toString());
+                }
+            })
+
+            {
+
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    Log.v("see error responce",response.toString());
+                    return super.parseNetworkResponse(response);
+
+
+                }
+
+                @Override
+                protected Map<String, String> getParams(){
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("city",city);
+                    params.put("bazzar", bazzar);
+                    params.put("main_cat", cat);
+                    params.put("item_name", search);
+
+
+
+
+                    return params;
+                }
+            };
+            queue.add(req);
+
+
+
+        }catch (Exception e){
+            Log.v("see error responce",e.toString());
+
+        }
+
+    }
 
     /*------------------------------------------------- /For Headers----------------------------------------------------------*/
     public interface VolleyResponseListener {

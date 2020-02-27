@@ -1,5 +1,6 @@
 package com.example.bazaruno;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.example.bazaruno.AppConstants.AppConstant;
 import com.example.bazaruno.Helpers.MySharePreferences;
 import com.example.bazaruno.Model.ItemModel;
+import com.example.bazaruno.Model.Users;
 import com.example.bazaruno.Services.VolleyService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -52,12 +54,17 @@ public class MainActivity extends AppCompatActivity
     private Main_Gird_View_Adapter adapter;
 
     ArrayList<ItemModel> itemModelslist=new ArrayList<>();
+    Users users=new Users();
 
 
+    @SuppressLint("RestrictedApi")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mySharePreferences=new MySharePreferences();
+        users=mySharePreferences.getUserData(this);
+
         volleyService=new VolleyService(this);
 
         // define and identify toolbar and set some properties
@@ -76,6 +83,19 @@ public class MainActivity extends AppCompatActivity
         // This line of code is about listner on floating adding button on main screen
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (users.getType()==null){
+
+        }
+        else {
+            if (users.getType().matches("buyer")) {
+                fab.setVisibility(View.INVISIBLE);
+            } else if (users.getType().matches("seller")) {
+
+                fab.setVisibility(View.VISIBLE);
+            } else {
+                fab.setVisibility(View.VISIBLE);
+            }
+        }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -194,11 +214,17 @@ public class MainActivity extends AppCompatActivity
            Intent intent=new Intent(getApplicationContext(),Favorites.class);
            startActivity(intent);
         }
-        else if (id == R.id.more)
-        {
-            Intent intent=new Intent(getApplicationContext(),More_Option.class);
-            startActivity(intent);
+        else if (id == R.id.more) {
+            Boolean checkLogin = mySharePreferences.loginStatus(MainActivity.this);
+            if (checkLogin) {
+                Intent intent = new Intent(getApplicationContext(), More_Option.class);
+                startActivity(intent);
+            }
+            else {
+                startActivity(new Intent(MainActivity.this,Login.class));
+            }
         }
+
     }
 
     // use for showing show hide content of fashion and wear

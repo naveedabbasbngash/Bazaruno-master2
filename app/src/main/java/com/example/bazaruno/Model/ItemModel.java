@@ -2,7 +2,7 @@ package com.example.bazaruno.Model;
 
 public class ItemModel {
     String id,shop_Id,shop_name,main_cat,sub_cat,sub_sub_cat,size,color,brand_name,item_images_url,item_price
-            ,item_descount,item_name;
+            ,item_descount,item_name,item_city,item_bazzar;
 
     public ItemModel() {
     }
@@ -19,6 +19,22 @@ public class ItemModel {
         this.color = color;
         this.brand_name = brand_name;
         this.item_images_url = item_images_url;
+    }
+
+    public String getItem_city() {
+        return item_city;
+    }
+
+    public void setItem_city(String item_city) {
+        this.item_city = item_city;
+    }
+
+    public String getItem_bazzar() {
+        return item_bazzar;
+    }
+
+    public void setItem_bazzar(String item_bazzar) {
+        this.item_bazzar = item_bazzar;
     }
 
     public String getItem_name() {
