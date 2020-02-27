@@ -273,6 +273,179 @@ public class VolleyService {
 
 
 
+    /*Get ITEMS
+    * */
+
+    public void GetItems(String url, final VolleyResponseListener volleyResponseListener){
+        try {
+            final RequestQueue queue = Volley.newRequestQueue(mContext);
+
+            StringRequest req = new StringRequest(Request.Method.GET, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            volleyResponseListener.onSuccess(s);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyResponseListener.onError(volleyError);
+                    Log.v("see error responce",volleyError.toString());
+                }
+            })
+
+            {
+
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    Log.v("see error responce",response.toString());
+                    return super.parseNetworkResponse(response);
+
+
+                }
+
+                @Override
+                protected Map<String, String> getParams(){
+                    HashMap<String, String> params = new HashMap<String, String>();
+                 /*   params.put("seller",user.getType());
+                    params.put("email",user.getEmail());
+                    params.put("username",user.getUsername());
+                    params.put("mobile_no",user.getMobile_no());
+                    params.put("cnic",user.getCnic());
+                    params.put("shop_name",user.getShop_name());
+                    params.put("shop_address",user.getShop_address());
+                    params.put("shop_lat_lang",user.getShop_lat_lang());
+                    params.put("city",user.getCity());
+                    params.put("city_area",user.getCity_area());
+                    params.put("bazzar",user.getBazzar());
+                    params.put("password",user.getPassword());
+                    params.put("status",user.getStatus());*/
+
+
+
+                    return params;
+                }
+            };
+            queue.add(req);
+
+
+
+        }catch (Exception e){
+            Log.v("see error responce",e.toString());
+
+        }
+
+    }
+
+
+    /*Get Item Location*/
+    public void GetItemLocation(String url, final String id , final VolleyResponseListener volleyResponseListener){
+        try {
+            final RequestQueue queue = Volley.newRequestQueue(mContext);
+
+            StringRequest req = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            volleyResponseListener.onSuccess(s);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyResponseListener.onError(volleyError);
+                    Log.v("see error responce",volleyError.toString());
+                }
+            })
+
+            {
+
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    Log.v("see error responce",response.toString());
+                    return super.parseNetworkResponse(response);
+
+
+                }
+
+                @Override
+                protected Map<String, String> getParams(){
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("id",id);
+
+
+
+
+                    return params;
+                }
+            };
+            queue.add(req);
+
+
+
+        }catch (Exception e){
+            Log.v("see error responce",e.toString());
+
+        }
+
+    }
+
+    /*Bring Data By Bazzar
+    * */
+    public void BringByBazzar(String url, final int upper,final int lower , final VolleyResponseListener volleyResponseListener){
+        try {
+            final RequestQueue queue = Volley.newRequestQueue(mContext);
+
+            StringRequest req = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            volleyResponseListener.onSuccess(s);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyResponseListener.onError(volleyError);
+                    Log.v("see error responce",volleyError.toString());
+                }
+            })
+
+            {
+
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    Log.v("see error responce",response.toString());
+                    return super.parseNetworkResponse(response);
+
+
+                }
+
+                @Override
+                protected Map<String, String> getParams(){
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("upper", String.valueOf(upper));
+                    params.put("lower", String.valueOf(lower));
+
+
+
+
+                    return params;
+                }
+            };
+            queue.add(req);
+
+
+
+        }catch (Exception e){
+            Log.v("see error responce",e.toString());
+
+        }
+
+    }
+
+
     /*------------------------------------------------- /For Headers----------------------------------------------------------*/
     public interface VolleyResponseListener {
       void onSuccess(String response);

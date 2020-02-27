@@ -56,6 +56,7 @@
                 android:layout_marginRight="5dp"/>
 
 <LinearLayout
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/text"
@@ -63,17 +64,18 @@
     android:orientation="horizontal">
 
     <TextView
-        android:layout_width="wrap_content"
+
+        android:gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="$2.43"
-        android:layout_weight="4.8"
         android:textSize="12sp"
         android:textStyle="bold"
         android:textColor="#000"
-        android:layout_marginLeft="10dp"
         android:id="@+id/price"/>
 
     <TextView
+        android:visibility="gone"
         android:layout_width="34dp"
         android:layout_height="17dp"
         android:layout_weight="1"

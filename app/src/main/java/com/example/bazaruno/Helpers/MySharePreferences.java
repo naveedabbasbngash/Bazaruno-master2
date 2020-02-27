@@ -3,6 +3,7 @@ package com.example.bazaruno.Helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.bazaruno.Model.ItemModel;
 import com.example.bazaruno.Model.Users;
 import com.google.gson.Gson;
 
@@ -54,5 +55,29 @@ public class MySharePreferences {
         editor.putBoolean("loginStatus", loginStatus);
         editor.commit();
 
+    }
+
+
+    public void SaveItemData(Context context , ItemModel user){
+
+
+        sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_MULTI_PROCESS);
+        editor = sharedpreferences.edit();
+        Gson gson = new Gson();
+        String mydata=gson.toJson(user);
+        editor.putString("itemData",mydata);
+        editor.commit();
+
+    }
+
+    public ItemModel GetItemData(Context ctx){
+
+        ItemModel userdatahere=new ItemModel();
+        SharedPreferences prfs = ctx.getSharedPreferences(MyPREFERENCES, Context.MODE_MULTI_PROCESS);
+
+        Gson gson = new Gson();
+        String json = prfs.getString("itemData", "");
+        userdatahere = gson.fromJson(json, ItemModel.class);
+        return userdatahere;
     }
 }

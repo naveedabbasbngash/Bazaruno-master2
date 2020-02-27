@@ -4,6 +4,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class Main_Side_Show_Adapter extends PagerAdapter {
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, final int position) {
 
        final Clothes_Recycler_Data_Container data=list.get(position);
        inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -73,8 +74,26 @@ public class Main_Side_Show_Adapter extends PagerAdapter {
         relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int other = 0;
+                if (position==0){
+                    other=0;
 
-                Toast.makeText(context, data.getName(), Toast.LENGTH_SHORT).show();
+                }
+                if (position==1){
+                    other=2;
+
+                }
+                if (position==2){
+                    other=4;
+
+                }
+                if (position==3){
+                    other=6;
+
+                }
+
+                /*Toast.makeText(context, data.getName(), Toast.LENGTH_SHORT).show();*/
+                context.startActivity(new Intent(context,Bazzar_Items.class).putExtra("upper",other));
             }
         });
 

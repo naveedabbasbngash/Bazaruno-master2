@@ -5,13 +5,20 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.android.volley.VolleyError;
+import com.example.bazaruno.AppConstants.AppConstant;
 import com.example.bazaruno.Helpers.MySharePreferences;
+import com.example.bazaruno.Model.ItemModel;
+import com.example.bazaruno.Services.VolleyService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
 import androidx.viewpager.widget.ViewPager;
+
+import android.util.Log;
 import android.view.View;
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -23,6 +30,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,18 +42,23 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , BottomNavigationView.OnNavigationItemSelectedListener
 {
 
+    VolleyService volleyService;
     BottomNavigationView bottomNavigationView; // use to show the bottom list of icon on main screen
     ViewPager viewPager;
     ExpandableHeightGridView gridView;
     int double_click=0;
     int doub_sub_click=0;
     MySharePreferences mySharePreferences;
+    private Main_Gird_View_Adapter adapter;
+
+    ArrayList<ItemModel> itemModelslist=new ArrayList<>();
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mySharePreferences=new MySharePreferences();
+        volleyService=new VolleyService(this);
 
         // define and identify toolbar and set some properties
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -54,7 +70,7 @@ public class MainActivity extends AppCompatActivity
 
          // These line of code for main page gird view
         gridView=(ExpandableHeightGridView) findViewById(R.id.girdview);
-        Gird_View_Fun();
+        BringItems();
 
 
         // This line of code is about listner on floating adding button on main screen
@@ -297,11 +313,11 @@ public class MainActivity extends AppCompatActivity
 
         Clothes_Recycler_Data_Container container=new Clothes_Recycler_Data_Container();
         container.setImage("https://files.guidedanmark.org/files/484/19792_Bazar_Vest_-_Frugtmarked.jpg");
-        container.setName("University Road");
+        container.setName("University Road Peshawar");
 
         Clothes_Recycler_Data_Container container1=new Clothes_Recycler_Data_Container();
         container1.setImage("https://media.dhakatribune.com/uploads/2016/12/20161226-RajibDhar-2459-1.jpg");
-        container1.setName("Saddar Bazar");
+        container1.setName("Saddar Bazar Peshawar");
 
         Clothes_Recycler_Data_Container container2=new Clothes_Recycler_Data_Container();
         container2.setImage("https://media-cdn.tripadvisor.com/media/photo-s/06/f4/34/f0/zelyony-bazaar.jpg");
@@ -357,9 +373,55 @@ public class MainActivity extends AppCompatActivity
 
     // work for creating main page girdview
 
-    void Gird_View_Fun()
+    void BringItems()
     {
-       ArrayList<Gird_Data_Container> list=new ArrayList<>();
+
+
+        volleyService.GetItems(AppConstant.DomainName + AppConstant.Dir + AppConstant.bringItems
+                , new VolleyService.VolleyResponseListener() {
+                    @Override
+                    public void onSuccess(String response) {
+                        try {
+                            JSONArray jsonElements=new JSONArray(response);
+                            Log.d(AppConstant.TAG+" BringItems :",jsonElements+"And"+response);
+                            for (int i=0;i<jsonElements.length();i++){
+                                JSONObject jsonObject= (JSONObject) jsonElements.get(i);
+                                ItemModel itemModel=new ItemModel();
+                                itemModel.setId(jsonObject.getString("id"));
+                                itemModel.setItem_name(jsonObject.getString("item_name"));
+                                itemModel.setShop_Id(jsonObject.getString("shop_Id"));
+                                itemModel.setShop_name(jsonObject.getString("shop_name"));
+                                itemModel.setMain_cat(jsonObject.getString("main_cat"));
+                                itemModel.setSub_cat(jsonObject.getString("sub_cat"));
+                                itemModel.setSub_sub_cat(jsonObject.getString("sub_sub_cat"));
+                                itemModel.setSize(jsonObject.getString("size"));
+                                itemModel.setColor(jsonObject.getString("color"));
+                                itemModel.setBrand_name(jsonObject.getString("brand_name"));
+                                itemModel.setItem_images_url(jsonObject.getString("item_images_url"));
+                                itemModel.setItem_price(jsonObject.getString("item_price"));
+                                itemModel.setItem_descount(jsonObject.getString("item_descount"));
+
+                                itemModelslist.add(itemModel);
+
+
+                            }
+                            adapter=new Main_Gird_View_Adapter(MainActivity.this,itemModelslist);
+                            gridView.setExpanded(true);
+                            adapter.notifyDataSetChanged();
+                            gridView.setAdapter(adapter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+
+                    }
+                });
+
+/*       ArrayList<Gird_Data_Container> list=new ArrayList<>();
 
        Gird_Data_Container container=new Gird_Data_Container();
        container.setImage("https://hull4heroes.org.uk/wp-content/uploads/2018/07/hull_4_heroes_logo_tshirt_dark_gray.png");
@@ -390,13 +452,10 @@ public class MainActivity extends AppCompatActivity
         list.add(container);
         list.add(container1);
         list.add(container2);
-        list.add(container3);
+        list.add(container3);*/
 
 
-        Main_Gird_View_Adapter adapter=new Main_Gird_View_Adapter(this,list);
-        gridView.setExpanded(true);
-        adapter.notifyDataSetChanged();
-        gridView.setAdapter(adapter);
+
 
 
     }

@@ -4,7 +4,11 @@
     package="com.example.bazaruno">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -14,9 +18,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Upload_Product"
-            android:label="Upload"
+        <activity android:name=".Bazzar_Items"
+            android:label="Market"
             android:theme="@style/AppTheme.Basit"></activity>
+        <activity
+            android:name=".Item_Details"
+            android:label="Item Details"
+            android:theme="@style/AppTheme.Basit" />
+        <activity
+            android:name=".Upload_Product"
+            android:label="Upload"
+            android:theme="@style/AppTheme.Basit" />
         <activity
             android:name=".Shop_Details_Activity"
             android:theme="@style/AppTheme.Basit" />
