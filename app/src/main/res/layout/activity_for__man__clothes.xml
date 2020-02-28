@@ -215,7 +215,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/fashion_drop"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:background="@color/back"
                             android:orientation="vertical">
 
@@ -277,7 +277,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/for_main_sub_layout"
-                                    android:visibility="gone"
+                                    android:visibility="visible"
                                     android:background="#E8ECE8"
                                     android:orientation="vertical">
 
@@ -504,6 +504,7 @@
                     <!-- Mobile and Tablets Section -->
 
                     <LinearLayout
+                        android:id="@+id/mobile_wear"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="16dp"
@@ -525,6 +526,7 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/mobile_tablets"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:civ_border_width="2dp"

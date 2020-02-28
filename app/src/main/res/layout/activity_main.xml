@@ -432,66 +432,420 @@
                <LinearLayout
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:paddingLeft="16dp"
-                   android:layout_marginTop="3dp"
-                   android:paddingTop="12dp"
-                   android:paddingBottom="12dp"
-                   android:paddingRight="16dp"
-                   android:orientation="horizontal"
-                   android:background="@color/back">
+                   android:orientation="vertical">
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:paddingLeft="16dp"
+                       android:id="@+id/woman_for_main_head_layout"
+                       android:layout_marginTop="3dp"
+                       android:paddingTop="12dp"
+                       android:paddingBottom="12dp"
+                       android:paddingRight="16dp"
+                       android:orientation="horizontal"
+                       android:background="@color/back">
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="For Woman"
+                           android:layout_gravity="center_vertical"
+                           android:paddingRight="12dp"
+                           android:layout_weight="1"
+                           android:textSize="20sp"/>
+
+                       <de.hdodenhof.circleimageview.CircleImageView
+                           xmlns:app="http://schemas.android.com/apk/res-auto"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           app:civ_border_width="2dp"
+                           android:layout_weight="0"
+                           android:id="@+id/woman_for_main_image"
+                           app:civ_border_color="#756C6C"
+                           android:layout_marginLeft="15dp"
+                           android:layout_gravity="center_vertical"
+                           android:src="@drawable/add_icon"/>
+
+                   </LinearLayout>
 
                    <TextView
-                       android:layout_width="wrap_content"
+                       android:layout_width="match_parent"
                        android:layout_height="wrap_content"
-                       android:text="For Woman"
-                       android:layout_gravity="center_vertical"
-                       android:paddingRight="12dp"
-                       android:layout_weight="1"
-                       android:textSize="20sp"/>
+                       android:id="@+id/woman_line_for_main"
+                       android:gravity="center"
+                       android:visibility="gone"
+                       android:background="#E8ECE8"
+                       android:text="------------------------------------------"
+                       android:padding="0dp"
+                       android:layout_margin="0dp"/>
 
-                   <de.hdodenhof.circleimageview.CircleImageView
-                       xmlns:app="http://schemas.android.com/apk/res-auto"
-                       android:layout_width="wrap_content"
+                   <!-- FOR MAN SUB PARTS -->
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
                        android:layout_height="wrap_content"
-                       app:civ_border_width="2dp"
-                       android:layout_weight="0"
-                       app:civ_border_color="#756C6C"
-                       android:layout_marginLeft="15dp"
-                       android:layout_gravity="center_vertical"
-                       android:src="@drawable/add_icon"/>
+                       android:id="@+id/woman_for_main_sub_layout"
+                       android:visibility="gone"
+                       android:background="#E8ECE8"
+                       android:orientation="vertical">
+
+                       <!-- Clothing -->
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:paddingLeft="16dp"
+                           android:layout_marginTop="3dp"
+                           android:paddingTop="12dp"
+                           android:id="@+id/woman_clothes_for_man"
+                           android:paddingBottom="12dp"
+                           android:paddingRight="16dp"
+                           android:orientation="horizontal"
+                           android:background="#E8ECE8">
+
+                           <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="Clothing"
+                               android:layout_gravity="center_vertical"
+                               android:paddingRight="12dp"
+                               android:layout_weight="1"
+                               android:textSize="20sp"/>
+
+                           <de.hdodenhof.circleimageview.CircleImageView
+                               xmlns:app="http://schemas.android.com/apk/res-auto"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               app:civ_border_width="2dp"
+                               android:layout_weight="0"
+                               app:civ_border_color="#C0BCBC"
+                               android:layout_marginLeft="15dp"
+                               android:layout_gravity="center_vertical"
+                               android:src="@drawable/greater"/>
+
+                       </LinearLayout>
+
+                       <!-- Shoes -->
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:paddingLeft="16dp"
+                           android:layout_marginTop="3dp"
+                           android:paddingTop="12dp"
+                           android:paddingBottom="12dp"
+                           android:id="@+id/woman_shoes_for_man"
+                           android:paddingRight="16dp"
+                           android:orientation="horizontal"
+                           android:background="#E8ECE8">
+
+                           <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="Shoes"
+                               android:layout_gravity="center_vertical"
+                               android:paddingRight="12dp"
+                               android:layout_weight="1"
+                               android:textSize="20sp"/>
+
+                           <de.hdodenhof.circleimageview.CircleImageView
+                               xmlns:app="http://schemas.android.com/apk/res-auto"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               app:civ_border_width="2dp"
+                               android:layout_weight="0"
+                               app:civ_border_color="#C0BCBC"
+                               android:layout_marginLeft="15dp"
+                               android:layout_gravity="center_vertical"
+                               android:src="@drawable/greater"/>
+
+                       </LinearLayout>
+
+
+                       <!-- Accessories -->
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:paddingLeft="16dp"
+                           android:layout_marginTop="3dp"
+                           android:paddingTop="12dp"
+                           android:id="@+id/woman_accessories_for_man"
+                           android:paddingBottom="12dp"
+                           android:paddingRight="16dp"
+                           android:orientation="horizontal"
+                           android:background="#E8ECE8">
+
+                           <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="Accessories"
+                               android:layout_gravity="center_vertical"
+                               android:paddingRight="12dp"
+                               android:layout_weight="1"
+                               android:textSize="20sp"/>
+
+                           <de.hdodenhof.circleimageview.CircleImageView
+                               xmlns:app="http://schemas.android.com/apk/res-auto"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               app:civ_border_width="2dp"
+                               android:layout_weight="0"
+                               app:civ_border_color="#C0BCBC"
+                               android:layout_marginLeft="15dp"
+                               android:layout_gravity="center_vertical"
+                               android:src="@drawable/greater"/>
+
+                       </LinearLayout>
+
+                       <!-- Beauity and Care -->
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:paddingLeft="16dp"
+                           android:layout_marginTop="3dp"
+                           android:paddingTop="12dp"
+                           android:paddingBottom="12dp"
+                           android:id="@+id/woman_beauity_and_care_for_man"
+                           android:paddingRight="16dp"
+                           android:orientation="horizontal"
+                           android:background="#E8ECE8">
+
+                           <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="Beauity and Care"
+                               android:layout_gravity="center_vertical"
+                               android:paddingRight="12dp"
+                               android:layout_weight="1"
+                               android:textSize="20sp"/>
+
+                           <de.hdodenhof.circleimageview.CircleImageView
+                               xmlns:app="http://schemas.android.com/apk/res-auto"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               app:civ_border_width="2dp"
+                               android:layout_weight="0"
+                               app:civ_border_color="#C0BCBC"
+                               android:layout_marginLeft="15dp"
+                               android:layout_gravity="center_vertical"
+                               android:src="@drawable/greater"/>
+
+                       </LinearLayout>
+
+                   </LinearLayout>
 
                </LinearLayout>
 
                <LinearLayout
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:paddingLeft="16dp"
-                   android:layout_marginTop="3dp"
-                   android:paddingTop="12dp"
-                   android:paddingBottom="12dp"
-                   android:paddingRight="16dp"
-                   android:orientation="horizontal"
-                   android:background="@color/back">
+                   android:orientation="vertical">
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:paddingLeft="16dp"
+                       android:id="@+id/kids_for_main_head_layout"
+                       android:layout_marginTop="3dp"
+                       android:paddingTop="12dp"
+                       android:paddingBottom="12dp"
+                       android:paddingRight="16dp"
+                       android:orientation="horizontal"
+                       android:background="@color/back">
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="For Kids"
+                           android:layout_gravity="center_vertical"
+                           android:paddingRight="12dp"
+                           android:layout_weight="1"
+                           android:textSize="20sp"/>
+
+                       <de.hdodenhof.circleimageview.CircleImageView
+                           xmlns:app="http://schemas.android.com/apk/res-auto"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           app:civ_border_width="2dp"
+                           android:layout_weight="0"
+                           android:id="@+id/kids_for_main_image"
+                           app:civ_border_color="#756C6C"
+                           android:layout_marginLeft="15dp"
+                           android:layout_gravity="center_vertical"
+                           android:src="@drawable/add_icon"/>
+
+                   </LinearLayout>
 
                    <TextView
-                       android:layout_width="wrap_content"
+                       android:layout_width="match_parent"
                        android:layout_height="wrap_content"
-                       android:text="For Kids"
-                       android:layout_gravity="center_vertical"
-                       android:paddingRight="12dp"
-                       android:layout_weight="1"
-                       android:textSize="20sp"/>
+                       android:id="@+id/kids_line_for_main"
+                       android:gravity="center"
+                       android:visibility="gone"
+                       android:background="#E8ECE8"
+                       android:text="------------------------------------------"
+                       android:padding="0dp"
+                       android:layout_margin="0dp"/>
 
-                   <de.hdodenhof.circleimageview.CircleImageView
-                       xmlns:app="http://schemas.android.com/apk/res-auto"
-                       android:layout_width="wrap_content"
+                   <!-- FOR MAN SUB PARTS -->
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
                        android:layout_height="wrap_content"
-                       app:civ_border_width="2dp"
-                       android:layout_weight="0"
-                       app:civ_border_color="#756C6C"
-                       android:layout_marginLeft="15dp"
-                       android:layout_gravity="center_vertical"
-                       android:src="@drawable/add_icon"/>
+                       android:id="@+id/kids_for_main_sub_layout"
+                       android:visibility="gone"
+                       android:background="#E8ECE8"
+                       android:orientation="vertical">
+
+                       <!-- Clothing -->
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:paddingLeft="16dp"
+                           android:layout_marginTop="3dp"
+                           android:paddingTop="12dp"
+                           android:id="@+id/kids_clothes_for_man"
+                           android:paddingBottom="12dp"
+                           android:paddingRight="16dp"
+                           android:orientation="horizontal"
+                           android:background="#E8ECE8">
+
+                           <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="Clothing"
+                               android:layout_gravity="center_vertical"
+                               android:paddingRight="12dp"
+                               android:layout_weight="1"
+                               android:textSize="20sp"/>
+
+                           <de.hdodenhof.circleimageview.CircleImageView
+                               xmlns:app="http://schemas.android.com/apk/res-auto"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               app:civ_border_width="2dp"
+                               android:layout_weight="0"
+                               app:civ_border_color="#C0BCBC"
+                               android:layout_marginLeft="15dp"
+                               android:layout_gravity="center_vertical"
+                               android:src="@drawable/greater"/>
+
+                       </LinearLayout>
+
+                       <!-- Shoes -->
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:paddingLeft="16dp"
+                           android:layout_marginTop="3dp"
+                           android:paddingTop="12dp"
+                           android:paddingBottom="12dp"
+                           android:id="@+id/kids_shoes_for_man"
+                           android:paddingRight="16dp"
+                           android:orientation="horizontal"
+                           android:background="#E8ECE8">
+
+                           <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="Shoes"
+                               android:layout_gravity="center_vertical"
+                               android:paddingRight="12dp"
+                               android:layout_weight="1"
+                               android:textSize="20sp"/>
+
+                           <de.hdodenhof.circleimageview.CircleImageView
+                               xmlns:app="http://schemas.android.com/apk/res-auto"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               app:civ_border_width="2dp"
+                               android:layout_weight="0"
+                               app:civ_border_color="#C0BCBC"
+                               android:layout_marginLeft="15dp"
+                               android:layout_gravity="center_vertical"
+                               android:src="@drawable/greater"/>
+
+                       </LinearLayout>
+
+
+                       <!-- Accessories -->
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:paddingLeft="16dp"
+                           android:layout_marginTop="3dp"
+                           android:paddingTop="12dp"
+                           android:id="@+id/kids_accessories_for_man"
+                           android:paddingBottom="12dp"
+                           android:paddingRight="16dp"
+                           android:orientation="horizontal"
+                           android:background="#E8ECE8">
+
+                           <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="Accessories"
+                               android:layout_gravity="center_vertical"
+                               android:paddingRight="12dp"
+                               android:layout_weight="1"
+                               android:textSize="20sp"/>
+
+                           <de.hdodenhof.circleimageview.CircleImageView
+                               xmlns:app="http://schemas.android.com/apk/res-auto"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               app:civ_border_width="2dp"
+                               android:layout_weight="0"
+                               app:civ_border_color="#C0BCBC"
+                               android:layout_marginLeft="15dp"
+                               android:layout_gravity="center_vertical"
+                               android:src="@drawable/greater"/>
+
+                       </LinearLayout>
+
+                       <!-- Beauity and Care -->
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:paddingLeft="16dp"
+                           android:layout_marginTop="3dp"
+                           android:paddingTop="12dp"
+                           android:paddingBottom="12dp"
+                           android:id="@+id/kids_beauity_and_care_for_man"
+                           android:paddingRight="16dp"
+                           android:orientation="horizontal"
+                           android:background="#E8ECE8">
+
+                           <TextView
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:text="Beauity and Care"
+                               android:layout_gravity="center_vertical"
+                               android:paddingRight="12dp"
+                               android:layout_weight="1"
+                               android:textSize="20sp"/>
+
+                           <de.hdodenhof.circleimageview.CircleImageView
+                               xmlns:app="http://schemas.android.com/apk/res-auto"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               app:civ_border_width="2dp"
+                               android:layout_weight="0"
+                               app:civ_border_color="#C0BCBC"
+                               android:layout_marginLeft="15dp"
+                               android:layout_gravity="center_vertical"
+                               android:src="@drawable/greater"/>
+
+                       </LinearLayout>
+
+                   </LinearLayout>
 
                </LinearLayout>
 
@@ -505,33 +859,338 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:layout_marginTop="3dp"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
-                android:paddingRight="16dp"
-                android:orientation="horizontal"
-                android:background="#fff">
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Mobiles &#38; Tablets"
-                    android:layout_gravity="center_vertical"
-                    android:paddingRight="12dp"
-                    android:layout_weight="1"
-                    android:textSize="20sp"/>
+                    android:paddingLeft="16dp"
+                    android:id="@+id/mobile_fashion_and_wear_layout"
+                    android:layout_marginTop="3dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:paddingRight="16dp"
+                    android:orientation="horizontal"
+                    android:background="#fff">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mobile &#38; Tablets"
+                        android:layout_gravity="center_vertical"
+                        android:paddingRight="12dp"
+                        android:layout_weight="1"
+                        android:textSize="20sp"/>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+                        android:layout_width="wrap_content"
+                        android:id="@+id/mobile_fashion_and_wear"
+                        android:layout_height="wrap_content"
+                        app:civ_border_width="2dp"
+                        android:layout_weight="0"
+                        app:civ_border_color="@color/back"
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/greater"/>
+
+                </LinearLayout>
+
+                <!-- SECOND OR SUB LIST OF FASHION AND WEAR -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:civ_border_width="2dp"
-                    android:layout_weight="0"
-                    app:civ_border_color="@color/back"
-                    android:layout_marginLeft="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/greater"/>
+                    android:id="@+id/mobile_fashion_drop"
+                    android:visibility="gone"
+                    android:background="@color/back"
+                    android:orientation="vertical">
+
+                    <!-- For Man Section sub part -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="16dp"
+                            android:id="@+id/mobile_for_main_head_layout"
+                            android:layout_marginTop="3dp"
+                            android:paddingTop="12dp"
+                            android:paddingBottom="12dp"
+                            android:paddingRight="16dp"
+                            android:orientation="horizontal"
+                            android:background="@color/back">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Android"
+                                android:layout_gravity="center_vertical"
+                                android:paddingRight="12dp"
+                                android:layout_weight="1"
+                                android:textSize="20sp"/>
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:civ_border_width="2dp"
+                                android:layout_weight="0"
+                                android:id="@+id/android_for_main_image"
+                                app:civ_border_color="#756C6C"
+                                android:layout_marginLeft="15dp"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/add_icon"/>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/andoird_line_for_main"
+                            android:gravity="center"
+                            android:visibility="gone"
+                            android:background="#E8ECE8"
+                            android:text="------------------------------------------"
+                            android:padding="0dp"
+                            android:layout_margin="0dp"/>
+
+                        <!-- FOR MAN SUB PARTS -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/android_for_main_sub_layout"
+                            android:visibility="gone"
+                            android:background="#E8ECE8"
+                            android:orientation="vertical">
+
+                            <!-- Clothing -->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="16dp"
+                                android:layout_marginTop="3dp"
+                                android:paddingTop="12dp"
+                                android:id="@+id/samsung_clothes_for_man"
+                                android:paddingBottom="12dp"
+                                android:paddingRight="16dp"
+                                android:orientation="horizontal"
+                                android:background="#E8ECE8">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Samsung"
+                                    android:layout_gravity="center_vertical"
+                                    android:paddingRight="12dp"
+                                    android:layout_weight="1"
+                                    android:textSize="20sp"/>
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:civ_border_width="2dp"
+                                    android:layout_weight="0"
+                                    app:civ_border_color="#C0BCBC"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/greater"/>
+
+                            </LinearLayout>
+
+                            <!-- Shoes -->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="16dp"
+                                android:layout_marginTop="3dp"
+                                android:paddingTop="12dp"
+                                android:paddingBottom="12dp"
+                                android:id="@+id/huawei_shoes_for_man"
+                                android:paddingRight="16dp"
+                                android:orientation="horizontal"
+                                android:background="#E8ECE8">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Huawei"
+                                    android:layout_gravity="center_vertical"
+                                    android:paddingRight="12dp"
+                                    android:layout_weight="1"
+                                    android:textSize="20sp"/>
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:civ_border_width="2dp"
+                                    android:layout_weight="0"
+                                    app:civ_border_color="#C0BCBC"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/greater"/>
+
+                            </LinearLayout>
+
+
+
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="16dp"
+                            android:id="@+id/iphone_for_main_head_layout"
+                            android:layout_marginTop="3dp"
+                            android:paddingTop="12dp"
+                            android:paddingBottom="12dp"
+                            android:paddingRight="16dp"
+                            android:orientation="horizontal"
+                            android:background="@color/back">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Iphone"
+                                android:layout_gravity="center_vertical"
+                                android:paddingRight="12dp"
+                                android:layout_weight="1"
+                                android:textSize="20sp"/>
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:civ_border_width="2dp"
+                                android:layout_weight="0"
+                                android:id="@+id/iphone_for_main_image"
+                                app:civ_border_color="#756C6C"
+                                android:layout_marginLeft="15dp"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/add_icon"/>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/iphone_line_for_main"
+                            android:gravity="center"
+                            android:visibility="gone"
+                            android:background="#E8ECE8"
+                            android:text="------------------------------------------"
+                            android:padding="0dp"
+                            android:layout_margin="0dp"/>
+
+                        <!-- FOR MAN SUB PARTS -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/iphone_for_main_sub_layout"
+                            android:visibility="gone"
+                            android:background="#E8ECE8"
+                            android:orientation="vertical">
+
+                            <!-- Clothing -->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="16dp"
+                                android:layout_marginTop="3dp"
+                                android:paddingTop="12dp"
+                                android:id="@+id/iphone_clothes_for_man"
+                                android:paddingBottom="12dp"
+                                android:paddingRight="16dp"
+                                android:orientation="horizontal"
+                                android:background="#E8ECE8">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="iphone 5s"
+                                    android:layout_gravity="center_vertical"
+                                    android:paddingRight="12dp"
+                                    android:layout_weight="1"
+                                    android:textSize="20sp"/>
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:civ_border_width="2dp"
+                                    android:layout_weight="0"
+                                    app:civ_border_color="#C0BCBC"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/greater"/>
+
+                            </LinearLayout>
+
+                            <!-- Shoes -->
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="16dp"
+                                android:layout_marginTop="3dp"
+                                android:paddingTop="12dp"
+                                android:paddingBottom="12dp"
+                                android:id="@+id/iphone_shoes_for_man"
+                                android:paddingRight="16dp"
+                                android:orientation="horizontal"
+                                android:background="#E8ECE8">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="iphone 6S"
+                                    android:layout_gravity="center_vertical"
+                                    android:paddingRight="12dp"
+                                    android:layout_weight="1"
+                                    android:textSize="20sp"/>
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:civ_border_width="2dp"
+                                    android:layout_weight="0"
+                                    app:civ_border_color="#C0BCBC"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:src="@drawable/greater"/>
+
+                            </LinearLayout>
+
+
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
 
             </LinearLayout>
 

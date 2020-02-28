@@ -63,7 +63,7 @@ public class Search_Activity extends AppCompatActivity implements BottomNavigati
                 this, android.R.layout.simple_spinner_item, AppConstant.cat);
 
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        citySpinner.setAdapter(adapter3);
+        category.setAdapter(adapter3);
 
         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -123,11 +123,20 @@ public class Search_Activity extends AppCompatActivity implements BottomNavigati
                             if (citySpinner.getSelectedItemPosition()==0){
                                 city_string="";
                             }
+                            else{
+                                city_string=citySpinner.getSelectedItem().toString();
+                            }
                             if (bazar.getSelectedItemPosition()==0){
                                 bazzar_string="";
                             }
+                            else{
+                                bazzar_string=bazar.getSelectedItem().toString();
+                            }
                             if (category.getSelectedItemPosition()==0){
                                 cat_string="";
+                            }
+                            else{
+                                cat_string=category.getSelectedItem().toString();
                             }
                             startActivity(new Intent(Search_Activity.this,Search_Items.class)
                                     .putExtra("city",city_string)

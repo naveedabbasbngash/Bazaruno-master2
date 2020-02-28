@@ -28,9 +28,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , BottomNavigationView.OnNavigationItemSelectedListener
 {
 
+    String cityS,bazzarS;
+
     VolleyService volleyService;
     BottomNavigationView bottomNavigationView; // use to show the bottom list of icon on main screen
     ViewPager viewPager;
@@ -56,6 +61,7 @@ public class MainActivity extends AppCompatActivity
     ArrayList<ItemModel> itemModelslist=new ArrayList<>();
     Users users=new Users();
 
+    Spinner city,bazar;
 
     @SuppressLint("RestrictedApi")
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,16 +130,220 @@ public class MainActivity extends AppCompatActivity
         bottomNavigationView.getMenu().getItem(2).setCheckable(false);
         bottomNavigationView.getMenu().getItem(3).setCheckable(false);
 
+        city=navigationView.findViewById(R.id.city);
+        bazar=navigationView.findViewById(R.id.bazar);
+
+        city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(MainActivity.this, "city", Toast.LENGTH_SHORT).show();
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         // ########################## For Man Section Code #############################//
 
        // This function work for show and hiding nav list and change image
         Parent_Controller(R.id.fashion_and_wear,R.id.fashion_drop,R.id.fashion_and_wear_layout);
         // This function work for show and hiding sub category of For Man (like Shoes,Accessories)
         Child_Controller(R.id.for_main_head_layout,R.id.for_main_sub_layout,R.id.for_main_image,R.id.line_for_main);
-        // Work for user click and send intent to another activity
+        // This function work for show and hiding sub category of For Woman (like Shoes,Accessories)
+        Child_Controller(R.id.woman_for_main_head_layout,R.id.woman_for_main_sub_layout,R.id.woman_for_main_image,R.id.woman_line_for_main);
+        // This function work for show and hiding sub category of For kids (like Shoes,Accessories)
+        Child_Controller(R.id.kids_for_main_head_layout,R.id.kids_for_main_sub_layout,R.id.kids_for_main_image,R.id.kids_line_for_main);
+
+
+
+        // Work for user click and send intent to another activity man
         Intent_For_Man_Section();
+        // Work for user click and send intent to another activity woman
+        Intent_For_Man_Section2();
+        // Work for user click and send intent to another activity kids
+        intent_for_kids_section();
 
 
+
+        /*woman*/
+
+        /*mobile and tablets*/
+        Parent_Controller(R.id.mobile_fashion_and_wear,R.id.mobile_fashion_drop,R.id.mobile_fashion_and_wear_layout);
+        Child_Controller(R.id.mobile_for_main_head_layout,R.id.android_for_main_sub_layout,R.id.android_for_main_image,R.id.andoird_line_for_main);
+        intent_for_mobile_section();
+
+        Child_Controller(R.id.iphone_for_main_head_layout,R.id.iphone_for_main_sub_layout,R.id.iphone_for_main_image,R.id.iphone_line_for_main);
+        intent_for_hauwi_section();
+
+
+    }
+
+    private void intent_for_hauwi_section() {
+        ArrayList<Integer> ids_for_man_section=new ArrayList<>();
+        ids_for_man_section.add(R.id.iphone_clothes_for_man); // id of clothing
+        ids_for_man_section.add(R.id.iphone_shoes_for_man); // id of shoes
+/*        ids_for_man_section.add(R.id.kids_accessories_for_man); // id of accessories
+        ids_for_man_section.add(R.id.kids_beauity_and_care_for_man); // id of beauity and care*/
+
+        // Run when clother item is click or selected
+        LinearLayout clother_for_man=(LinearLayout) findViewById(ids_for_man_section.get(0));
+        clother_for_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+        LinearLayout shoes=(LinearLayout) findViewById(ids_for_man_section.get(1));
+        shoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+/*        LinearLayout accessories_for_man=(LinearLayout) findViewById(ids_for_man_section.get(2));
+        accessories_for_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+        LinearLayout beauity_and_care_for_man=(LinearLayout) findViewById(ids_for_man_section.get(3));
+        beauity_and_care_for_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });*/
+    }
+
+    private void intent_for_mobile_section() {
+        ArrayList<Integer> ids_for_man_section=new ArrayList<>();
+        ids_for_man_section.add(R.id.samsung_clothes_for_man); // id of clothing
+        ids_for_man_section.add(R.id.huawei_shoes_for_man); // id of shoes
+/*        ids_for_man_section.add(R.id.kids_accessories_for_man); // id of accessories
+        ids_for_man_section.add(R.id.kids_beauity_and_care_for_man); // id of beauity and care*/
+
+        // Run when clother item is click or selected
+        LinearLayout clother_for_man=(LinearLayout) findViewById(ids_for_man_section.get(0));
+        clother_for_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+        LinearLayout shoes=(LinearLayout) findViewById(ids_for_man_section.get(1));
+        shoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+/*        LinearLayout accessories_for_man=(LinearLayout) findViewById(ids_for_man_section.get(2));
+        accessories_for_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+        LinearLayout beauity_and_care_for_man=(LinearLayout) findViewById(ids_for_man_section.get(3));
+        beauity_and_care_for_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });*/
+    }
+
+    private void intent_for_kids_section() {
+        ArrayList<Integer> ids_for_man_section=new ArrayList<>();
+        ids_for_man_section.add(R.id.kids_clothes_for_man); // id of clothing
+        ids_for_man_section.add(R.id.kids_shoes_for_man); // id of shoes
+        ids_for_man_section.add(R.id.kids_accessories_for_man); // id of accessories
+        ids_for_man_section.add(R.id.kids_beauity_and_care_for_man); // id of beauity and care
+
+        // Run when clother item is click or selected
+        LinearLayout clother_for_man=(LinearLayout) findViewById(ids_for_man_section.get(0));
+        clother_for_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+        LinearLayout shoes=(LinearLayout) findViewById(ids_for_man_section.get(1));
+        shoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+        LinearLayout accessories_for_man=(LinearLayout) findViewById(ids_for_man_section.get(2));
+        accessories_for_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+        LinearLayout beauity_and_care_for_man=(LinearLayout) findViewById(ids_for_man_section.get(3));
+        beauity_and_care_for_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+    }
+
+    private void Intent_For_Man_Section2() {
+        ArrayList<Integer> ids_for_man_section=new ArrayList<>();
+        ids_for_man_section.add(R.id.woman_clothes_for_man); // id of clothing
+        ids_for_man_section.add(R.id.woman_shoes_for_man); // id of shoes
+        ids_for_man_section.add(R.id.woman_accessories_for_man); // id of accessories
+        ids_for_man_section.add(R.id.woman_beauity_and_care_for_man); // id of beauity and care
+
+        // Run when clother item is click or selected
+        LinearLayout clother_for_man=(LinearLayout) findViewById(ids_for_man_section.get(0));
+        clother_for_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+        LinearLayout shoes=(LinearLayout) findViewById(ids_for_man_section.get(1));
+        shoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+        LinearLayout accessories_for_man=(LinearLayout) findViewById(ids_for_man_section.get(2));
+        accessories_for_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+        LinearLayout beauity_and_care_for_man=(LinearLayout) findViewById(ids_for_man_section.get(3));
+        beauity_and_care_for_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
     }
 
     @Override
@@ -328,6 +538,30 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
              Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+        LinearLayout shoes=(LinearLayout) findViewById(ids_for_man_section.get(1));
+        shoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+        LinearLayout accessories_for_man=(LinearLayout) findViewById(ids_for_man_section.get(2));
+        accessories_for_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
+            }
+        });
+
+        LinearLayout beauity_and_care_for_man=(LinearLayout) findViewById(ids_for_man_section.get(3));
+        beauity_and_care_for_man.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent_Handler(For_Man_Clothes.class);
             }
         });
     }
