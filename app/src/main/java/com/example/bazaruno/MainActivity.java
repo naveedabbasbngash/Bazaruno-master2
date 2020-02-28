@@ -9,6 +9,7 @@ import android.os.Handler;
 import com.android.volley.VolleyError;
 import com.example.bazaruno.AppConstants.AppConstant;
 import com.example.bazaruno.Helpers.MySharePreferences;
+import com.example.bazaruno.Model.FilterModel;
 import com.example.bazaruno.Model.ItemModel;
 import com.example.bazaruno.Model.Users;
 import com.example.bazaruno.Services.VolleyService;
@@ -29,6 +30,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity
 
     Spinner city,bazar;
 
+
     @SuppressLint("RestrictedApi")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +86,17 @@ public class MainActivity extends AppCompatActivity
 
          // These line of code for main page gird view
         gridView=(ExpandableHeightGridView) findViewById(R.id.girdview);
-        BringItems();
+        int checkBringData=mySharePreferences.checkBringData(this);
+        if (checkBringData==0) {
+            BringItems();
+        }
+        else if (checkBringData==1){
+            FilterModel filterModel=mySharePreferences.GetFilterData(this);
+            Log.d(AppConstant.TAG+" : fileter data",filterModel.getItem_bazzar()
+                    +filterModel.getItem_city()+filterModel.getMain_cat()+filterModel.getSub_sub_cat());
+            BringItemsFilter(filterModel);
+            Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
+        }
 
 
         // This line of code is about listner on floating adding button on main screen
@@ -133,11 +146,29 @@ public class MainActivity extends AppCompatActivity
         city=navigationView.findViewById(R.id.city);
         bazar=navigationView.findViewById(R.id.bazar);
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, AppConstant.cities);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        city.setAdapter(adapter);
         city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(MainActivity.this, "city", Toast.LENGTH_SHORT).show();
 
+                if (city.getSelectedItemPosition()==1){
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                            MainActivity.this, android.R.layout.simple_spinner_item, AppConstant.peshawarBazzar);
+
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    bazar.setAdapter(adapter);
+                }
+                else if (city.getSelectedItemPosition()==2){
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                            MainActivity.this, android.R.layout.simple_spinner_item, AppConstant.kohatBazzar);
+
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    bazar.setAdapter(adapter);
+                }
 
             }
 
@@ -186,41 +217,68 @@ public class MainActivity extends AppCompatActivity
         ArrayList<Integer> ids_for_man_section=new ArrayList<>();
         ids_for_man_section.add(R.id.iphone_clothes_for_man); // id of clothing
         ids_for_man_section.add(R.id.iphone_shoes_for_man); // id of shoes
-/*        ids_for_man_section.add(R.id.kids_accessories_for_man); // id of accessories
-        ids_for_man_section.add(R.id.kids_beauity_and_care_for_man); // id of beauity and care*/
 
         // Run when clother item is click or selected
         LinearLayout clother_for_man=(LinearLayout) findViewById(ids_for_man_section.get(0));
         clother_for_man.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
+
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Mobile & Tablets");
+                filterModel.setSub_cat("Iphone");
+                filterModel.setSub_sub_cat("Iphone 5s");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);
             }
         });
 
         LinearLayout shoes=(LinearLayout) findViewById(ids_for_man_section.get(1));
         shoes.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Mobile & Tablets");
+                filterModel.setSub_cat("Iphone");
+                filterModel.setSub_sub_cat("Iphone 6S");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);            }
         });
 
-/*        LinearLayout accessories_for_man=(LinearLayout) findViewById(ids_for_man_section.get(2));
-        accessories_for_man.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
-        });
-
-        LinearLayout beauity_and_care_for_man=(LinearLayout) findViewById(ids_for_man_section.get(3));
-        beauity_and_care_for_man.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
-        });*/
     }
 
     private void intent_for_mobile_section() {
@@ -233,35 +291,64 @@ public class MainActivity extends AppCompatActivity
         // Run when clother item is click or selected
         LinearLayout clother_for_man=(LinearLayout) findViewById(ids_for_man_section.get(0));
         clother_for_man.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
+
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Mobile & Tablets");
+                filterModel.setSub_cat("Android");
+                filterModel.setSub_sub_cat("samsung");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);
             }
         });
 
         LinearLayout shoes=(LinearLayout) findViewById(ids_for_man_section.get(1));
         shoes.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Mobile & Tablets");
+                filterModel.setSub_cat("Android");
+                filterModel.setSub_sub_cat("huawei");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);            }
         });
 
-/*        LinearLayout accessories_for_man=(LinearLayout) findViewById(ids_for_man_section.get(2));
-        accessories_for_man.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
-        });
-
-        LinearLayout beauity_and_care_for_man=(LinearLayout) findViewById(ids_for_man_section.get(3));
-        beauity_and_care_for_man.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
-        });*/
     }
 
     private void intent_for_kids_section() {
@@ -274,38 +361,124 @@ public class MainActivity extends AppCompatActivity
         // Run when clother item is click or selected
         LinearLayout clother_for_man=(LinearLayout) findViewById(ids_for_man_section.get(0));
         clother_for_man.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
+
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Fashion & Wear");
+                filterModel.setSub_cat("For Kids");
+                filterModel.setSub_sub_cat("Clothings");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);
             }
         });
 
         LinearLayout shoes=(LinearLayout) findViewById(ids_for_man_section.get(1));
         shoes.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Fashion & Wear");
+                filterModel.setSub_cat("For Kids");
+                filterModel.setSub_sub_cat("Shoes");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);            }
         });
 
         LinearLayout accessories_for_man=(LinearLayout) findViewById(ids_for_man_section.get(2));
         accessories_for_man.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Fashion & Wear");
+                filterModel.setSub_cat("For Kids");
+                filterModel.setSub_sub_cat("Accessories");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);            }
         });
 
         LinearLayout beauity_and_care_for_man=(LinearLayout) findViewById(ids_for_man_section.get(3));
         beauity_and_care_for_man.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Fashion & Wear");
+                filterModel.setSub_cat("For Kids");
+                filterModel.setSub_sub_cat("Beauty And Care");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);                   }
         });
     }
 
-    private void Intent_For_Man_Section2() {
+    private void Intent_For_Man_Section2()  {
         ArrayList<Integer> ids_for_man_section=new ArrayList<>();
         ids_for_man_section.add(R.id.woman_clothes_for_man); // id of clothing
         ids_for_man_section.add(R.id.woman_shoes_for_man); // id of shoes
@@ -315,34 +488,120 @@ public class MainActivity extends AppCompatActivity
         // Run when clother item is click or selected
         LinearLayout clother_for_man=(LinearLayout) findViewById(ids_for_man_section.get(0));
         clother_for_man.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
+
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Fashion & Wear");
+                filterModel.setSub_cat("For Womens");
+                filterModel.setSub_sub_cat("Clothings");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);
             }
         });
 
         LinearLayout shoes=(LinearLayout) findViewById(ids_for_man_section.get(1));
         shoes.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Fashion & Wear");
+                filterModel.setSub_cat("For Womens");
+                filterModel.setSub_sub_cat("Shoes");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);            }
         });
 
         LinearLayout accessories_for_man=(LinearLayout) findViewById(ids_for_man_section.get(2));
         accessories_for_man.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Fashion & Wear");
+                filterModel.setSub_cat("For Womens");
+                filterModel.setSub_sub_cat("Accessories");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);            }
         });
 
         LinearLayout beauity_and_care_for_man=(LinearLayout) findViewById(ids_for_man_section.get(3));
         beauity_and_care_for_man.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Fashion & Wear");
+                filterModel.setSub_cat("For Womens");
+                filterModel.setSub_sub_cat("Beauty And Care");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);                   }
         });
     }
 
@@ -523,6 +782,7 @@ public class MainActivity extends AppCompatActivity
 
         Intent intent=new Intent(getApplicationContext(),activitys);
         startActivity(intent);
+        finish();
     }
 
     void  Intent_For_Man_Section(){
@@ -535,34 +795,120 @@ public class MainActivity extends AppCompatActivity
         // Run when clother item is click or selected
         LinearLayout clother_for_man=(LinearLayout) findViewById(ids_for_man_section.get(0));
         clother_for_man.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-             Intent_Handler(For_Man_Clothes.class);
+
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Fashion & Wear");
+                filterModel.setSub_cat("For Men");
+                filterModel.setSub_sub_cat("Clothings");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+             Intent_Handler(MainActivity.class);
             }
         });
 
         LinearLayout shoes=(LinearLayout) findViewById(ids_for_man_section.get(1));
         shoes.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Fashion & Wear");
+                filterModel.setSub_cat("For Men");
+                filterModel.setSub_sub_cat("Shoes");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);            }
         });
 
         LinearLayout accessories_for_man=(LinearLayout) findViewById(ids_for_man_section.get(2));
         accessories_for_man.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Fashion & Wear");
+                filterModel.setSub_cat("For Men");
+                filterModel.setSub_sub_cat("Accessories");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);            }
         });
 
         LinearLayout beauity_and_care_for_man=(LinearLayout) findViewById(ids_for_man_section.get(3));
         beauity_and_care_for_man.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Intent_Handler(For_Man_Clothes.class);
-            }
+                mySharePreferences.setBringData(MainActivity.this,1);
+                FilterModel filterModel=new FilterModel();
+                filterModel.setMain_cat("Fashion & Wear");
+                filterModel.setSub_cat("For Men");
+                filterModel.setSub_sub_cat("Beauty And Care");
+                if (city.getSelectedItemPosition()<0){
+                    filterModel.setItem_city(city.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_city("");
+                }
+                if (bazar.getSelectedItemPosition()<0){
+                    filterModel.setItem_bazzar(bazar.getSelectedItem().toString());
+                }
+                else {
+                    filterModel.setItem_bazzar("");
+                }
+                mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
+                        bazar.getSelectedItem());
+                Intent_Handler(MainActivity.class);                   }
         });
     }
 
@@ -720,5 +1066,99 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    void BringItemsFilter(FilterModel filterModel)
+    {
+
+
+        volleyService.GetFilterItems(AppConstant.DomainName + AppConstant.Dir + AppConstant.bringItemsfilter
+               ,filterModel , new VolleyService.VolleyResponseListener() {
+                    @Override
+                    public void onSuccess(String response) {
+                        Log.d(AppConstant.TAG + " BringItems :", response.length() + "");
+
+                        if (response.length() < 90) {
+                            Toast.makeText(MainActivity.this, "No Item Found", Toast.LENGTH_SHORT).show();
+
+                        } else {
+
+                            try {
+                                JSONArray jsonElements = new JSONArray(response);
+                                Log.d(AppConstant.TAG + " BringItems :", jsonElements + "And" + response);
+                                for (int i = 0; i < jsonElements.length(); i++) {
+                                    JSONObject jsonObject = (JSONObject) jsonElements.get(i);
+                                    ItemModel itemModel = new ItemModel();
+                                    itemModel.setId(jsonObject.getString("id"));
+                                    itemModel.setItem_name(jsonObject.getString("item_name"));
+                                    itemModel.setShop_Id(jsonObject.getString("shop_Id"));
+                                    itemModel.setShop_name(jsonObject.getString("shop_name"));
+                                    itemModel.setMain_cat(jsonObject.getString("main_cat"));
+                                    itemModel.setSub_cat(jsonObject.getString("sub_cat"));
+                                    itemModel.setSub_sub_cat(jsonObject.getString("sub_sub_cat"));
+                                    itemModel.setSize(jsonObject.getString("size"));
+                                    itemModel.setColor(jsonObject.getString("color"));
+                                    itemModel.setBrand_name(jsonObject.getString("brand_name"));
+                                    itemModel.setItem_images_url(jsonObject.getString("item_images_url"));
+                                    itemModel.setItem_price(jsonObject.getString("item_price"));
+                                    itemModel.setItem_descount(jsonObject.getString("item_descount"));
+
+                                    itemModelslist.add(itemModel);
+
+
+                                }
+                                adapter = new Main_Gird_View_Adapter(MainActivity.this, itemModelslist);
+                                gridView.setExpanded(true);
+                                adapter.notifyDataSetChanged();
+                                gridView.setAdapter(adapter);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(VolleyError error) {
+
+                    }
+                });
+
+/*       ArrayList<Gird_Data_Container> list=new ArrayList<>();
+
+       Gird_Data_Container container=new Gird_Data_Container();
+       container.setImage("https://hull4heroes.org.uk/wp-content/uploads/2018/07/hull_4_heroes_logo_tshirt_dark_gray.png");
+       container.setName("T-Shirts Free");
+       container.setPrice(34);
+       container.setRating("5.0");
+
+        Gird_Data_Container container1=new Gird_Data_Container();
+        container1.setName("Sumsung j-10");
+        container1.setImage("https://static.businessinsider.com/image/5c54826474c58717f026a77d-1200/galaxy-s10e-leak-4x3.png");
+        container1.setPrice(200);
+        container1.setRating("4.6");
+
+
+        Gird_Data_Container container2=new Gird_Data_Container();
+        container2.setName("Bluetooth headphones");
+        container2.setImage("https://images-na.ssl-images-amazon.com/images/I/61BYbqQaPpL._SX466_.jpg");
+        container2.setPrice(400);
+        container2.setRating("4.2");
+
+        Gird_Data_Container container3=new Gird_Data_Container();
+        container3.setName("Golden Free");
+        container3.setImage("https://cdn.shopify.com/s/files/1/0658/1297/products/LXG_LR_1024x1024.jpg?v=1504121273");
+        container3.setPrice(100);
+        container3.setRating("4.1");
+
+
+        list.add(container);
+        list.add(container1);
+        list.add(container2);
+        list.add(container3);*/
+
+
+
+
+
+    }
 
 }

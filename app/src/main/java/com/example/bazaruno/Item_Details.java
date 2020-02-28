@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +20,9 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.bazaruno.AppConstants.AppConstant;
 import com.example.bazaruno.Helpers.MySharePreferences;
 import com.example.bazaruno.Model.ItemModel;
+import com.example.bazaruno.Model.Users;
 import com.example.bazaruno.Services.VolleyService;
+import com.victor.loading.rotate.RotateLoading;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +44,9 @@ public class Item_Details extends AppCompatActivity {
     VolleyService volleyService;
     private String area;
     private String shop_lat_lang;
+    LinearLayout buyer_stuff,seller_stuff;
+    Button add_item_fav,add_shop_fav,delete_item;
+    private RotateLoading rotating;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -63,11 +70,35 @@ public class Item_Details extends AppCompatActivity {
         item_price=findViewById(R.id.item_price);
         item_size=findViewById(R.id.item_size);
         item_brand_name=findViewById(R.id.item_brand_name);
+        buyer_stuff=findViewById(R.id.buyer_stuff);
+        seller_stuff=findViewById(R.id.seller_stuff);
+        add_item_fav=findViewById(R.id.add_item_fav);
+        add_shop_fav=findViewById(R.id.add_shop_fav);
+        delete_item=findViewById(R.id.delete_item);
+        rotating = findViewById(R.id.newton_cradle_loading);
+
+
+        Users users=mySharePreferences.getUserData(this);
+        if (users.getType()==null){
+            Toast.makeText(this, "Guest is here", Toast.LENGTH_SHORT).show();
+            buyer_stuff.setVisibility(View.VISIBLE);
+        }
+        else if (users.getType().matches("seller")){
+            Toast.makeText(this, "Seller is here", Toast.LENGTH_SHORT).show();
+            seller_stuff.setVisibility(View.VISIBLE);
+        }
+        else if (users.getType().matches("buyer")){
+            Toast.makeText(this, "buyer is here", Toast.LENGTH_SHORT).show();
+            buyer_stuff.setVisibility(View.VISIBLE);
+
+
+        }
+
+
         itemModel=mySharePreferences.GetItemData(this);
 
         volleyService=new VolleyService(this);
         List<String> items = Arrays.asList(itemModel.getItem_images_url().split("\\s*,\\s*"));
-        Toast.makeText(this, "INSHALLAH ", Toast.LENGTH_SHORT).show();
         Log.d(AppConstant.TAG+" image list size", String.valueOf(items.size()));
         for (int i=0;i<items.size();i++){
             SlideModel slideModel=new SlideModel("https://kheloaurjeeto.net/bazarona/php/"+items.get(i));
@@ -83,8 +114,47 @@ public class Item_Details extends AppCompatActivity {
         item_size.setText(itemModel.getSize());
         item_brand_name.setText(itemModel.getBrand_name());
         BringLocationData();
+        delete_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteItem(itemModel.getId());
+            }
+        });
 
     }
+
+    private void deleteItem(String id) {
+        rotating.start();
+        volleyService.DeleteItem(AppConstant.DomainName + AppConstant.Dir + AppConstant.delete_item,
+                id, new VolleyService.VolleyResponseListener() {
+                    @Override
+                    public void onSuccess(String response) {
+                        Log.d(AppConstant.TAG+": Item Delete",response);
+                       if (response.matches("Record deleted successfully")){
+                           Toast.makeText(Item_Details.this, "Deleted Successfully", Toast.LENGTH_SHORT).show();
+                           startActivity(new Intent(Item_Details.this,Shop_profile.class));
+                           finish();
+                           rotating.stop();
+                       }
+                       else {
+                           Toast.makeText(Item_Details.this, "something went wrong Try Again Later", Toast.LENGTH_SHORT).show();
+                           rotating.stop();
+                       }
+
+                    }
+
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onError(VolleyError error) {
+                        Log.d(AppConstant.TAG+": VolleyError Item Delete",error.getMessage());
+                        rotating.stop();
+
+                    }
+                });
+
+
+    }
+
     public void BringLocationData(){
         volleyService.GetItemLocation(AppConstant.DomainName + AppConstant.Dir + AppConstant.get_item_location,
                 itemModel.getShop_Id(), new VolleyService.VolleyResponseListener() {

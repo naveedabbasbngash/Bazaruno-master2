@@ -72,6 +72,7 @@ public class Main_Gird_View_Adapter extends ArrayAdapter<ItemModel> {
                 ItemModel itemModel=new ItemModel();
 
                 itemModel.setItem_name(data_container.getItem_name());
+                itemModel.setId(data_container.getId());
                 itemModel.setShop_Id(data_container.getShop_Id());
                 itemModel.setShop_name(data_container.getShop_name());
                 itemModel.setMain_cat(data_container.getMain_cat());
@@ -84,6 +85,7 @@ public class Main_Gird_View_Adapter extends ArrayAdapter<ItemModel> {
                 itemModel.setItem_descount(data_container.getItem_descount());
                 mySharePreferences.SaveItemData(context,itemModel);
                 context.startActivity(new Intent(context,Item_Details.class));
+
 
             }
         });

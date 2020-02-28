@@ -66,6 +66,8 @@ public class More_Recycleview extends RecyclerView.Adapter<More_Recycleview.View
             // click for my shop
             if (getLayoutPosition() == 0)
             {
+                context.startActivity(new Intent(context,Shop_profile.class));
+
 
             }
             // click for notification

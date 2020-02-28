@@ -3,6 +3,7 @@ package com.example.bazaruno.Helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.bazaruno.Model.FilterModel;
 import com.example.bazaruno.Model.ItemModel;
 import com.example.bazaruno.Model.Users;
 import com.google.gson.Gson;
@@ -78,6 +79,48 @@ public class MySharePreferences {
         Gson gson = new Gson();
         String json = prfs.getString("itemData", "");
         userdatahere = gson.fromJson(json, ItemModel.class);
+        return userdatahere;
+    }
+
+
+
+    public int checkBringData(Context context){
+
+        SharedPreferences prfs = context.getSharedPreferences(MyPREFERENCES, Context.MODE_MULTI_PROCESS);
+        int  checkfirs=prfs.getInt("checkBringData", 0);
+        return checkfirs;
+
+    }
+    public void setBringData(Context context, int loginStatus){
+        sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_MULTI_PROCESS);
+        editor = sharedpreferences.edit();
+        editor.putInt("checkBringData", loginStatus);
+        editor.commit();
+
+    }
+
+
+
+    public void SaveFilterData(Context context , FilterModel user){
+
+
+        sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_MULTI_PROCESS);
+        editor = sharedpreferences.edit();
+        Gson gson = new Gson();
+        String mydata=gson.toJson(user);
+        editor.putString("SaveFilterData",mydata);
+        editor.commit();
+
+    }
+
+    public FilterModel GetFilterData(Context ctx){
+
+        FilterModel userdatahere=new FilterModel();
+        SharedPreferences prfs = ctx.getSharedPreferences(MyPREFERENCES, Context.MODE_MULTI_PROCESS);
+
+        Gson gson = new Gson();
+        String json = prfs.getString("SaveFilterData", "");
+        userdatahere = gson.fromJson(json, FilterModel.class);
         return userdatahere;
     }
 }

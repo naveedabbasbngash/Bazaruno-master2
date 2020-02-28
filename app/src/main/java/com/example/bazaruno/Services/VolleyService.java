@@ -1,5 +1,6 @@
 package com.example.bazaruno.Services;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
@@ -10,6 +11,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.bazaruno.AppConstants.AppConstant;
+import com.example.bazaruno.Model.FilterModel;
 import com.example.bazaruno.Model.ItemModel;
 import com.example.bazaruno.Model.Users;
 
@@ -501,6 +504,174 @@ public class VolleyService {
 
         }
 
+    }
+
+    /*GET FILTER ITEMS*/
+    @SuppressLint("LongLogTag")
+    public void GetFilterItems(String url, final FilterModel filterModel, final VolleyResponseListener volleyResponseListener){
+        try {
+            final RequestQueue queue = Volley.newRequestQueue(mContext);
+
+            StringRequest req = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            volleyResponseListener.onSuccess(s);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyResponseListener.onError(volleyError);
+                    Log.v("see error responce",volleyError.toString());
+                }
+            })
+
+            {
+
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    Log.v("see error responce",response.toString());
+                    return super.parseNetworkResponse(response);
+
+
+                }
+
+                @Override
+                protected Map<String, String> getParams(){
+
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("main_cat",filterModel.getMain_cat());
+                    params.put("sub_cat",filterModel.getSub_cat());
+                    params.put("item_city",filterModel.getItem_city());
+                    params.put("item_bazzar",filterModel.getItem_bazzar());
+                    params.put("sub_sub_cat",filterModel.getSub_sub_cat());
+
+
+
+
+                    return params;
+                }
+            };
+            queue.add(req);
+
+
+
+        }catch (Exception e){
+            Log.v("see error responce",e.toString());
+
+        }
+
+    }
+
+    /*Get Owner Items*/
+
+    @SuppressLint("LongLogTag")
+    public void OwnerPorfile(String url, final String shopId, final VolleyResponseListener volleyResponseListener){
+        try {
+            final RequestQueue queue = Volley.newRequestQueue(mContext);
+
+            StringRequest req = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            volleyResponseListener.onSuccess(s);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyResponseListener.onError(volleyError);
+                    Log.v("see error responce",volleyError.toString());
+                }
+            })
+
+            {
+
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    Log.v("see error responce",response.toString());
+                    return super.parseNetworkResponse(response);
+
+
+                }
+
+                @Override
+                protected Map<String, String> getParams(){
+
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("shopId",shopId);
+
+
+
+
+
+                    return params;
+                }
+            };
+            queue.add(req);
+
+
+
+        }catch (Exception e){
+            Log.v("see error responce",e.toString());
+
+        }
+
+    }
+
+    /*Delete Item*/
+    public void DeleteItem(String url, final String itemModelShop_id, final VolleyResponseListener volleyResponseListener) {
+
+        try {
+            final RequestQueue queue = Volley.newRequestQueue(mContext);
+
+            StringRequest req = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            volleyResponseListener.onSuccess(s);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    volleyResponseListener.onError(volleyError);
+                    Log.v("see error responce",volleyError.toString());
+                }
+            })
+
+            {
+
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    Log.v("see error responce",response.toString());
+                    return super.parseNetworkResponse(response);
+
+
+                }
+
+                @Override
+                protected Map<String, String> getParams(){
+
+                    HashMap<String, String> params = new HashMap<String, String>();
+                    params.put("itemId",itemModelShop_id);
+
+
+
+
+
+                    return params;
+                }
+            };
+            queue.add(req);
+
+
+
+        }catch (Exception e){
+            Log.v("see error responce",e.toString());
+
+        }
     }
 
     /*------------------------------------------------- /For Headers----------------------------------------------------------*/

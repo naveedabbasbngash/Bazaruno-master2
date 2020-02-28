@@ -18,9 +18,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Search_Items"
-            android:label="Result"
+        <activity android:name=".Shop_profile"
+            android:label="My Shop"
             android:theme="@style/AppTheme.Basit" ></activity>
+        <activity
+            android:name=".Search_Items"
+            android:label="Result"
+            android:theme="@style/AppTheme.Basit" />
         <activity
             android:name=".Bazzar_Items"
             android:label="Market"

@@ -147,7 +147,7 @@ public class Upload_Product extends AppCompatActivity {
                 if (i == 2) {
 
 
-                    sp_size.setVisibility(View.GONE);
+//                    sp_size.setVisibility(View.GONE);
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                             Upload_Product.this, android.R.layout.simple_spinner_item, AppConstant.mobile_tablet_cat1);
 
