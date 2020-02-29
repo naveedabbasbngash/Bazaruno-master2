@@ -83,6 +83,8 @@ public class Main_Gird_View_Adapter extends ArrayAdapter<ItemModel> {
                 itemModel.setItem_images_url(data_container.getItem_images_url());
                 itemModel.setItem_price(data_container.getItem_price());
                 itemModel.setItem_descount(data_container.getItem_descount());
+                itemModel.setItem_city(data_container.getItem_city());
+                itemModel.setItem_bazzar(data_container.getItem_bazzar());
                 mySharePreferences.SaveItemData(context,itemModel);
                 context.startActivity(new Intent(context,Item_Details.class));
 

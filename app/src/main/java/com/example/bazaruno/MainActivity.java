@@ -1006,6 +1006,8 @@ public class MainActivity extends AppCompatActivity
                                 itemModel.setItem_images_url(jsonObject.getString("item_images_url"));
                                 itemModel.setItem_price(jsonObject.getString("item_price"));
                                 itemModel.setItem_descount(jsonObject.getString("item_descount"));
+                                itemModel.setItem_city(jsonObject.getString("item_city"));
+                                itemModel.setItem_bazzar(jsonObject.getString("item_bazzar"));
 
                                 itemModelslist.add(itemModel);
 
