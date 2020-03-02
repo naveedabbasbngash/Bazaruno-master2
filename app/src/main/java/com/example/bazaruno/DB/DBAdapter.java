@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
+import com.example.bazaruno.AppConstants.AppConstant;
 import com.example.bazaruno.Item_Details;
 import com.example.bazaruno.Model.ItemModel;
 import com.example.bazaruno.Model.Spacecraft;
@@ -55,8 +57,7 @@ public class DBAdapter {
             cv.put(Constants.item_bazzar, spacecraft.getItem_bazzar());
 
 
-
-            long result = db.insert(Constants.TB_NAME, Constants.ROW_ID, cv);
+            long result = db.insertWithOnConflict(Constants.TB_NAME, null, cv, SQLiteDatabase.CONFLICT_REPLACE);
             if (result > 0) {
                 return true;
             }
@@ -75,46 +76,41 @@ public class DBAdapter {
      2. RETURN THE LIST
      */
 
-    public ArrayList<ItemModel> retrieveSpacecrafts()
-    {
-        ArrayList<ItemModel> spacecrafts=new ArrayList<>();
+    public ArrayList<ItemModel> retrieveSpacecrafts() {
+        ArrayList<ItemModel> spacecrafts = new ArrayList<>();
 
-        String[] columns={
-                Constants.ROW_ID,Constants.Shop_Id,Constants.shop_name,Constants.main_cat,
-                Constants.sub_cat,Constants.sub_sub_cat,Constants.size,Constants.color,
-                Constants.brand_name,Constants.item_images_url,Constants.item_price,Constants.item_descount,
-                Constants.item_name,Constants.item_city,Constants.item_bazzar,
+        String[] columns = {
+                Constants.ROW_ID, Constants.Shop_Id, Constants.shop_name, Constants.main_cat,
+                Constants.sub_cat, Constants.sub_sub_cat, Constants.size, Constants.color,
+                Constants.brand_name, Constants.item_images_url, Constants.item_price, Constants.item_descount,
+                Constants.item_name, Constants.item_city, Constants.item_bazzar,
         };
 
-        try
-        {
+        try {
             db = helper.getWritableDatabase();
-            Cursor c=db.query(Constants.TB_NAME,columns,null,null,null,null,null);
+            Cursor c = db.query(Constants.TB_NAME, columns, null, null, null, null, null);
 
             ItemModel s;
 
-            if(c != null)
-            {
-                while (c.moveToNext())
-                {
-                    String Shop_Id=c.getString(1);
-                    String shop_name=c.getString(2);
-                    String main_cat=c.getString(3);
-                    String sub_cat=c.getString(3);
-                    String sub_sub_cat=c.getString(1);
-                    String size=c.getString(2);
-                    String color=c.getString(3);
-                    String brand_name=c.getString(3);
-                    String item_images_url=c.getString(1);
-                    String item_price=c.getString(3);
-                    String item_descount=c.getString(3);
-                    String item_name=c.getString(1);
-                    String item_city=c.getString(2);
-                    String item_bazzar=c.getString(3);
+            if (c != null) {
+                while (c.moveToNext()) {
+                    String Shop_Id = c.getString(1);
+                    String shop_name = c.getString(2);
+                    String main_cat = c.getString(3);
+                    String sub_cat = c.getString(4);
+                    String sub_sub_cat = c.getString(5);
+                    String size = c.getString(6);
+                    String color = c.getString(7);
+                    String brand_name = c.getString(8);
+                    String item_images_url = c.getString(9);
+                    String item_price = c.getString(10);
+                    String item_descount = c.getString(11);
+                    String item_name = c.getString(12);
+                    String item_city = c.getString(13);
+                    String item_bazzar = c.getString(14);
 
 
-
-                    s=new ItemModel();
+                    s = new ItemModel();
                     s.setShop_Id(Shop_Id);
                     s.setShop_name(shop_name);
                     s.setMain_cat(main_cat);
@@ -135,8 +131,7 @@ public class DBAdapter {
                 }
             }
 
-        }catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -144,4 +139,31 @@ public class DBAdapter {
         return spacecrafts;
     }
 
+    public boolean isRecordExistInDatabase(String value) {
+        String query = "SELECT * FROM " + Constants.TB_NAME + " WHERE " + Constants.Shop_Id + " = '" + value + "'";
+        Cursor c = db.rawQuery(query, null);
+        if (c.moveToFirst()) {
+            //Record exist
+            c.close();
+            return true;
+        }
+        //Record available
+        c.close();
+        return false;
+    }
+
+    public boolean rowIdExists(String StrId) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select shop_Id from " + Constants.TB_NAME
+                + " where shop_Id=?", new String[]{StrId});
+        Log.d(AppConstant.TAG+" : cursor count",cursor.getCount()+"");
+       if (cursor.getCount() <= 0){
+           return true;
+       }
+       else {
+           return false;
+       }
+
+
+    }
 }

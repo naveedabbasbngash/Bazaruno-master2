@@ -1,9 +1,13 @@
 package com.example.bazaruno;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +17,22 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.bazaruno.AppConstants.AppConstant;
+import com.example.bazaruno.Model.ItemModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Saved_Product_Recyclerview extends RecyclerView.Adapter<Saved_Product_Recyclerview.View_Holder> {
 
-    ArrayList<Saved_Data_Container>  list;
-    Activity context;
+    ArrayList<ItemModel>  list;
+    Context context;
     boolean show;
     View view;
 
-    public Saved_Product_Recyclerview( Activity context,ArrayList<Saved_Data_Container> list,boolean show) {
+    public Saved_Product_Recyclerview( Activity context,ArrayList<ItemModel> list,boolean show) {
         this.list = list;
         this.context = context;
         this.show=show;
@@ -47,18 +55,23 @@ public class Saved_Product_Recyclerview extends RecyclerView.Adapter<Saved_Produ
         return new View_Holder(view);
     }
 
+    @SuppressLint("LongLogTag")
     @Override
     public void onBindViewHolder(@NonNull final View_Holder view_holder, int i) {
 
-        final Saved_Data_Container container=list.get(i);
+        final ItemModel container=list.get(i);
         if (show == true)
         {
-            view_holder.title.setText(container.getName());
-            view_holder.shop.setText(container.getShop());
-            view_holder.price.setText("Rs-"+container.getPrice());
-            if (container.getImage() != "")
+            view_holder.title.setText(container.getItem_name());
+            view_holder.shop.setText(container.getShop_name());
+            view_holder.price.setText("Rs-"+container.getItem_price());
+            if (container.getItem_images_url() != "")
             {
-                Picasso.get().load(container.getImage()).into(view_holder.image, new com.squareup.picasso.Callback() {
+                List<String> items = Arrays.asList(container.getItem_images_url().split("\\s*,\\s*"));
+
+                Log.d(AppConstant.TAG+" : Saved Product Recycleview :","onBindViewHolder Data"+
+                        "image url"+container.getItem_images_url()+" single image :"+items.get(0));
+                Picasso.get().load("https://kheloaurjeeto.net/bazarona/php/"+items.get(0)).into(view_holder.image, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {
                         view_holder.progressBar.setVisibility(View.GONE);
@@ -87,13 +100,15 @@ public class Saved_Product_Recyclerview extends RecyclerView.Adapter<Saved_Produ
 
         else if (show == false)
         {
-            view_holder.title.setText(container.getName());
-            view_holder.shop.setText(container.getShop());
+            view_holder.title.setText(container.getItem_name());
+            view_holder.shop.setText(container.getShop_name());
             if (i == list.size()-1)
             {
                 view_holder.last.setPadding(0,0,0,150);
             }
-            Picasso.get().load(container.getImage()).into(view_holder.image, new com.squareup.picasso.Callback() {
+            final List<String> items = Arrays.asList(container.getItem_images_url().split("\\s*,\\s*"));
+
+            Picasso.get().load("https://kheloaurjeeto.net/bazarona/php/"+items.get(0)).into(view_holder.image, new com.squareup.picasso.Callback() {
                 @Override
                 public void onSuccess() {
                     view_holder.progressBar.setVisibility(View.GONE);
@@ -110,9 +125,9 @@ public class Saved_Product_Recyclerview extends RecyclerView.Adapter<Saved_Produ
                 @Override
                 public void onClick(View v) {
                    Intent intent=new Intent(context,Shop_Details_Activity.class);
-                   intent.putExtra("name",container.getName());
-                   intent.putExtra("city",container.getShop());
-                   intent.putExtra("image",container.getImage());
+                   intent.putExtra("name",container.getItem_name());
+                   intent.putExtra("city",container.getShop_name());
+                   intent.putExtra("image",items.get(0));
                    context.startActivity(intent);
                 }
             });

@@ -46,10 +46,10 @@ public class Saved_Shop extends Fragment
         list.add(container1);
 
 
-        Saved_Product_Recyclerview adapter=new Saved_Product_Recyclerview(getActivity(),list,false);
+        /*Saved_Product_Recyclerview adapter=new Saved_Product_Recyclerview(getActivity(),list,false);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-
+*/
 
         return view;
     }

@@ -128,50 +128,68 @@ public class Item_Details extends AppCompatActivity {
         add_item_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ItemModel checItemModel=new ItemModel(
-                        "1",itemModel.getShop_Id(),itemModel.getShop_name(),
-                        itemModel.getMain_cat(),"u",itemModel.getSub_sub_cat(),
-                        itemModel.getSize(),itemModel.getColor(),itemModel.getBrand_name(),
-                        itemModel.getItem_images_url(),itemModel.getItem_price(),itemModel.getItem_descount(),
-                        itemModel.getItem_name(),itemModel.getItem_city(),itemModel.getItem_bazzar()
+                ItemModel checItemModel = new ItemModel(
+                        "1", itemModel.getId(), itemModel.getShop_name(),
+                        itemModel.getMain_cat(), "u", itemModel.getSub_sub_cat(),
+                        itemModel.getSize(), itemModel.getColor(), itemModel.getBrand_name(),
+                        itemModel.getItem_images_url(), itemModel.getItem_price(), itemModel.getItem_descount(),
+                        itemModel.getItem_name(), itemModel.getItem_city(), itemModel.getItem_bazzar()
                 );
 
 
-
-                Log.d(AppConstant.TAG,itemModel.getShop_Id()+" "
-                        +itemModel.getShop_name()+" "+
-                        itemModel.getMain_cat()+" "
-                        +itemModel.getSub_cat()+" "+
-                        itemModel.getSub_sub_cat()+" "+
-                        itemModel.getSize()+" "+
-                        itemModel.getColor()+" "+
-                        itemModel.getBrand_name()+" "+
-                        itemModel.getItem_images_url()+" "+
-                        itemModel.getItem_price()+" "+
-                        itemModel.getItem_descount()+" "+
-                        itemModel.getItem_name()+" "+
-                        itemModel.getItem_city()+" "+
+                Log.d(AppConstant.TAG, itemModel.getShop_Id() + " "
+                        + itemModel.getId() + " " +
+                        itemModel.getMain_cat() + " "
+                        + itemModel.getSub_cat() + " " +
+                        itemModel.getSub_sub_cat() + " " +
+                        itemModel.getSize() + " " +
+                        itemModel.getColor() + " " +
+                        itemModel.getBrand_name() + " " +
+                        itemModel.getItem_images_url() + " " +
+                        itemModel.getItem_price() + " " +
+                        itemModel.getItem_descount() + " " +
+                        itemModel.getItem_name() + " " +
+                        itemModel.getItem_city() + " " +
                         itemModel.getItem_bazzar());
 
 
-                if (new DBAdapter(Item_Details.this).saveSpacecraft(checItemModel)) {
-                    ArrayList<ItemModel> itemModels = new DBAdapter(Item_Details.this).retrieveSpacecrafts();
+                DBAdapter dbAdapter = new DBAdapter(Item_Details.this);
+                Log.d(AppConstant.TAG + " : exit", dbAdapter.rowIdExists(itemModel.getShop_Id()) + "");
 
-                    for (int i = 0; i < itemModels.size(); i++) {
-                        ItemModel itemModel = itemModels.get(i);
-                        Log.d(AppConstant.TAG + ": Fav", itemModel.getShop_name()+new DBAdapter(Item_Details.this).retrieveSpacecrafts().size());
-                        Toast.makeText(Item_Details.this, "Saved to Favourite", Toast.LENGTH_SHORT).show();
+                if (dbAdapter.rowIdExists(itemModel.getId())) {
+                    if (new DBAdapter(Item_Details.this).saveSpacecraft(checItemModel)) {
+                        ArrayList<ItemModel> itemModels = new DBAdapter(Item_Details.this).retrieveSpacecrafts();
+
+                        for (int i = 0; i < itemModels.size(); i++) {
+                            ItemModel itemModel = itemModels.get(i);
+                            Log.d(AppConstant.TAG+": Added Data i"+i+" ",
+                                    "item name = "+itemModel.getItem_name()+
+                                            " Shop Name = "+itemModel.getShop_name()+
+                                            " Price = "+itemModel.getItem_price()+
+                                            " image urls = "+itemModel.getItem_images_url());                            Toast.makeText(Item_Details.this, "Saved to Favourite", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+                        Toast.makeText(Item_Details.this, "not saved", Toast.LENGTH_SHORT).show();
                     }
 
                 }
                 else {
-                    Toast.makeText(Item_Details.this, "not saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Item_Details.this, "Already Saved To Favourite", Toast.LENGTH_SHORT).show();
                 }
             }
+
+
         });
 
 
 
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(Item_Details.this, "clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void deleteItem(String id) {
