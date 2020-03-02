@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bazaruno.Helpers.MySharePreferences;
+import com.example.bazaruno.Model.Users;
 
 import java.util.ArrayList;
 
@@ -63,39 +64,45 @@ public class More_Recycleview extends RecyclerView.Adapter<More_Recycleview.View
         @Override
         public void onClick(View v) {
 
-            // click for my shop
-            if (getLayoutPosition() == 0)
-            {
-                context.startActivity(new Intent(context,Shop_profile.class));
+            MySharePreferences mySharePreferences = new MySharePreferences();
+            Users users = new Users();
+            users = mySharePreferences.getUserData(context);
+            if (users.getType().matches("seller")){
+                if (getLayoutPosition() == 0)
+                {
+                    context.startActivity(new Intent(context,Shop_profile.class));
 
 
-            }
-            // click for notification
-            else if (getLayoutPosition() == 1)
-            {
+                }
+                else if (getLayoutPosition() == 1)
+                {
+                    context.startActivity(new Intent(context,Account_More.class));
+                }
+                else if (getLayoutPosition() == 2)
+                {
+                    MySharePreferences mySharePreferences2=new MySharePreferences();
+                    mySharePreferences2.setLoginStatus(context,false);
+                    context.startActivity(new Intent(context,Login.class));
+                    context.finishAffinity();
+                }
 
             }
-            // click for my product review
-            else if (getLayoutPosition() == 2)
-            {
+            else if (users.getType().matches("buyer")){
 
-            }
-            // click for payment
-            else if (getLayoutPosition() == 3)
-            {
+                // click for my shop
+                if (getLayoutPosition() == 0)
+                {
+                    MySharePreferences mySharePreferences2=new MySharePreferences();
+                    mySharePreferences2.setLoginStatus(context,false);
+                    context.startActivity(new Intent(context,Login.class));
+                    context.finishAffinity();
 
-            }
-            //  for account option
-            else if (getLayoutPosition() == 4)
-            {
-                context.startActivity(new Intent(context,Account_More.class));
-            }
-            else if (getLayoutPosition() == 5)
-            {
-                MySharePreferences mySharePreferences=new MySharePreferences();
-                mySharePreferences.setLoginStatus(context,false);
-                context.startActivity(new Intent(context,Login.class));
-                context.finishAffinity();
+                }
+
+                //  for account option
+
+
+
             }
         }
     }

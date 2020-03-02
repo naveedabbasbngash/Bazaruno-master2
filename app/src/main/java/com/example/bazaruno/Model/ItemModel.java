@@ -8,7 +8,8 @@ public class ItemModel {
     }
 
     public ItemModel(String id, String shop_Id, String shop_name, String main_cat, String sub_cat,
-                     String sub_sub_cat, String size, String color, String brand_name, String item_images_url) {
+                     String sub_sub_cat, String size, String color, String brand_name, String item_images_url,
+                     String item_price, String item_descount, String item_name, String item_city, String item_bazzar) {
         this.id = id;
         this.shop_Id = shop_Id;
         this.shop_name = shop_name;
@@ -19,6 +20,11 @@ public class ItemModel {
         this.color = color;
         this.brand_name = brand_name;
         this.item_images_url = item_images_url;
+        this.item_price = item_price;
+        this.item_descount = item_descount;
+        this.item_name = item_name;
+        this.item_city = item_city;
+        this.item_bazzar = item_bazzar;
     }
 
     public String getItem_city() {

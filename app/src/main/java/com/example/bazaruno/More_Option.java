@@ -2,6 +2,9 @@ package com.example.bazaruno;
 
 import android.content.Intent;
 import androidx.annotation.NonNull;
+
+import com.example.bazaruno.Helpers.MySharePreferences;
+import com.example.bazaruno.Model.Users;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -93,29 +96,41 @@ public class More_Option extends AppCompatActivity implements BottomNavigationVi
 
 
     // this set data for recycleview
-    void Set_Data()
-    {
-        ArrayList<String> name = new ArrayList<>();
-        ArrayList<Integer> image=new ArrayList<>();
+    void Set_Data() {
+        MySharePreferences mySharePreferences = new MySharePreferences();
+        Users users = new Users();
+        users = mySharePreferences.getUserData(More_Option.this);
+        if (users.getType().matches("seller")) {
+            ArrayList<String> name = new ArrayList<>();
+            ArrayList<Integer> image = new ArrayList<>();
 
-        name.add("My Shop");
-        name.add("Notifications");
-        name.add("My Product Reivews");
-        name.add("Payment");
-        name.add("Account Settings");
-        name.add("Logout");
+            name.add("My Shop");
+            name.add("Notifications");
+            name.add("Logout");
 
-        image.add(R.drawable.m_shop_icon);
-        image.add(R.drawable.m_notification_icon);
-        image.add(R.drawable.m_review_icon);
-        image.add(R.drawable.m_payment_icon);
-        image.add(R.drawable.m_account_icon);
-        image.add(R.drawable.logout);
+            image.add(R.drawable.m_shop_icon);
+            image.add(R.drawable.m_notification_icon);
+            image.add(R.drawable.logout);
+            recyclerView.setHasFixedSize(true);
+            More_Recycleview adapter=new More_Recycleview(this,name,image);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        recyclerView.setHasFixedSize(true);
-        More_Recycleview adapter=new More_Recycleview(this,name,image);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        }
+        else if (users.getType().matches("buyer")){
+            ArrayList<String> name = new ArrayList<>();
+            ArrayList<Integer> image = new ArrayList<>();
+
+            name.add("Logout");
+
+            image.add(R.drawable.logout);
+            recyclerView.setHasFixedSize(true);
+            More_Recycleview adapter=new More_Recycleview(this,name,image);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+
+        }
 
 
     }

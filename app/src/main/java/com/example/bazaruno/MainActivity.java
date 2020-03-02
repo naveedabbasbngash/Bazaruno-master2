@@ -64,9 +64,10 @@ public class MainActivity extends AppCompatActivity
     Users users=new Users();
 
     Spinner city,bazar;
+    private int checkBringData;
 
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint({"RestrictedApi", "LongLogTag"})
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -86,15 +87,21 @@ public class MainActivity extends AppCompatActivity
 
          // These line of code for main page gird view
         gridView=(ExpandableHeightGridView) findViewById(R.id.girdview);
-        int checkBringData=mySharePreferences.checkBringData(this);
+         checkBringData=mySharePreferences.checkBringData(this);
         if (checkBringData==0) {
             BringItems();
         }
         else if (checkBringData==1){
-            FilterModel filterModel=mySharePreferences.GetFilterData(this);
-            Log.d(AppConstant.TAG+" : fileter data",filterModel.getItem_bazzar()
-                    +filterModel.getItem_city()+filterModel.getMain_cat()+filterModel.getSub_sub_cat());
-            BringItemsFilter(filterModel);
+            FilterModel filterModel1=mySharePreferences.GetFilterData(MainActivity.this);
+
+            Log.d(AppConstant.TAG+" :"+" 2for man Fashion And Wear","For Man ,Clothing"+getIntent().getStringExtra("city")+
+                    " "+ filterModel1.getItem_bazzar());
+            if (getIntent().getStringExtra("city")==null){
+                Toast.makeText(this, "here", Toast.LENGTH_SHORT).show();
+            }
+            String city=getIntent().getStringExtra("city");
+            String bazzar=getIntent().getStringExtra("bazzar");
+            BringItemsFilter(filterModel1,city,bazzar);
             Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
         }
 
@@ -102,10 +109,7 @@ public class MainActivity extends AppCompatActivity
         // This line of code is about listner on floating adding button on main screen
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (users.getType()==null){
 
-        }
-        else {
             if (users.getType().matches("buyer")) {
                 fab.setVisibility(View.INVISIBLE);
             } else if (users.getType().matches("seller")) {
@@ -114,7 +118,7 @@ public class MainActivity extends AppCompatActivity
             } else {
                 fab.setVisibility(View.VISIBLE);
             }
-        }
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,12 +195,13 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        // Work for user click and send intent to another activity man
-        Intent_For_Man_Section();
-        // Work for user click and send intent to another activity woman
-        Intent_For_Man_Section2();
-        // Work for user click and send intent to another activity kids
-        intent_for_kids_section();
+
+            // Work for user click and send intent to another activity man
+            Intent_For_Man_Section();
+            // Work for user click and send intent to another activity woman
+            Intent_For_Man_Section2();
+            // Work for user click and send intent to another activity kids
+            intent_for_kids_section();
 
 
 
@@ -243,10 +248,14 @@ public class MainActivity extends AppCompatActivity
                     filterModel.setItem_bazzar("");
                 }
                 mySharePreferences.SaveFilterData(MainActivity.this,filterModel);
+                FilterModel filterModel1=mySharePreferences.GetFilterData(MainActivity.this);
 
-                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
-                        bazar.getSelectedItem());
-                Intent_Handler(MainActivity.class);
+                Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+filterModel1.getItem_city()+
+                       " "+ filterModel1.getItem_bazzar());
+//                Intent_Handler(MainActivity.class);
+                startActivity(new Intent(MainActivity.this,MainActivity.class)
+                        .putExtra("city",city.getSelectedItem().toString())
+                        .putExtra("bazzar",bazar.getSelectedItem().toString()));
             }
         });
 
@@ -276,7 +285,9 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
                         bazar.getSelectedItem());
-                Intent_Handler(MainActivity.class);            }
+                startActivity(new Intent(MainActivity.this,MainActivity.class)
+                        .putExtra("city",city.getSelectedItem().toString())
+                        .putExtra("bazzar",bazar.getSelectedItem().toString()));            }
         });
 
     }
@@ -316,8 +327,9 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
                         bazar.getSelectedItem());
-                Intent_Handler(MainActivity.class);
-            }
+                startActivity(new Intent(MainActivity.this,MainActivity.class)
+                        .putExtra("city",city.getSelectedItem().toString())
+                        .putExtra("bazzar",bazar.getSelectedItem().toString()));            }
         });
 
         LinearLayout shoes=(LinearLayout) findViewById(ids_for_man_section.get(1));
@@ -346,7 +358,9 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
                         bazar.getSelectedItem());
-                Intent_Handler(MainActivity.class);            }
+                startActivity(new Intent(MainActivity.this,MainActivity.class)
+                        .putExtra("city",city.getSelectedItem().toString())
+                        .putExtra("bazzar",bazar.getSelectedItem().toString()));            }
         });
 
     }
@@ -386,8 +400,9 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
                         bazar.getSelectedItem());
-                Intent_Handler(MainActivity.class);
-            }
+                startActivity(new Intent(MainActivity.this,MainActivity.class)
+                        .putExtra("city",city.getSelectedItem().toString())
+                        .putExtra("bazzar",bazar.getSelectedItem().toString()));            }
         });
 
         LinearLayout shoes=(LinearLayout) findViewById(ids_for_man_section.get(1));
@@ -416,7 +431,9 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
                         bazar.getSelectedItem());
-                Intent_Handler(MainActivity.class);            }
+                startActivity(new Intent(MainActivity.this,MainActivity.class)
+                        .putExtra("city",city.getSelectedItem().toString())
+                        .putExtra("bazzar",bazar.getSelectedItem().toString()));            }
         });
 
         LinearLayout accessories_for_man=(LinearLayout) findViewById(ids_for_man_section.get(2));
@@ -445,7 +462,9 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
                         bazar.getSelectedItem());
-                Intent_Handler(MainActivity.class);            }
+                startActivity(new Intent(MainActivity.this,MainActivity.class)
+                        .putExtra("city",city.getSelectedItem().toString())
+                        .putExtra("bazzar",bazar.getSelectedItem().toString()));            }
         });
 
         LinearLayout beauity_and_care_for_man=(LinearLayout) findViewById(ids_for_man_section.get(3));
@@ -474,7 +493,9 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
                         bazar.getSelectedItem());
-                Intent_Handler(MainActivity.class);                   }
+                startActivity(new Intent(MainActivity.this,MainActivity.class)
+                        .putExtra("city",city.getSelectedItem().toString())
+                        .putExtra("bazzar",bazar.getSelectedItem().toString()));            }
         });
     }
 
@@ -513,8 +534,9 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
                         bazar.getSelectedItem());
-                Intent_Handler(MainActivity.class);
-            }
+                startActivity(new Intent(MainActivity.this,MainActivity.class)
+                        .putExtra("city",city.getSelectedItem().toString())
+                        .putExtra("bazzar",bazar.getSelectedItem().toString()));            }
         });
 
         LinearLayout shoes=(LinearLayout) findViewById(ids_for_man_section.get(1));
@@ -543,7 +565,9 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
                         bazar.getSelectedItem());
-                Intent_Handler(MainActivity.class);            }
+                startActivity(new Intent(MainActivity.this,MainActivity.class)
+                        .putExtra("city",city.getSelectedItem().toString())
+                        .putExtra("bazzar",bazar.getSelectedItem().toString()));            }
         });
 
         LinearLayout accessories_for_man=(LinearLayout) findViewById(ids_for_man_section.get(2));
@@ -572,7 +596,9 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
                         bazar.getSelectedItem());
-                Intent_Handler(MainActivity.class);            }
+                startActivity(new Intent(MainActivity.this,MainActivity.class)
+                        .putExtra("city",city.getSelectedItem().toString())
+                        .putExtra("bazzar",bazar.getSelectedItem().toString()));            }
         });
 
         LinearLayout beauity_and_care_for_man=(LinearLayout) findViewById(ids_for_man_section.get(3));
@@ -601,7 +627,9 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
                         bazar.getSelectedItem());
-                Intent_Handler(MainActivity.class);                   }
+                startActivity(new Intent(MainActivity.this,MainActivity.class)
+                        .putExtra("city",city.getSelectedItem().toString())
+                        .putExtra("bazzar",bazar.getSelectedItem().toString()));            }
         });
     }
 
@@ -820,8 +848,9 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d(AppConstant.TAG+" :"+"for man Fashion And Wear","For Man ,Clothing"+city.getSelectedItem()+
                         bazar.getSelectedItem());
-             Intent_Handler(MainActivity.class);
-            }
+                startActivity(new Intent(MainActivity.this,MainActivity.class)
+                        .putExtra("city",city.getSelectedItem().toString())
+                        .putExtra("bazzar",bazar.getSelectedItem().toString()));            }
         });
 
         LinearLayout shoes=(LinearLayout) findViewById(ids_for_man_section.get(1));
@@ -1068,15 +1097,15 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    void BringItemsFilter(FilterModel filterModel)
+    void BringItemsFilter(FilterModel filterModel,String city,String bazzar)
     {
 
 
         volleyService.GetFilterItems(AppConstant.DomainName + AppConstant.Dir + AppConstant.bringItemsfilter
-               ,filterModel , new VolleyService.VolleyResponseListener() {
+               ,filterModel,city,bazzar , new VolleyService.VolleyResponseListener() {
                     @Override
                     public void onSuccess(String response) {
-                        Log.d(AppConstant.TAG + " BringItems :", response.length() + "");
+                        Log.d(AppConstant.TAG + " BringItems :", response + "");
 
                         if (response.length() < 90) {
                             Toast.makeText(MainActivity.this, "No Item Found", Toast.LENGTH_SHORT).show();

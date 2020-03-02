@@ -152,6 +152,8 @@ public class Login extends AppCompatActivity {
                                     users1.setEmail(jsonObject.getString("email"));
                                     users1.setUsername(jsonObject.getString("username"));
                                     mySharePreferences.SaveUserAds(Login.this,users1);
+                                    mySharePreferences.setLoginStatus(Login.this,true);
+
                                     Toast.makeText(Login.this, "Login Successfully. . ", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(Login.this,MainActivity.class));
 

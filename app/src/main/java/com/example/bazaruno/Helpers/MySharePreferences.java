@@ -123,4 +123,20 @@ public class MySharePreferences {
         userdatahere = gson.fromJson(json, FilterModel.class);
         return userdatahere;
     }
+
+
+    public Boolean firsttime(Context context){
+
+        SharedPreferences prfs = context.getSharedPreferences(MyPREFERENCES, Context.MODE_MULTI_PROCESS);
+        boolean  checkfirs=prfs.getBoolean("firsttime", true);
+        return checkfirs;
+
+    }
+    public void entery(Context context, Boolean loginStatus){
+        sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_MULTI_PROCESS);
+        editor = sharedpreferences.edit();
+        editor.putBoolean("firsttime", loginStatus);
+        editor.commit();
+
+    }
 }

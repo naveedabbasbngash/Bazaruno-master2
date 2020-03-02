@@ -508,7 +508,7 @@ public class VolleyService {
 
     /*GET FILTER ITEMS*/
     @SuppressLint("LongLogTag")
-    public void GetFilterItems(String url, final FilterModel filterModel, final VolleyResponseListener volleyResponseListener){
+    public void GetFilterItems(String url, final FilterModel filterModel, final String city, final String bazzar, final VolleyResponseListener volleyResponseListener){
         try {
             final RequestQueue queue = Volley.newRequestQueue(mContext);
 
@@ -543,8 +543,8 @@ public class VolleyService {
                     HashMap<String, String> params = new HashMap<String, String>();
                     params.put("main_cat",filterModel.getMain_cat());
                     params.put("sub_cat",filterModel.getSub_cat());
-                    params.put("item_city",filterModel.getItem_city());
-                    params.put("item_bazzar",filterModel.getItem_bazzar());
+                    params.put("item_city",city);
+                    params.put("item_bazzar",bazzar);
                     params.put("sub_sub_cat",filterModel.getSub_sub_cat());
 
 

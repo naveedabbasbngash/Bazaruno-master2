@@ -34,25 +34,25 @@ public class DBAdapter {
     /*
     SAVE DATA TO DB
      */
-    public boolean saveSpacecraft(Spacecraft spacecraft) {
+    public boolean saveSpacecraft(ItemModel spacecraft) {
         try {
             db = helper.getWritableDatabase();
 
             ContentValues cv = new ContentValues();
-            cv.put(Constants.Shop_Id, spacecraft.getPropellant());
-            cv.put(Constants.shop_name, spacecraft.getDestination());
-            cv.put(Constants.main_cat, spacecraft.getDestination());
-            cv.put(Constants.sub_cat, spacecraft.getDestination());
-            cv.put(Constants.sub_sub_cat, spacecraft.getDestination());
-            cv.put(Constants.size, spacecraft.getDestination());
-            cv.put(Constants.color, spacecraft.getDestination());
-            cv.put(Constants.brand_name, spacecraft.getDestination());
-            cv.put(Constants.item_images_url, spacecraft.getDestination());
-            cv.put(Constants.item_price, spacecraft.getDestination());
-            cv.put(Constants.item_descount, spacecraft.getDestination());
-            cv.put(Constants.item_name, spacecraft.getDestination());
-            cv.put(Constants.item_city, spacecraft.getDestination());
-            cv.put(Constants.item_bazzar, spacecraft.getName());
+            cv.put(Constants.Shop_Id, spacecraft.getShop_Id());
+            cv.put(Constants.shop_name, spacecraft.getShop_name());
+            cv.put(Constants.main_cat, spacecraft.getMain_cat());
+            cv.put(Constants.sub_cat, spacecraft.getSub_cat());
+            cv.put(Constants.sub_sub_cat, spacecraft.getSub_sub_cat());
+            cv.put(Constants.size, spacecraft.getSize());
+            cv.put(Constants.color, spacecraft.getColor());
+            cv.put(Constants.brand_name, spacecraft.getBrand_name());
+            cv.put(Constants.item_images_url, spacecraft.getItem_images_url());
+            cv.put(Constants.item_price, spacecraft.getItem_price());
+            cv.put(Constants.item_descount, spacecraft.getItem_descount());
+            cv.put(Constants.item_name, spacecraft.getItem_name());
+            cv.put(Constants.item_city, spacecraft.getItem_city());
+            cv.put(Constants.item_bazzar, spacecraft.getItem_bazzar());
 
 
 

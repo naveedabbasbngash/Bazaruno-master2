@@ -18,6 +18,9 @@ import com.android.volley.VolleyError;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.bazaruno.AppConstants.AppConstant;
+import com.example.bazaruno.DB.DBAdapter;
+import com.example.bazaruno.DB.DBHelper;
+import com.example.bazaruno.DB.TableHelper;
 import com.example.bazaruno.Helpers.MySharePreferences;
 import com.example.bazaruno.Model.ItemModel;
 import com.example.bazaruno.Model.Users;
@@ -47,6 +50,7 @@ public class Item_Details extends AppCompatActivity {
     LinearLayout buyer_stuff,seller_stuff;
     Button add_item_fav,add_shop_fav,delete_item;
     private RotateLoading rotating;
+    private TableHelper tableHelper;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -76,7 +80,7 @@ public class Item_Details extends AppCompatActivity {
         add_shop_fav=findViewById(R.id.add_shop_fav);
         delete_item=findViewById(R.id.delete_item);
         rotating = findViewById(R.id.newton_cradle_loading);
-
+        tableHelper=new TableHelper(this);
 
         Users users=mySharePreferences.getUserData(this);
         if (users.getType()==null){
@@ -120,6 +124,53 @@ public class Item_Details extends AppCompatActivity {
                 deleteItem(itemModel.getId());
             }
         });
+
+        add_item_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ItemModel checItemModel=new ItemModel(
+                        "1",itemModel.getShop_Id(),itemModel.getShop_name(),
+                        itemModel.getMain_cat(),"u",itemModel.getSub_sub_cat(),
+                        itemModel.getSize(),itemModel.getColor(),itemModel.getBrand_name(),
+                        itemModel.getItem_images_url(),itemModel.getItem_price(),itemModel.getItem_descount(),
+                        itemModel.getItem_name(),itemModel.getItem_city(),itemModel.getItem_bazzar()
+                );
+
+
+
+                Log.d(AppConstant.TAG,itemModel.getShop_Id()+" "
+                        +itemModel.getShop_name()+" "+
+                        itemModel.getMain_cat()+" "
+                        +itemModel.getSub_cat()+" "+
+                        itemModel.getSub_sub_cat()+" "+
+                        itemModel.getSize()+" "+
+                        itemModel.getColor()+" "+
+                        itemModel.getBrand_name()+" "+
+                        itemModel.getItem_images_url()+" "+
+                        itemModel.getItem_price()+" "+
+                        itemModel.getItem_descount()+" "+
+                        itemModel.getItem_name()+" "+
+                        itemModel.getItem_city()+" "+
+                        itemModel.getItem_bazzar());
+
+
+                if (new DBAdapter(Item_Details.this).saveSpacecraft(checItemModel)) {
+                    ArrayList<ItemModel> itemModels = new DBAdapter(Item_Details.this).retrieveSpacecrafts();
+
+                    for (int i = 0; i < itemModels.size(); i++) {
+                        ItemModel itemModel = itemModels.get(i);
+                        Log.d(AppConstant.TAG + ": Fav", itemModel.getShop_name()+new DBAdapter(Item_Details.this).retrieveSpacecrafts().size());
+                        Toast.makeText(Item_Details.this, "Saved to Favourite", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                else {
+                    Toast.makeText(Item_Details.this, "not saved", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
 
     }
 
@@ -197,5 +248,10 @@ public class Item_Details extends AppCompatActivity {
         intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
 
         startActivity(intent);
+    }
+
+    public void ViewShop(View view) {
+        startActivity(new Intent(Item_Details.this,Shop_profile_by_customer.class));
+
     }
 }

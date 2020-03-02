@@ -21,6 +21,10 @@
         <activity android:name=".Shop_profile"
             android:label="My Shop"
             android:theme="@style/AppTheme.Basit" ></activity>
+
+        <activity android:name=".Shop_profile_by_customer"
+            android:label="Shop"
+            android:theme="@style/AppTheme.Basit" ></activity>
         <activity
             android:name=".Search_Items"
             android:label="Result"

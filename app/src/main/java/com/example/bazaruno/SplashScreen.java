@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.bazaruno.Helpers.MySharePreferences;
+import com.example.bazaruno.Model.Users;
 
 public class SplashScreen extends AppCompatActivity {
     MySharePreferences mySharePreferences=new MySharePreferences();
@@ -21,6 +22,12 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
         mySharePreferences.setBringData(this,0);
 
+        if (mySharePreferences.firsttime(this)){
+            Users users=new Users();
+            users.setType("guest");
+            mySharePreferences.SaveUserAds(this,users);
+            mySharePreferences.entery(this,false);
+        }
         Handler handler=new Handler();
         handler.postDelayed(new Runnable() {
             @Override
