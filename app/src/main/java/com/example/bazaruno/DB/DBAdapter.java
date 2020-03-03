@@ -37,7 +37,7 @@ public class DBAdapter {
 
 
     /*
-    SAVE DATA TO DB
+    SAVE DATA TO Table Favorite
      */
     public boolean saveSpacecraft(ItemModel spacecraft) {
         try {
@@ -74,11 +74,74 @@ public class DBAdapter {
         return false;
     }
 
-    /*
-     1. RETRIEVE SPACECRAFTS FROM DB AND POPULATE ARRAYLIST
-     2. RETURN THE LIST
-     */
+  /*
+  * SAVE DATA TO SHOP
+  * */
+    public boolean saveShopToDb(ShopModel spacecraft) {
+      try {
+          db = helper.getWritableDatabase();
 
+          ContentValues cv = new ContentValues();
+          cv.put(Constants.shop_id, spacecraft.getId());
+          cv.put(Constants.shop_name, spacecraft.getShop_name());
+          cv.put(Constants.shop_img, spacecraft.getShop_img());
+          cv.put(Constants.shop_lat_lang, spacecraft.getShop_lat_lang());
+          cv.put(Constants.city_area, spacecraft.getCity_area());
+          cv.put(Constants.city, spacecraft.getCity());
+
+
+
+          long result = db.insertWithOnConflict(Constants.TB_Shop, null, cv, SQLiteDatabase.CONFLICT_REPLACE);
+          if (result > 0) {
+              return true;
+          }
+
+      } catch (SQLException e) {
+          e.printStackTrace();
+      } finally {
+          helper.close();
+      }
+
+      return false;
+  }
+
+  /*
+  * SAVE DATA TO COMPARE
+  * */
+    public boolean saveToComapre(ItemModel spacecraft) {
+      try {
+          db = helper.getWritableDatabase();
+
+          ContentValues cv = new ContentValues();
+          cv.put(Constants.Com_item_image_urls, spacecraft.getItem_images_url());
+          cv.put(Constants.Com_item_type, spacecraft.getSub_sub_cat());
+          cv.put(Constants.Com_item_price, spacecraft.getItem_price());
+          cv.put(Constants.Com_item_color, spacecraft.getColor());
+          cv.put(Constants.Com_item_image_id, spacecraft.getId());
+          cv.put(Constants.Com_item_size, spacecraft.getSize());
+          cv.put(Constants.Com_item_name, spacecraft.getItem_name());
+
+
+          long result = db.insertWithOnConflict(Constants.TB_COMPARE, null, cv, SQLiteDatabase.CONFLICT_REPLACE);
+          if (result > 0) {
+              return true;
+          }
+
+      } catch (SQLException e) {
+          e.printStackTrace();
+      } finally {
+          helper.close();
+      }
+
+      return false;
+  }
+
+
+  /*------------------------------------------------------------------------------------------------*/
+
+    /*
+    * GET DATA FROM ITEM TABLE
+    * */
     public ArrayList<ItemModel> retrieveSpacecrafts() {
         ArrayList<ItemModel> spacecrafts = new ArrayList<>();
 
@@ -141,6 +204,10 @@ public class DBAdapter {
 
         return spacecrafts;
     }
+
+    /*
+    * GET DATA FROM SHOP TABLE
+    * */
     public ArrayList<ShopModel> retrieveShop() {
         ArrayList<ItemModel> spacecrafts = new ArrayList<>();
 
@@ -188,20 +255,64 @@ public class DBAdapter {
         return shopModel;
     }
 
+   /*
+   * GET DATA FROM COMPARE TABLE
+   * */
+    public ArrayList<ItemModel> getCompareFromDb() {
+    ArrayList<ItemModel> spacecrafts = new ArrayList<>();
 
-    public boolean isRecordExistInDatabase(String value) {
-        String query = "SELECT * FROM " + Constants.TB_NAME + " WHERE " + Constants.Shop_Id + " = '" + value + "'";
-        Cursor c = db.rawQuery(query, null);
-        if (c.moveToFirst()) {
-            //Record exist
-            c.close();
-            return true;
+    String[] columns = {
+            Constants.Com_item_id, Constants.Com_item_image_urls, Constants.Com_item_type,
+            Constants.Com_item_price, Constants.Com_item_color,Constants.Com_item_image_id,
+            Constants.Com_item_size,Constants.Com_item_name
+    };
+
+    try {
+        db = helper.getWritableDatabase();
+        Cursor c = db.query(Constants.TB_COMPARE, columns, null, null, null, null, null);
+
+        ItemModel s;
+
+        if (c != null) {
+            while (c.moveToNext()) {
+                String id = c.getString(0);
+                String Com_item_image_urls = c.getString(1);
+                String Com_item_type = c.getString(2);
+                String Com_item_price = c.getString(3);
+                String Com_item_color = c.getString(4);
+                String Com_item_image_id = c.getString(5);
+                String Com_item_size = c.getString(6);
+                String Com_item_name = c.getString(7);
+
+
+
+                s = new ItemModel();
+                s.setId(Com_item_image_id);
+                s.setItem_images_url(Com_item_image_urls);
+                s.setSub_sub_cat(Com_item_type);
+                s.setItem_price(Com_item_price);
+                s.setColor(Com_item_color);
+                s.setSize(Com_item_size);
+                s.setItem_name(Com_item_name);
+
+
+                spacecrafts.add(s);
+            }
         }
-        //Record available
-        c.close();
-        return false;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
 
+
+    return spacecrafts;
+}
+
+
+
+ /*
+ * CHECK DUPLICATE IN ITEM TABLE
+ * */
     public boolean rowIdExists(String StrId) {
         SQLiteDatabase db = helper.getWritableDatabase();
         try {
@@ -224,6 +335,9 @@ public class DBAdapter {
 
     }
 
+    /*
+    * CHECK DUBLICATE IN SHOP TABLE
+    * */
 
     public boolean rowIdExistsShop(String StrId) {
         SQLiteDatabase db = helper.getWritableDatabase();
@@ -236,6 +350,62 @@ public class DBAdapter {
         else {
             return false;
         }
+
+
+    }
+
+    /*
+    * GET Dublicate IN COMPARE
+    * */
+    public boolean CompareExists(String Com_item_image_id) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        try {
+            Cursor cursor = db.rawQuery("select Com_item_image_id from " + Constants.TB_COMPARE
+                    + " where Com_item_image_id=?", new String[]{Com_item_image_id});
+            Log.e(AppConstant.TAG+" : cursor count",cursor.getCount()+"");
+            if (cursor.getCount() <= 0){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (Exception e){
+            Log.e(AppConstant.TAG+": exist item ",e.getMessage());
+            return false;
+        }
+
+
+
+    }
+
+
+    /*
+     * GET Tye IN COMPARE
+     * */
+    public boolean TypeExists(String Com_item_type) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        try {
+            Cursor cursor = db.rawQuery("select Com_item_type from " + Constants.TB_COMPARE
+                    + " where Com_item_type=?", new String[]{Com_item_type});
+            Log.e(AppConstant.TAG+" : cursor count",cursor.getCount()+"");
+            if (cursor.getCount() > 0){
+                //item found
+                return true;
+            }
+            else if (cursor.getCount()==0){
+                return false;
+            }
+            else {
+                //item not found
+                return false;
+            }
+        }
+        catch (Exception e){
+            Log.e(AppConstant.TAG+": exist item ",e.getMessage());
+            return false;
+        }
+
 
 
     }
@@ -254,6 +424,8 @@ public class DBAdapter {
         database.close();
     }
 
+    /*REMOVE SHOP FROM SHOP TABLE
+    * */
     public void removeShopContact(String title) {
         //Open the database
         SQLiteDatabase database = helper.getWritableDatabase();
@@ -266,33 +438,21 @@ public class DBAdapter {
         database.close();
     }
 
+    /*remove ALL from item Compare*/
 
-    public boolean saveShopToDb(ShopModel spacecraft) {
-        try {
-            db = helper.getWritableDatabase();
+    public void removeAllCompare() {
+        //Open the database
+        SQLiteDatabase database = helper.getWritableDatabase();
 
-            ContentValues cv = new ContentValues();
-            cv.put(Constants.shop_id, spacecraft.getId());
-            cv.put(Constants.shop_name, spacecraft.getShop_name());
-            cv.put(Constants.shop_img, spacecraft.getShop_img());
-            cv.put(Constants.shop_lat_lang, spacecraft.getShop_lat_lang());
-            cv.put(Constants.city_area, spacecraft.getCity_area());
-            cv.put(Constants.city, spacecraft.getCity());
+        //Execute sql query to remove from database
+        //NOTE: When removing by String in SQL, value must be enclosed with ''
+        database.execSQL("DELETE FROM " + Constants.TB_COMPARE);
 
-
-
-            long result = db.insertWithOnConflict(Constants.TB_Shop, null, cv, SQLiteDatabase.CONFLICT_REPLACE);
-            if (result > 0) {
-                return true;
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            helper.close();
-        }
-
-        return false;
+        //Close the database
+        database.close();
     }
+
+
+
 
 }

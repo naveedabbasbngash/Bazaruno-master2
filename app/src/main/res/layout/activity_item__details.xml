@@ -124,6 +124,7 @@
 
 
                     <Button
+                        android:id="@+id/compareItem"
                         android:textSize="10dp"
                         android:layout_marginTop="10dp"
                         android:drawableTop="@drawable/add_icon"

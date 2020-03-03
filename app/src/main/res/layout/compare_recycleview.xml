@@ -88,6 +88,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="$2.43"
@@ -99,6 +100,7 @@
                             android:id="@+id/price_card"/>
 
                         <TextView
+                            android:visibility="gone"
                             android:layout_width="34dp"
                             android:layout_height="25dp"
                             android:layout_weight="1"
@@ -236,6 +238,7 @@
                 <!-- Item Rating -->
 
                 <LinearLayout
+                    android:visibility="invisible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-2dp"
@@ -263,6 +266,7 @@
                 <!-- Shop rating -->
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="100dp"

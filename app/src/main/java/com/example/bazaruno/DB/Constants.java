@@ -5,8 +5,9 @@ package com.example.bazaruno.DB;
  */
 public class Constants {
     /*
-  COLUMNS
+  COLUMNS Favorite Items
    */
+
     static final String ROW_ID="id";
     static final String NAME="name";
     static final String PROPELLANT="propellant";
@@ -27,6 +28,9 @@ public class Constants {
     static final String item_city="item_city";
     static final String item_bazzar="item_bazzar";
 
+    /*
+COLUMNS Favorite Shops
+*/
     public static String shop_id="shop_id";
     static final String shop_nameTS="shop_name";
     static final String shop_img="shop_img";
@@ -35,7 +39,18 @@ public class Constants {
     static final String city="city";
 
 
+    /*
+  COLUMNS Compare
+   */
 
+    public static String Com_item_id="id";
+    public static String Com_item_image_id="Com_item_image_id";
+    public static String Com_item_image_urls="Com_item_image_urls";
+    public static String Com_item_type="Com_item_type";
+    public static String Com_item_price="Com_item_price";
+    public static String Com_item_color="Com_item_color";
+    public static String Com_item_size="Com_item_size";
+    public static String Com_item_name="Com_item_name";
 
 
 
@@ -45,10 +60,11 @@ public class Constants {
     static final String DB_NAME="tv_DB";
     static final String TB_NAME="tv_TB";
     static final String TB_Shop="tv_TS";
+    static final String TB_COMPARE="tv_TC";
     static final int DB_VERSION=1;
 
     /*
-    TABLE CREATION STATEMENT
+    TABLE CREATION STATEMENT Favorite  Shop
      */
     static final String CREATE_TS="CREATE TABLE tv_TS(id INTEGER PRIMARY KEY AUTOINCREMENT,"
             + "shop_id TEXT NOT NULL,shop_name TEXT NOT NULL,shop_img TEXT NOT NULL,shop_lat_lang TEXT NOT NULL" +
@@ -56,7 +72,7 @@ public class Constants {
 
 
     /*
-TABLE CREATION STATEMENT
+TABLE CREATION STATEMENT  Favorite Item Table
  */
     static final String CREATE_TB="CREATE TABLE tv_TB(id INTEGER PRIMARY KEY AUTOINCREMENT,"
             + "shop_Id TEXT NOT NULL,shop_name TEXT NOT NULL,main_cat TEXT NOT NULL,sub_cat TEXT NOT NULL" +
@@ -64,11 +80,16 @@ TABLE CREATION STATEMENT
             ",item_price TEXT NOT NULL,item_descount TEXT NOT NULL,item_name TEXT NOT NULL,item_city TEXT NOT NULL,item_bazzar TEXT NOT NULL);";
 
 
+    /*TABLE CREATION STATEMENT COMPARE*/
+    static final String CREATE_TC="CREATE TABLE tv_TC(id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "Com_item_image_urls TEXT NOT NULL,Com_item_type TEXT NOT NULL,Com_item_price TEXT NOT NULL,Com_item_color TEXT NOT NULL,Com_item_image_id TEXT NOT NULL,Com_item_size TEXT NOT NULL" +
+            ",Com_item_name TEXT NOT NULL);";
 
     /*
     TABLE DELETION STMT
      */
     static final String DROP_TB="DROP TABLE IF EXISTS "+TB_NAME;
     static final String DROP_TS="DROP TABLE IF EXISTS "+TB_Shop;
+    static final String DROP_TC="DROP TABLE IF EXISTS "+TB_COMPARE;
 
 }

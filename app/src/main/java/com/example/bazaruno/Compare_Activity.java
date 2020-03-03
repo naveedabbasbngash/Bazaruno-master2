@@ -2,6 +2,10 @@ package com.example.bazaruno;
 
 import android.content.Intent;
 import androidx.annotation.NonNull;
+
+import com.example.bazaruno.DB.DBAdapter;
+import com.example.bazaruno.Helpers.MySharePreferences;
+import com.example.bazaruno.Model.ItemModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -16,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Compare_Activity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
@@ -148,9 +154,25 @@ public class Compare_Activity extends AppCompatActivity implements BottomNavigat
         compare3.setShop_rating("5.0");
         compare3.setSize("Small");
 
-        list.add(compare);
+     /*   list.add(compare);
         list.add(compare2);
-        list.add(compare3);
+        list.add(compare3);*/
+
+        DBAdapter dbAdapter=new DBAdapter(Compare_Activity.this);
+        ArrayList<ItemModel> itemModels=dbAdapter.getCompareFromDb();
+        for (int i=0;i<itemModels.size();i++ ){
+            ItemModel itemModel=itemModels.get(i);
+            Compare_Data_Container compare_data_container=new Compare_Data_Container();
+            compare_data_container.setName(itemModel.getItem_name());
+            final List<String> items = Arrays.asList(itemModel.getItem_images_url().split("\\s*,\\s*"));
+            compare_data_container.setImage("https://kheloaurjeeto.net/bazarona/php/"+items.get(0));
+            compare_data_container.setPrice(itemModel.getItem_price());
+            compare_data_container.setColor(itemModel.getColor());
+            compare_data_container.setSize(itemModel.getSize());
+            compare_data_container.setType(itemModel.getSub_sub_cat());
+            list.add(compare_data_container);
+
+        }
 
         Compare_RecycleView adapter=new Compare_RecycleView(this,list);
          viewPager.setAdapter(adapter);

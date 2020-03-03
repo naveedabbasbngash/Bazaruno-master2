@@ -26,6 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
         {
             db.execSQL(Constants.CREATE_TS);
             db.execSQL(Constants.CREATE_TB);
+            db.execSQL(Constants.CREATE_TC);
 
         }catch (SQLException e)
         {
@@ -44,6 +45,8 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL(Constants.CREATE_TB);
             db.execSQL(Constants.DROP_TS);
             db.execSQL(Constants.CREATE_TS);
+            db.execSQL(Constants.DROP_TC);
+            db.execSQL(Constants.CREATE_TC);
             onCreate(db);
         }catch (SQLException e)
         {

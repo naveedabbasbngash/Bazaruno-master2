@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.bazaruno.AppConstants.AppConstant;
+import com.example.bazaruno.DB.Constants;
 import com.example.bazaruno.DB.DBAdapter;
 import com.example.bazaruno.DB.DBHelper;
 import com.example.bazaruno.DB.TableHelper;
@@ -55,6 +58,7 @@ public class Item_Details extends AppCompatActivity {
     private String shop_nameS;
     private String city_areaS;
     private String cityS;
+    Button compareItem;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -83,6 +87,7 @@ public class Item_Details extends AppCompatActivity {
         add_item_fav=findViewById(R.id.add_item_fav);
         add_shop_fav=findViewById(R.id.add_shop_fav);
         delete_item=findViewById(R.id.delete_item);
+        compareItem=findViewById(R.id.compareItem);
         rotating = findViewById(R.id.newton_cradle_loading);
         tableHelper=new TableHelper(this);
 
@@ -106,7 +111,7 @@ public class Item_Details extends AppCompatActivity {
         itemModel=mySharePreferences.GetItemData(this);
 
         volleyService=new VolleyService(this);
-        List<String> items = Arrays.asList(itemModel.getItem_images_url().split("\\s*,\\s*"));
+        final List<String> items = Arrays.asList(itemModel.getItem_images_url().split("\\s*,\\s*"));
         Log.d(AppConstant.TAG+" image list size", String.valueOf(items.size()));
         for (int i=0;i<items.size();i++){
             SlideModel slideModel=new SlideModel("https://kheloaurjeeto.net/bazarona/php/"+items.get(i));
@@ -241,6 +246,96 @@ public class Item_Details extends AppCompatActivity {
                 }
 
 
+            }
+        });
+
+        compareItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(AppConstant.TAG, itemModel.getId() + " "+
+                        itemModel.getSub_sub_cat() + " " +
+                        itemModel.getSize() + " " +
+                        itemModel.getColor() + " " +
+                        itemModel.getItem_images_url() + " " +
+                        itemModel.getItem_price() + " " +
+                        itemModel.getItem_name() + " ");
+                final MySharePreferences mySharePreferences=new MySharePreferences();
+                String checkCompare=mySharePreferences.checkComparetype(Item_Details.this);
+                if (checkCompare.matches("no")){
+                    Log.d(AppConstant.TAG+": first time adding" ," "+itemModel.getSub_sub_cat());
+                    mySharePreferences.setCompare(Item_Details.this,itemModel.getSub_sub_cat());
+                }
+                else if (checkCompare.matches(itemModel.getSub_sub_cat())){
+                    DBAdapter dbAdapter=new DBAdapter(Item_Details.this);
+
+                    Log.d(AppConstant.TAG+": category exits",itemModel.getSub_sub_cat());
+                    if (dbAdapter.CompareExists(itemModel.getId())) {
+                        Log.d(AppConstant.TAG+": inserted done","done");
+                        dbAdapter.saveToComapre(itemModel);
+                    }
+                    else {
+                        Log.d(AppConstant.TAG+": exist",itemModel.getId());
+                    }
+                }
+                else if (!checkCompare.matches(itemModel.getSub_sub_cat())){
+                    Log.d(AppConstant.TAG+": new cat found",itemModel.getSub_sub_cat());
+                    AlertDialog alertDialog = new AlertDialog.Builder(Item_Details.this).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage("New Compare Category Found");
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Add New Compare",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    DBAdapter dbAdapter=new DBAdapter(Item_Details.this);
+                                    dbAdapter.removeAllCompare();
+                                    Toast.makeText(Item_Details.this, "New Compare Category Added", Toast.LENGTH_SHORT).show();
+                                    mySharePreferences.setCompare(Item_Details.this,itemModel.getSub_sub_cat());
+                                    if (dbAdapter.CompareExists(itemModel.getId())) {
+                                        dbAdapter.saveToComapre(itemModel);
+                                        Log.d(AppConstant.TAG+": inserted done","done");
+
+                                    }
+                                    else {
+                                        Log.d(AppConstant.TAG+": exist",itemModel.getId());
+                                    }
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Ignore",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+
+                }
+
+               /* DBAdapter dbAdapter=new DBAdapter(Item_Details.this);
+                boolean TypeExist=dbAdapter.TypeExists(itemModel.getSub_sub_cat());
+                if (!TypeExist){
+                    Log.d(AppConstant.TAG+" :  Exist ",TypeExist+"");
+                    if (dbAdapter.CompareExists(itemModel.getId())){
+                        if (dbAdapter.saveToComapre(itemModel)){
+
+                            Log.d(AppConstant.TAG+" :  Inserted  ","true");
+
+                        }
+                        else{
+                            Log.d(AppConstant.TAG+" :  Inserted  ","false");
+
+                        }
+                    }
+                    else{
+                        Log.d(AppConstant.TAG+" :  Already exist  ","true");
+
+                    }
+
+                }
+                else{
+                    Log.d(AppConstant.TAG+" :  Same Type ",TypeExist+"");
+                }
+*/
             }
         });
     }

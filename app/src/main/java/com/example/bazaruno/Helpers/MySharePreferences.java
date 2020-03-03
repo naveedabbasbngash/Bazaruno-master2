@@ -139,4 +139,19 @@ public class MySharePreferences {
         editor.commit();
 
     }
+
+    public String checkComparetype(Context context){
+
+        SharedPreferences prfs = context.getSharedPreferences(MyPREFERENCES, Context.MODE_MULTI_PROCESS);
+        String  checkfirs=prfs.getString("checkComparetype", "no");
+        return checkfirs;
+
+    }
+    public void setCompare(Context context, String Compare){
+        sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_MULTI_PROCESS);
+        editor = sharedpreferences.edit();
+        editor.putString("checkComparetype", Compare);
+        editor.commit();
+
+    }
 }

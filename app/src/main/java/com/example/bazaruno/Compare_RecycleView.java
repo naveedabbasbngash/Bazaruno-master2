@@ -88,10 +88,10 @@ public class Compare_RecycleView extends PagerAdapter {
         }
 
         name.setText(container.getName());
-        price_card.setText("$"+container.getPrice());
+        price_card.setText("RS "+container.getPrice());
         rating_card.setText(Html.fromHtml("&#9733;") + " "+container.getRating());
        type.setText(container.getType());
-       price.setText("$"+container.getPrice());
+       price.setText("Rs "+container.getPrice());
       color.setText(container.getColor());
         size.setText(container.getSize());
        rating.setText(container.getRating());
