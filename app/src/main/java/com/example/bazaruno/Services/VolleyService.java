@@ -82,6 +82,7 @@ public class VolleyService {
                     params.put("bazzar",user.getBazzar());
                     params.put("password",user.getPassword());
                     params.put("status",user.getStatus());
+                    params.put("image_path",user.getShop_image());
 
 
 

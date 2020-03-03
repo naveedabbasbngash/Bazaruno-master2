@@ -1,8 +1,9 @@
 package com.example.bazaruno.Model;
 
 public class Users {
+
     private String id, email,username,mobile_no,cnic,shop_name,shop_address,shop_lat_lang,city,city_area
-            ,bazzar,password,status,type;
+            ,bazzar,password,status,type,shop_image;
 
     public Users() {
     }
@@ -22,6 +23,14 @@ public class Users {
         this.password = password;
         this.status = status;
         this.type = type;
+    }
+
+    public String getShop_image() {
+        return shop_image;
+    }
+
+    public void setShop_image(String shop_image) {
+        this.shop_image = shop_image;
     }
 
     public String getType() {

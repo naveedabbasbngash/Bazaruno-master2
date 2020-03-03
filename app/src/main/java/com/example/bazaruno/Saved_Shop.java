@@ -1,14 +1,22 @@
 package com.example.bazaruno;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.bazaruno.AppConstants.AppConstant;
+import com.example.bazaruno.DB.DBAdapter;
+import com.example.bazaruno.Model.ItemModel;
+import com.example.bazaruno.Model.ShopModel;
 
 import java.util.ArrayList;
 
@@ -20,6 +28,7 @@ public class Saved_Shop extends Fragment
 
     }
 
+    @SuppressLint("LongLogTag")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,16 +49,27 @@ public class Saved_Shop extends Fragment
         container2.setImage("https://media1.fdncms.com/stranger/imager/u/original/25099185/sub.png");
         container2.setShop("Saddar, Karachi");
 
+
+        DBAdapter dbAdapter=new DBAdapter(getActivity());
+        ArrayList<ShopModel> fav =dbAdapter.retrieveShop();
+        Log.d(AppConstant.TAG+": Saved product in database size =",fav.size()+" Here");
+        for (int i=0;i<fav.size();i++){
+            ShopModel itemModel=fav.get(i);
+            Log.d(AppConstant.TAG+": Saved Data i"+i+" ",
+                    "shop id = "+itemModel.getId()+
+                            " Shop Name = "+itemModel.getShop_name()+
+                            " Price = "+itemModel.getShop_lat_lang()+
+                            " image urls = "+itemModel.getShop_img());
+        }
         list.add(container1);
         list.add(container2);
         list.add(container1);
         list.add(container1);
 
 
-        /*Saved_Product_Recyclerview adapter=new Saved_Product_Recyclerview(getActivity(),list,false);
+        Saved_Shop_Recyclerview adapter=new Saved_Shop_Recyclerview(getActivity(),fav,true);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-*/
 
         return view;
     }

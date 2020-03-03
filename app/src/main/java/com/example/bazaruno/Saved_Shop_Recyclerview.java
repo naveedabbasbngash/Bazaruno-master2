@@ -5,10 +5,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,11 +16,15 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.VolleyError;
 import com.example.bazaruno.AppConstants.AppConstant;
 import com.example.bazaruno.DB.DBAdapter;
 import com.example.bazaruno.Helpers.MySharePreferences;
 import com.example.bazaruno.Model.ItemModel;
+import com.example.bazaruno.Model.ShopModel;
 import com.example.bazaruno.Services.VolleyService;
 import com.squareup.picasso.Picasso;
 
@@ -36,15 +36,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Saved_Product_Recyclerview extends RecyclerView.Adapter<Saved_Product_Recyclerview.View_Holder> {
+public class Saved_Shop_Recyclerview extends RecyclerView.Adapter<Saved_Shop_Recyclerview.View_Holder> {
 
-    ArrayList<ItemModel>  list;
+    ArrayList<ShopModel>  list;
     Context context;
     boolean show;
     View view;
     private VolleyService volleyService;
 
-    public Saved_Product_Recyclerview( Activity context,ArrayList<ItemModel> list,boolean show) {
+    public Saved_Shop_Recyclerview(Activity context, ArrayList<ShopModel> list, boolean show) {
         this.list = list;
         this.context = context;
         this.show=show;
@@ -72,18 +72,18 @@ public class Saved_Product_Recyclerview extends RecyclerView.Adapter<Saved_Produ
     @Override
     public void onBindViewHolder(@NonNull final View_Holder view_holder, final int i) {
 
-        final ItemModel container=list.get(i);
+        final ShopModel container=list.get(i);
         if (show == true)
         {
-            view_holder.title.setText(container.getItem_name());
-            view_holder.shop.setText(container.getShop_name());
-            view_holder.price.setText("Rs-"+container.getItem_price());
-            if (container.getItem_images_url() != "")
+            view_holder.title.setText(container.getShop_name());
+            view_holder.shop.setText(container.getCity_area());
+            view_holder.price.setText(container.getCity());
+            if (container.getShop_img() != "")
             {
-                List<String> items = Arrays.asList(container.getItem_images_url().split("\\s*,\\s*"));
+                List<String> items = Arrays.asList(container.getShop_img().split("\\s*,\\s*"));
 
                 Log.d(AppConstant.TAG+" : Saved Product Recycleview :","onBindViewHolder Data"+
-                        "image url"+container.getItem_images_url()+" single image :"+items.get(0));
+                        "image url"+container.getShop_img()+" single image :"+items.get(0));
                 Picasso.get().load("https://kheloaurjeeto.net/bazarona/php/"+items.get(0)).into(view_holder.image, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {
@@ -107,8 +107,12 @@ public class Saved_Product_Recyclerview extends RecyclerView.Adapter<Saved_Produ
                 public void onClick(View v) {
 
                     MySharePreferences mySharePreferences=new MySharePreferences();
-                    mySharePreferences.SaveItemData(context,container);
-                    context.startActivity(new Intent(context, Item_Details.class));
+                    ItemModel itemModel=new ItemModel();
+                    itemModel.setShop_Id(container.getId());
+                    itemModel.setShop_name(container.getShop_name());
+                    mySharePreferences.SaveItemData(context,itemModel);
+                    context.startActivity(new Intent(context, Shop_profile_by_customer.class));
+                    Log.d(AppConstant.TAG+": id",itemModel.getShop_Id());
 
 
                 }
@@ -116,21 +120,21 @@ public class Saved_Product_Recyclerview extends RecyclerView.Adapter<Saved_Produ
             view_holder.location.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    BringLocationData(container.getShop_Id());
+                    BringLocationData(container.getId());
                 }
             });
             view_holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     DBAdapter dbAdapter=new DBAdapter(context);
-                    dbAdapter.removeSingleContact(container.getShop_Id());
+                    dbAdapter.removeShopContact(container.getId());
                     removeAt(i);
 
                 }
             });
         }
 
-        else if (show == false)
+       /* else if (show == false)
         {
             view_holder.title.setText(container.getItem_name());
             view_holder.shop.setText(container.getShop_name());
@@ -163,7 +167,7 @@ public class Saved_Product_Recyclerview extends RecyclerView.Adapter<Saved_Produ
                    context.startActivity(intent);
                 }
             });
-        }
+        }*/
 
     }
 
@@ -235,7 +239,7 @@ public class Saved_Product_Recyclerview extends RecyclerView.Adapter<Saved_Produ
                                 List<String> items = Arrays.asList(shop_lat_lang.split("\\s*,\\s*"));
 
                                 String strUri = "http://maps.google.com/maps?q=loc:" + items.get(0) + "," + items.get(1) + " (" + "Label which you want" + ")";
-                                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(strUri));
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(strUri));
 
                                 intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
 

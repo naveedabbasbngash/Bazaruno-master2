@@ -92,6 +92,7 @@ public class SignUp_Customer extends Fragment {
                         Log.d(AppConstant.TAG+" SignUp Success",response);
 
 
+
                         rotating.stop();
                     }
 

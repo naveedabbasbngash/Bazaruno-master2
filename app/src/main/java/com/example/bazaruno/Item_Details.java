@@ -23,6 +23,7 @@ import com.example.bazaruno.DB.DBHelper;
 import com.example.bazaruno.DB.TableHelper;
 import com.example.bazaruno.Helpers.MySharePreferences;
 import com.example.bazaruno.Model.ItemModel;
+import com.example.bazaruno.Model.ShopModel;
 import com.example.bazaruno.Model.Users;
 import com.example.bazaruno.Services.VolleyService;
 import com.victor.loading.rotate.RotateLoading;
@@ -51,6 +52,9 @@ public class Item_Details extends AppCompatActivity {
     Button add_item_fav,add_shop_fav,delete_item;
     private RotateLoading rotating;
     private TableHelper tableHelper;
+    private String shop_nameS;
+    private String city_areaS;
+    private String cityS;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -137,10 +141,11 @@ public class Item_Details extends AppCompatActivity {
                 );
 
 
+
                 Log.d(AppConstant.TAG, itemModel.getShop_Id() + " "
                         + itemModel.getId() + " " +
                         itemModel.getMain_cat() + " "
-                        + itemModel.getSub_cat() + " " +
+                        +"u" + " " +
                         itemModel.getSub_sub_cat() + " " +
                         itemModel.getSize() + " " +
                         itemModel.getColor() + " " +
@@ -166,7 +171,8 @@ public class Item_Details extends AppCompatActivity {
                                     "item name = "+itemModel.getItem_name()+
                                             " Shop Name = "+itemModel.getShop_name()+
                                             " Price = "+itemModel.getItem_price()+
-                                            " image urls = "+itemModel.getItem_images_url());                            Toast.makeText(Item_Details.this, "Saved to Favourite", Toast.LENGTH_SHORT).show();
+                                            " image urls = "+itemModel.getItem_images_url());
+                            Toast.makeText(Item_Details.this, "Saved to Favourite", Toast.LENGTH_SHORT).show();
                         }
 
                     } else {
@@ -188,6 +194,53 @@ public class Item_Details extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(Item_Details.this, "clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        add_shop_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                DBAdapter dbAdapter=new DBAdapter(Item_Details.this);
+                boolean checkEntery=dbAdapter.rowIdExistsShop(itemModel.getShop_Id());
+                if (checkEntery){
+                    ShopModel shopModel = new ShopModel();
+                    shopModel.setId(itemModel.getShop_Id());
+                    shopModel.setShop_name(shop_nameS);
+                    shopModel.setShop_img(area);
+                    shopModel.setCity(cityS);
+                    shopModel.setCity_area(city_areaS);
+                    shopModel.setShop_lat_lang(shop_lat_lang);
+                    Log.d(AppConstant.TAG+": Added Data i"+" ",
+                            "shop id = "+shopModel.getId()+
+                                    " Shop Name = "+shopModel.getShop_name()+
+                                    " lat lang = "+shopModel.getShop_lat_lang()+
+                                    " image urls = "+shopModel.getShop_img());
+                    if (dbAdapter.saveShopToDb(shopModel)){
+
+                        ArrayList<ShopModel> itemModels = new DBAdapter(Item_Details.this).retrieveShop();
+
+                        for (int i = 0; i < itemModels.size(); i++) {
+                            ShopModel itemModel = itemModels.get(i);
+                            Log.d(AppConstant.TAG+": Added Data i"+i+" ",
+                                    "shop id = "+itemModel.getId()+
+                                            " Shop Name = "+itemModel.getShop_name()+
+                                            " lat lang = "+itemModel.getShop_lat_lang()+
+                                            " image urls = "+itemModel.getShop_img());
+                            Toast.makeText(Item_Details.this, "Saved Shop to Favourite", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+
+                    }
+                }
+                else {
+
+
+                    Toast.makeText(Item_Details.this, "Shop Already Exist", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
     }
@@ -234,12 +287,15 @@ public class Item_Details extends AppCompatActivity {
                             JSONArray jsonArray=new JSONArray(response);
                             for (int i=0;i<jsonArray.length();i++){
                                 JSONObject jsonObject= (JSONObject) jsonArray.get(i);
-                                area=jsonObject.getString("city_area");
+                                shop_nameS=jsonObject.getString("shop_name");
+                                area=jsonObject.getString("shop_img");
                                 shop_lat_lang=jsonObject.getString("shop_lat_lang");
+                                city_areaS=jsonObject.getString("city_area");
+                                cityS=jsonObject.getString("city");
                             }
 
 
-                            shop_location.setText(area);
+                            shop_location.setText(city_areaS);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

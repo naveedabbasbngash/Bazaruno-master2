@@ -24,7 +24,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try
         {
+            db.execSQL(Constants.CREATE_TS);
             db.execSQL(Constants.CREATE_TB);
+
         }catch (SQLException e)
         {
             e.printStackTrace();
@@ -40,6 +42,9 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             db.execSQL(Constants.DROP_TB);
             db.execSQL(Constants.CREATE_TB);
+            db.execSQL(Constants.DROP_TS);
+            db.execSQL(Constants.CREATE_TS);
+            onCreate(db);
         }catch (SQLException e)
         {
             e.printStackTrace();

@@ -22,7 +22,23 @@
                 android:layout_centerHorizontal="true"
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
+                <ImageView
 
+                    android:id="@+id/addimages"
+                    android:layout_marginBottom="5dp"
+                    android:src="@drawable/add_icon"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"></ImageView>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="Add Shop Image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></TextView>
                 <EditText
                     android:layout_width="325dp"
                     android:hint="Your E-mail"

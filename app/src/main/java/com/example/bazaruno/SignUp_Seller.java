@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -25,15 +27,24 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.bazaruno.AppConstants.AppConstant;
+import com.example.bazaruno.Helpers.MyCommand;
 import com.example.bazaruno.Helpers.MySharePreferences;
 import com.example.bazaruno.Model.Users;
 import com.example.bazaruno.Services.VolleyService;
 import com.google.android.gms.maps.model.LatLng;
+import com.kosalgeek.android.photoutil.GalleryPhoto;
+import com.kosalgeek.android.photoutil.ImageBase64;
+import com.kosalgeek.android.photoutil.PhotoLoader;
 import com.nabinbhandari.android.permissions.PermissionHandler;
 import com.nabinbhandari.android.permissions.Permissions;
 import com.victor.loading.rotate.RotateLoading;
@@ -41,22 +52,33 @@ import com.victor.loading.rotate.RotateLoading;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.LOCATION_SERVICE;
 
 public class SignUp_Seller extends Fragment {
 
+    private static final int GALLERY_REQUEST = 1200;
     View view;
 
     EditText email, name, phone, cnic, shop_name, shop_full_address, pass, again_pass;
 
     Spinner sp_city, sp_area, sp_bazzar;
     Button signup;
+    ImageView addimages;
 
     VolleyService volleyService;
     private RotateLoading rotating;
+    private GalleryPhoto galleryPhoto;
+    private MyCommand myCommand;
+    private ArrayList<String> movieList=new ArrayList<>();
+    private String imagepaths;
 
     public SignUp_Seller() {
 
@@ -80,7 +102,11 @@ public class SignUp_Seller extends Fragment {
         again_pass = view.findViewById(R.id.again_pass);
         rotating = view.findViewById(R.id.newton_cradle_loading);
         signup = view.findViewById(R.id.signup);
+        addimages = view.findViewById(R.id.addimages);
+
         volleyService = new VolleyService(getActivity());
+        myCommand = new MyCommand(getActivity());
+        galleryPhoto = new GalleryPhoto(getActivity());
         Permissions.check(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION,
                 null, new PermissionHandler() {
                     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -88,6 +114,14 @@ public class SignUp_Seller extends Fragment {
                     public void onGranted() {
 
                         getLocation();
+                    }
+                });
+
+        Permissions.check(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE,
+                null, new PermissionHandler() {
+                    @Override
+                    public void onGranted() {
+
                     }
                 });
 
@@ -147,7 +181,8 @@ public class SignUp_Seller extends Fragment {
                 } else if (!pass.getText().toString().matches(again_pass.getText().toString())) {
                     Toast.makeText(getActivity(), "Password Not Matched", Toast.LENGTH_SHORT).show();
                 } else {
-                    Users users = new Users();
+                    rotating.start();
+                    final Users users = new Users();
                     users.setType("seller");
                     users.setEmail(email.getText().toString().trim());
                     users.setUsername(name.getText().toString().trim());
@@ -162,7 +197,72 @@ public class SignUp_Seller extends Fragment {
                     users.setBazzar(sp_bazzar.getSelectedItem().toString());
                     users.setPassword(pass.getText().toString().trim());
                     users.setStatus("0");
-                    registerData(users);
+
+                    for (final String imagePath : movieList) {
+
+                        try {
+                            Bitmap bitmap = PhotoLoader.init().from(imagePath).requestSize(512, 512).getBitmap();
+                            final String encodedString = ImageBase64.encode(bitmap);
+
+                            String url = AppConstant.DomainName + AppConstant.Dir + AppConstant.upload;
+                            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.d(AppConstant.TAG + " onResponse", response);
+
+//                            Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(response);
+                                        Boolean success = jsonObject.getBoolean("success");
+                                        if (success) {
+                                            Log.d("my images paths", response);
+                                                imagepaths = jsonObject.getString("imageurl");
+
+
+
+                                                users.setShop_image(imagepaths);
+                                                registerData(users);
+
+
+                                        } else {
+                                            Toast.makeText(getActivity(), "Please Try Again", Toast.LENGTH_SHORT).show();
+
+
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        Log.d(AppConstant.TAG + " JSONException", e.getMessage());
+
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                                @SuppressLint("LongLogTag")
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(getActivity(), "Error while uploading image", Toast.LENGTH_SHORT).show();
+                                    Log.d(AppConstant.TAG+" onErrorResponse", error.getMessage());
+
+                                }
+                            }) {
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String, String> params = new HashMap<>();
+                                    params.put("image", encodedString);
+                                    return params;
+                                }
+                            };
+
+                            myCommand.add(stringRequest);
+
+                        } catch (FileNotFoundException e) {
+                            Toast.makeText(getActivity(), "Error while loading image", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                    myCommand.execute();
+
+
+
                 }
             }
         });
@@ -207,11 +307,20 @@ public class SignUp_Seller extends Fragment {
 
             }
         });
+        addimages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
+
+            }
+        });
         return view;
     }
 
     public void registerData(Users users) {
-        rotating.start();
+
         volleyService.RegisterUser(AppConstant.DomainName + AppConstant.Dir + AppConstant.registerUser
                 , users, new VolleyService.VolleyResponseListener() {
                     @SuppressLint("LongLogTag")
@@ -236,6 +345,7 @@ public class SignUp_Seller extends Fragment {
                                 sellerUsers1.setCity(jsonObject.getString("city"));
                                 sellerUsers1.setCity_area(jsonObject.getString("city_area"));
                                 sellerUsers1.setBazzar(jsonObject.getString("bazzar"));
+                                sellerUsers1.setType(jsonObject.getString("type"));
                                 mySharePreferences.SaveUserAds(getActivity(), sellerUsers1);
                                 mySharePreferences.setLoginStatus(getActivity(), true);
                                 Toast.makeText(getActivity(), "Login Successfully. . ", Toast.LENGTH_SHORT).show();
@@ -268,6 +378,7 @@ public class SignUp_Seller extends Fragment {
 
     }
 
+    @SuppressLint("LongLogTag")
     public LatLng getLocationFromAddress(Context context, String strAddress) {
 
         Geocoder coder = new Geocoder(context);
@@ -286,6 +397,7 @@ public class SignUp_Seller extends Fragment {
 
         } catch (IOException ex) {
 
+            Log.e(AppConstant.TAG+": location IOException", ex.getMessage()+" check location "+strAddress);
             ex.printStackTrace();
         }
 
@@ -305,12 +417,32 @@ public class SignUp_Seller extends Fragment {
             // for Activity#requestPermissions for more details.
             return;
         }
-        Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+       /* Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (myLocation == null)
         {
             myLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 
         }
-        Log.d(AppConstant.TAG+" :location",myLocation.getLatitude()+","+myLocation.getLongitude());
+        Log.d(AppConstant.TAG+" :location",myLocation.getLatitude()+","+myLocation.getLongitude());*/
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == GALLERY_REQUEST) {
+                galleryPhoto.setPhotoUri(data.getData());
+                String photoPath = galleryPhoto.getPath();
+                movieList.clear();
+                movieList.add(photoPath);
+                Log.d(AppConstant.TAG + " add images", photoPath);
+                Bitmap bmImg = BitmapFactory.decodeFile(photoPath);
+                addimages.setImageBitmap(bmImg);
+
+            }
+
+        }
     }
 }
