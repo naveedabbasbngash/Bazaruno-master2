@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -92,11 +93,19 @@ public class Item_Details extends AppCompatActivity {
         tableHelper=new TableHelper(this);
 
         Users users=mySharePreferences.getUserData(this);
+        itemModel=mySharePreferences.GetItemData(this);
+
         if (users.getType()==null){
             Toast.makeText(this, "Guest is here", Toast.LENGTH_SHORT).show();
             buyer_stuff.setVisibility(View.VISIBLE);
         }
         else if (users.getType().matches("seller")){
+            if (users.getId().matches(itemModel.getShop_Id())){
+                delete_item.setVisibility(View.VISIBLE);
+            }
+            else {
+                delete_item.setVisibility(View.GONE);
+            }
             Toast.makeText(this, "Seller is here", Toast.LENGTH_SHORT).show();
             seller_stuff.setVisibility(View.VISIBLE);
         }
@@ -108,7 +117,6 @@ public class Item_Details extends AppCompatActivity {
         }
 
 
-        itemModel=mySharePreferences.GetItemData(this);
 
         volleyService=new VolleyService(this);
         final List<String> items = Arrays.asList(itemModel.getItem_images_url().split("\\s*,\\s*"));
@@ -127,6 +135,7 @@ public class Item_Details extends AppCompatActivity {
         item_size.setText(itemModel.getSize());
         item_brand_name.setText(itemModel.getBrand_name());
         BringLocationData();
+
         delete_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -423,4 +432,23 @@ public class Item_Details extends AppCompatActivity {
         startActivity(new Intent(Item_Details.this,Shop_profile_by_customer.class));
 
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+
+        if (id == android.R.id.home)
+        {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -183,6 +183,7 @@ public class Login extends AppCompatActivity {
 
                             }
                             else {
+                                Toast.makeText(Login.this, "Incorrect Email Or Password", Toast.LENGTH_SHORT).show();
 
                             }
                         } catch (JSONException e) {

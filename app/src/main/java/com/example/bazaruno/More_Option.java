@@ -105,7 +105,7 @@ public class More_Option extends AppCompatActivity implements BottomNavigationVi
             ArrayList<Integer> image = new ArrayList<>();
 
             name.add("My Shop");
-            name.add("Notifications");
+            name.add("Account");
             name.add("Logout");
 
             image.add(R.drawable.m_shop_icon);

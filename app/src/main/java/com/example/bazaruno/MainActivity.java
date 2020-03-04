@@ -708,9 +708,18 @@ public class MainActivity extends AppCompatActivity
         }
         else if(id == R.id.favorites)
         {
+            MySharePreferences mySharePreferences=new MySharePreferences();
+            Boolean checkLogin=mySharePreferences.loginStatus(this);
+            if (checkLogin){
            Intent intent=new Intent(getApplicationContext(),Favorites.class);
            startActivity(intent);
         }
+        else{
+                startActivity(new Intent(MainActivity.this,Login.class));
+                finish();
+            }
+        }
+
         else if (id == R.id.more) {
             Boolean checkLogin = mySharePreferences.loginStatus(MainActivity.this);
             if (checkLogin) {
@@ -719,6 +728,7 @@ public class MainActivity extends AppCompatActivity
             }
             else {
                 startActivity(new Intent(MainActivity.this,Login.class));
+                finish();
             }
         }
 
