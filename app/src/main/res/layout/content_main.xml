@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Bazars"
-            android:id="@+id/bazar"
+            android:id="@+id/bazar_txt"
             android:textColor="#000"
             android:textSize="20sp"
             android:textStyle="bold"/>
@@ -41,7 +41,7 @@
                android:id="@+id/bazars"
                android:focusableInTouchMode="true"
                android:layout_centerHorizontal="true"
-               android:layout_below="@id/bazar"
+               android:layout_below="@id/bazar_txt"
                android:layout_marginTop="9dp">
 
            </androidx.viewpager.widget.ViewPager>

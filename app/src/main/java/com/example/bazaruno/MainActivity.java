@@ -13,14 +13,18 @@ import com.example.bazaruno.Model.FilterModel;
 import com.example.bazaruno.Model.ItemModel;
 import com.example.bazaruno.Model.Users;
 import com.example.bazaruno.Services.VolleyService;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
 import android.view.View;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -65,6 +69,7 @@ public class MainActivity extends AppCompatActivity
 
     Spinner city,bazar;
     private int checkBringData;
+    TextView bazar_txt,trending;
 
 
     @SuppressLint({"RestrictedApi", "LongLogTag"})
@@ -72,9 +77,19 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         mySharePreferences=new MySharePreferences();
         users=mySharePreferences.getUserData(this);
+        FirebaseMessaging.getInstance().subscribeToTopic("weathers")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(MainActivity.this, "Successfull", Toast.LENGTH_SHORT).show();
 
+                        }
+                    }
+                });
         volleyService=new VolleyService(this);
 
         // define and identify toolbar and set some properties
@@ -83,6 +98,10 @@ public class MainActivity extends AppCompatActivity
 
         // These Line of codes work main page slide show
         viewPager=(ViewPager) findViewById(R.id.bazars);
+
+        bazar_txt=(TextView) findViewById(R.id.bazar_txt);
+        trending=(TextView) findViewById(R.id.trending);
+
          Slide_Show_Fun();
 
          // These line of code for main page gird view
@@ -97,12 +116,13 @@ public class MainActivity extends AppCompatActivity
             Log.d(AppConstant.TAG+" :"+" 2for man Fashion And Wear","For Man ,Clothing"+getIntent().getStringExtra("city")+
                     " "+ filterModel1.getItem_bazzar());
             if (getIntent().getStringExtra("city")==null){
-                Toast.makeText(this, "here", Toast.LENGTH_SHORT).show();
             }
             String city=getIntent().getStringExtra("city");
             String bazzar=getIntent().getStringExtra("bazzar");
             BringItemsFilter(filterModel1,city,bazzar);
-            Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
+            trending.setText("Search By "+bazzar+" "+city);
+
+
         }
 
 

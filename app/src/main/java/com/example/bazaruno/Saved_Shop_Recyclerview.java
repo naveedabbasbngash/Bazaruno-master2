@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +27,9 @@ import com.example.bazaruno.Helpers.MySharePreferences;
 import com.example.bazaruno.Model.ItemModel;
 import com.example.bazaruno.Model.ShopModel;
 import com.example.bazaruno.Services.VolleyService;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -129,6 +133,15 @@ public class Saved_Shop_Recyclerview extends RecyclerView.Adapter<Saved_Shop_Rec
                     DBAdapter dbAdapter=new DBAdapter(context);
                     dbAdapter.removeShopContact(container.getId());
                     removeAt(i);
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(container.getId())
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (!task.isSuccessful()) {
+
+                                    }
+                                }
+                            });
 
                 }
             });

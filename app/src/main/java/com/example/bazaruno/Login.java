@@ -210,4 +210,11 @@ public class Login extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(Login.this,MainActivity.class));
+        finish();
+    }
 }

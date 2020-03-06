@@ -1,5 +1,6 @@
 package com.example.bazaruno;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -30,6 +31,9 @@ import com.example.bazaruno.Model.ItemModel;
 import com.example.bazaruno.Model.ShopModel;
 import com.example.bazaruno.Model.Users;
 import com.example.bazaruno.Services.VolleyService;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.victor.loading.rotate.RotateLoading;
 
 import org.json.JSONArray;
@@ -60,6 +64,8 @@ public class Item_Details extends AppCompatActivity {
     private String city_areaS;
     private String cityS;
     Button compareItem;
+    ItemModel NotificationModel=new ItemModel();
+
 
     @SuppressLint("LongLogTag")
     @Override
@@ -116,26 +122,67 @@ public class Item_Details extends AppCompatActivity {
 
         }
 
+        Bundle extras = getIntent().getExtras();
 
+        if (extras!=null){
+            Toast.makeText(this, "From Notification", Toast.LENGTH_SHORT).show();
+            NotificationModel.setShop_name(extras.getString("shop_name"));
+            NotificationModel.setMain_cat(extras.getString("main_cat"));
+            NotificationModel.setShop_Id(extras.getString("shop_Id"));
+            NotificationModel.setSub_cat(extras.getString("sub_cat"));
+            NotificationModel.setSub_sub_cat(extras.getString("sub_sub_cat"));
+            NotificationModel.setSize(extras.getString("size"));
+            NotificationModel.setColor(extras.getString("color"));
+            NotificationModel.setBrand_name(extras.getString("brand_name"));
+            NotificationModel.setItem_images_url(extras.getString("item_images_url"));
+            NotificationModel.setItem_price(extras.getString("item_price"));
+            NotificationModel.setItem_descount(extras.getString("item_descount"));
+            NotificationModel.setItem_name(extras.getString("item_name"));
+            NotificationModel.setItem_city(extras.getString("item_city"));
+            NotificationModel.setItem_bazzar(extras.getString("item_bazzar"));
 
-        volleyService=new VolleyService(this);
-        final List<String> items = Arrays.asList(itemModel.getItem_images_url().split("\\s*,\\s*"));
-        Log.d(AppConstant.TAG+" image list size", String.valueOf(items.size()));
-        for (int i=0;i<items.size();i++){
-            SlideModel slideModel=new SlideModel("https://kheloaurjeeto.net/bazarona/php/"+items.get(i));
-            slideModelArrayList.add(slideModel);
+            volleyService = new VolleyService(this);
+            final List<String> items = Arrays.asList(NotificationModel.getItem_images_url().split("\\s*,\\s*"));
+            Log.d(AppConstant.TAG + " image list size", String.valueOf(items.size()));
+            for (int i = 0; i < items.size(); i++) {
+                SlideModel slideModel = new SlideModel("https://kheloaurjeeto.net/bazarona/php/" + items.get(i));
+                slideModelArrayList.add(slideModel);
+            }
+            imageSlider.setImageList(slideModelArrayList);
+            item_name.setText(NotificationModel.getItem_name());
+            item_price1.setText("Price " + NotificationModel.getItem_price() + " PKR");
+            shop_name.setText("Shop " + NotificationModel.getShop_name());
+            item_cat.setText(NotificationModel.getMain_cat());
+            item_color.setText(NotificationModel.getColor());
+            item_price.setText(NotificationModel.getItem_price());
+            item_size.setText(NotificationModel.getSize());
+            item_brand_name.setText(NotificationModel.getBrand_name());
+            BringLocationData(1);
+
         }
-        imageSlider.setImageList(slideModelArrayList);
-        item_name.setText(itemModel.getItem_name());
-        item_price1.setText("Price "+itemModel.getItem_price()+" PKR");
-        shop_name.setText("Shop " +itemModel.getShop_name());
-        item_cat.setText(itemModel.getMain_cat());
-        item_color.setText(itemModel.getColor());
-        item_price.setText(itemModel.getItem_price());
-        item_size.setText(itemModel.getSize());
-        item_brand_name.setText(itemModel.getBrand_name());
-        BringLocationData();
+        else {
+            Toast.makeText(this, "Not Notification", Toast.LENGTH_SHORT).show();
 
+
+            volleyService = new VolleyService(this);
+            final List<String> items = Arrays.asList(itemModel.getItem_images_url().split("\\s*,\\s*"));
+            Log.d(AppConstant.TAG + " image list size", String.valueOf(items.size()));
+            for (int i = 0; i < items.size(); i++) {
+                SlideModel slideModel = new SlideModel("https://kheloaurjeeto.net/bazarona/php/" + items.get(i));
+                slideModelArrayList.add(slideModel);
+            }
+            imageSlider.setImageList(slideModelArrayList);
+            item_name.setText(itemModel.getItem_name());
+            item_price1.setText("Price " + itemModel.getItem_price() + " PKR");
+            shop_name.setText("Shop " + itemModel.getShop_name());
+            item_cat.setText(itemModel.getMain_cat());
+            item_color.setText(itemModel.getColor());
+            item_price.setText(itemModel.getItem_price());
+            item_size.setText(itemModel.getSize());
+            item_brand_name.setText(itemModel.getBrand_name());
+            BringLocationData(0);
+
+        }
         delete_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -231,6 +278,16 @@ public class Item_Details extends AppCompatActivity {
                                     " lat lang = "+shopModel.getShop_lat_lang()+
                                     " image urls = "+shopModel.getShop_img());
                     if (dbAdapter.saveShopToDb(shopModel)){
+                        FirebaseMessaging.getInstance().subscribeToTopic(shopModel.getId())
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (!task.isSuccessful()) {
+                                            Toast.makeText(Item_Details.this, "Successfull", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    }
+                                });
 
                         ArrayList<ShopModel> itemModels = new DBAdapter(Item_Details.this).retrieveShop();
 
@@ -281,6 +338,7 @@ public class Item_Details extends AppCompatActivity {
                     if (dbAdapter.CompareExists(itemModel.getId())) {
                         Log.d(AppConstant.TAG+": inserted done","done");
                         dbAdapter.saveToComapre(itemModel);
+                        Toast.makeText(Item_Details.this, "Added To Compare", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         Log.d(AppConstant.TAG+": exist",itemModel.getId());
@@ -381,9 +439,16 @@ public class Item_Details extends AppCompatActivity {
 
     }
 
-    public void BringLocationData(){
+    public void BringLocationData(int i){
+        String shopId = null;
+        if (i==0){
+            shopId=itemModel.getShop_Id();
+        }
+        else {
+            shopId=NotificationModel.getShop_Id();
+        }
         volleyService.GetItemLocation(AppConstant.DomainName + AppConstant.Dir + AppConstant.get_item_location,
-                itemModel.getShop_Id(), new VolleyService.VolleyResponseListener() {
+                shopId, new VolleyService.VolleyResponseListener() {
                     @Override
                     public void onSuccess(String response) {
                         Log.d(AppConstant.TAG+": Item location",response);
@@ -451,4 +516,10 @@ public class Item_Details extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(Item_Details.this,MainActivity.class));
+        finishAffinity();
+    }
 }
