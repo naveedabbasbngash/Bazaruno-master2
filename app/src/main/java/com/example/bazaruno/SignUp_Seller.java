@@ -241,7 +241,7 @@ public class SignUp_Seller extends Fragment {
                                 @SuppressLint("LongLogTag")
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Log.d(AppConstant.TAG+" onErrorResponse", error.getMessage());
+                                    Log.d(AppConstant.TAG+" onErrorResponse", error.getMessage()+" here");
 
                                 }
                             }) {
@@ -418,13 +418,13 @@ public class SignUp_Seller extends Fragment {
             // for Activity#requestPermissions for more details.
             return;
         }
-       /* Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (myLocation == null)
         {
             myLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 
         }
-        Log.d(AppConstant.TAG+" :location",myLocation.getLatitude()+","+myLocation.getLongitude());*/
+        Log.d(AppConstant.TAG+" :location",myLocation.getLatitude()+","+myLocation.getLongitude());
     }
 
 

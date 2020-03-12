@@ -3,6 +3,7 @@ package com.example.bazaruno;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 
+import com.example.bazaruno.AppConstants.AppConstant;
 import com.example.bazaruno.DB.DBAdapter;
 import com.example.bazaruno.Helpers.MySharePreferences;
 import com.example.bazaruno.Model.ItemModel;
@@ -165,7 +166,7 @@ public class Compare_Activity extends AppCompatActivity implements BottomNavigat
             Compare_Data_Container compare_data_container=new Compare_Data_Container();
             compare_data_container.setName(itemModel.getItem_name());
             final List<String> items = Arrays.asList(itemModel.getItem_images_url().split("\\s*,\\s*"));
-            compare_data_container.setImage("http://34.74.24.185:9999/upload/"+items.get(0));
+            compare_data_container.setImage(AppConstant.DomainName+AppConstant.Dir +items.get(0));
             compare_data_container.setPrice(itemModel.getItem_price());
             compare_data_container.setColor(itemModel.getColor());
             compare_data_container.setSize(itemModel.getSize());

@@ -1,10 +1,13 @@
 package com.example.bazaruno.AppConstants;
 
 public class AppConstant {
-
+/*
     public static final String TAG = "Bazarona";
-    public static String DomainName="http://34.74.24.185:9999";
-    public static String Dir="/";
+    public static String DomainName="http://34.74.24.185:9999";*/
+    public static final String TAG = "Bazarona";
+    public static String DomainName="https://kheloaurjeeto.net";
+    public static String Dir="/bazarona/php/";
+    public static String DirImg="/bazarona/php/";
     public static String registerUser="registeruser.php";
     public static String login_now="login_now.php";
     public static String upload="upload.php";

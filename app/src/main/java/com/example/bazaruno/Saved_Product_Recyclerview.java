@@ -84,7 +84,7 @@ public class Saved_Product_Recyclerview extends RecyclerView.Adapter<Saved_Produ
 
                 Log.d(AppConstant.TAG+" : Saved Product Recycleview :","onBindViewHolder Data"+
                         "image url"+container.getItem_images_url()+" single image :"+items.get(0));
-                Picasso.get().load("http://34.74.24.185:9999/upload/"+items.get(0)).into(view_holder.image, new com.squareup.picasso.Callback() {
+                Picasso.get().load(AppConstant.DomainName+AppConstant.Dir +items.get(0)).into(view_holder.image, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {
                         view_holder.progressBar.setVisibility(View.GONE);
@@ -140,7 +140,7 @@ public class Saved_Product_Recyclerview extends RecyclerView.Adapter<Saved_Produ
             }
             final List<String> items = Arrays.asList(container.getItem_images_url().split("\\s*,\\s*"));
 
-            Picasso.get().load("http://34.74.24.185:9999/upload/"+items.get(0)).into(view_holder.image, new com.squareup.picasso.Callback() {
+            Picasso.get().load(AppConstant.DomainName+AppConstant.Dir +items.get(0)).into(view_holder.image, new com.squareup.picasso.Callback() {
                 @Override
                 public void onSuccess() {
                     view_holder.progressBar.setVisibility(View.GONE);

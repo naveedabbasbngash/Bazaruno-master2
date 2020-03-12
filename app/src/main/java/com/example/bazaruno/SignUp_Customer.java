@@ -1,6 +1,7 @@
 package com.example.bazaruno;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.AnimatedImageDrawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.android.volley.VolleyError;
 import com.example.bazaruno.AppConstants.AppConstant;
+import com.example.bazaruno.Helpers.MySharePreferences;
 import com.example.bazaruno.Model.Users;
 import com.example.bazaruno.Services.VolleyService;
 import com.google.android.material.snackbar.Snackbar;
@@ -22,6 +24,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SignUp_Customer extends Fragment {
 
@@ -91,6 +96,27 @@ public class SignUp_Customer extends Fragment {
                     public void onSuccess(String response) {
                         Log.d(AppConstant.TAG+" SignUp Success",response);
 
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            Boolean success=jsonObject.getBoolean("success");
+                            if (success){
+                                MySharePreferences mySharePreferences = new MySharePreferences();
+                                Users sellerUsers1 = new Users();
+
+                                sellerUsers1.setUsername(jsonObject.getString("username"));;
+                                sellerUsers1.setEmail(jsonObject.getString("email"));;
+                                sellerUsers1.setType("buyer");
+                                mySharePreferences.SaveUserAds(getActivity(), sellerUsers1);
+                                mySharePreferences.setLoginStatus(getActivity(), true);
+                                Toast.makeText(getActivity(), "Login Successfully. . ", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+                            }
+                            else {
+                                Toast.makeText(getActivity(), "User Already Exist", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
 
                         rotating.stop();

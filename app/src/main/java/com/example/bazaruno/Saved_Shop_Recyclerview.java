@@ -88,7 +88,7 @@ public class Saved_Shop_Recyclerview extends RecyclerView.Adapter<Saved_Shop_Rec
 
                 Log.d(AppConstant.TAG+" : Saved Product Recycleview :","onBindViewHolder Data"+
                         "image url"+container.getShop_img()+" single image :"+items.get(0));
-                Picasso.get().load("http://34.74.24.185:9999/upload/"+items.get(0)).into(view_holder.image, new com.squareup.picasso.Callback() {
+                Picasso.get().load(AppConstant.DomainName+""+items.get(0)).into(view_holder.image, new com.squareup.picasso.Callback() {
                     @Override
                     public void onSuccess() {
                         view_holder.progressBar.setVisibility(View.GONE);

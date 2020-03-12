@@ -1053,6 +1053,8 @@ public class MainActivity extends AppCompatActivity
                 , new VolleyService.VolleyResponseListener() {
                     @Override
                     public void onSuccess(String response) {
+                        Log.d(AppConstant.TAG+" BringItems ", response);
+
                         try {
                             JSONArray jsonElements=new JSONArray(response);
                             Log.d(AppConstant.TAG+" BringItems :",jsonElements+"And"+response);

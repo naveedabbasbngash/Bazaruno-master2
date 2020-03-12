@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.bazaruno.AppConstants.AppConstant;
 import com.example.bazaruno.Helpers.MySharePreferences;
 import com.example.bazaruno.Model.ItemModel;
 import com.squareup.picasso.Picasso;
@@ -48,7 +49,7 @@ public class Main_Gird_View_Adapter extends ArrayAdapter<ItemModel> {
         if (data_container.getItem_images_url() != "")
         {
             String output = list.get(position).getItem_images_url().substring(0, list.get(position).getItem_images_url().indexOf(','));
-            Picasso.get().load("http://34.74.24.185:9999/upload/"+output).resize(110,150).into(imageView, new com.squareup.picasso.Callback() {
+            Picasso.get().load(AppConstant.DomainName+AppConstant.Dir +output).resize(110,150).into(imageView, new com.squareup.picasso.Callback() {
                 @Override
                 public void onSuccess() {
                     progressBar.setVisibility(View.GONE);
