@@ -48,6 +48,7 @@ public class More_Option extends AppCompatActivity implements BottomNavigationVi
         bottomNavigationView.getMenu().getItem(3).setChecked(true);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,10 +121,12 @@ public class More_Option extends AppCompatActivity implements BottomNavigationVi
         else if (users.getType().matches("buyer")){
             ArrayList<String> name = new ArrayList<>();
             ArrayList<Integer> image = new ArrayList<>();
-
+            /*name.add("Notifications");*/
             name.add("Logout");
 
+
             image.add(R.drawable.logout);
+            /*image.add(R.drawable.m_notification_icon);*/
             recyclerView.setHasFixedSize(true);
             More_Recycleview adapter=new More_Recycleview(this,name,image);
             recyclerView.setAdapter(adapter);

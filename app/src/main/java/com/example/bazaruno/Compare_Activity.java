@@ -165,7 +165,7 @@ public class Compare_Activity extends AppCompatActivity implements BottomNavigat
             Compare_Data_Container compare_data_container=new Compare_Data_Container();
             compare_data_container.setName(itemModel.getItem_name());
             final List<String> items = Arrays.asList(itemModel.getItem_images_url().split("\\s*,\\s*"));
-            compare_data_container.setImage("https://kheloaurjeeto.net/bazarona/php/"+items.get(0));
+            compare_data_container.setImage("http://34.74.24.185:9999/upload/"+items.get(0));
             compare_data_container.setPrice(itemModel.getItem_price());
             compare_data_container.setColor(itemModel.getColor());
             compare_data_container.setSize(itemModel.getSize());

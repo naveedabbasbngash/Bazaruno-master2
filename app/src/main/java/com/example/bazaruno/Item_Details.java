@@ -145,7 +145,7 @@ public class Item_Details extends AppCompatActivity {
             final List<String> items = Arrays.asList(NotificationModel.getItem_images_url().split("\\s*,\\s*"));
             Log.d(AppConstant.TAG + " image list size", String.valueOf(items.size()));
             for (int i = 0; i < items.size(); i++) {
-                SlideModel slideModel = new SlideModel("https://kheloaurjeeto.net/bazarona/php/" + items.get(i));
+                SlideModel slideModel = new SlideModel("http://34.74.24.185:9999/upload/" + items.get(i));
                 slideModelArrayList.add(slideModel);
             }
             imageSlider.setImageList(slideModelArrayList);
@@ -168,7 +168,7 @@ public class Item_Details extends AppCompatActivity {
             final List<String> items = Arrays.asList(itemModel.getItem_images_url().split("\\s*,\\s*"));
             Log.d(AppConstant.TAG + " image list size", String.valueOf(items.size()));
             for (int i = 0; i < items.size(); i++) {
-                SlideModel slideModel = new SlideModel("https://kheloaurjeeto.net/bazarona/php/" + items.get(i));
+                SlideModel slideModel = new SlideModel("http://34.74.24.185:9999/upload/" + items.get(i));
                 slideModelArrayList.add(slideModel);
             }
             imageSlider.setImageList(slideModelArrayList);
@@ -342,6 +342,7 @@ public class Item_Details extends AppCompatActivity {
                     }
                     else {
                         Log.d(AppConstant.TAG+": exist",itemModel.getId());
+                        Toast.makeText(Item_Details.this, "Already exist", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else if (!checkCompare.matches(itemModel.getSub_sub_cat())){

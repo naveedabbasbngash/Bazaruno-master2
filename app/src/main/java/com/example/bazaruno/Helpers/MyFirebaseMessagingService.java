@@ -13,7 +13,9 @@ import androidx.core.app.NotificationCompat;
 
 
 import com.example.bazaruno.AppConstants.AppConstant;
+import com.example.bazaruno.DB.DBAdapter;
 import com.example.bazaruno.Item_Details;
+import com.example.bazaruno.Model.ItemModel;
 import com.example.bazaruno.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -42,7 +44,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d("TEMP", "pdfuri: " + remoteMessage.getData().get("shop_Id"));
             Log.d("TEMP", "likesuri: " + remoteMessage.getData().get("sub_cat"));
             Log.d("TEMP", "dislikesuri: " + remoteMessage.getData().get("sub_sub_cat"));
+            ItemModel itemModel=new ItemModel();
+            itemModel.setShop_name(remoteMessage.getData().get("shop_name"));
+            itemModel.setMain_cat(remoteMessage.getData().get("main_cat"));
+            itemModel.setShop_Id(remoteMessage.getData().get("shop_Id"));
+            itemModel.setSub_cat(remoteMessage.getData().get("sub_cat"));
+            itemModel.setSub_sub_cat(remoteMessage.getData().get("sub_sub_cat"));
+            itemModel.setSize(remoteMessage.getData().get("size"));
+            itemModel.setColor(remoteMessage.getData().get("color"));
+            itemModel.setItem_images_url(remoteMessage.getData().get("item_images_url"));
+            itemModel.setItem_price(remoteMessage.getData().get("item_price"));
+            itemModel.setItem_descount(remoteMessage.getData().get("item_descount"));
+            itemModel.setItem_name(remoteMessage.getData().get("item_name"));
+            itemModel.setItem_city(remoteMessage.getData().get("item_city"));
+            itemModel.setItem_bazzar(remoteMessage.getData().get("item_bazzar"));
+            itemModel.setShop_name(remoteMessage.getData().get("shop_name"));
+            itemModel.setBrand_name(remoteMessage.getData().get("brand_name"));
 
+            DBAdapter dbAdapter=new DBAdapter(this);
+            dbAdapter.saveToNotification(itemModel);
 
             Intent intent = new Intent(this, Item_Details.class);
 

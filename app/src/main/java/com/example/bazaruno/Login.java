@@ -202,19 +202,37 @@ public class Login extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // handle arrow click here
-        if (item.getItemId() == android.R.id.home) {
-            finish(); // close this activity and return to preview activity (if there is any)
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(Login.this,MainActivity.class));
         finish();
+    }
+
+    // work for toolbar item such as account and search
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+
+        if (id == R.id.login){
+            Intent intent=new Intent(getApplicationContext(),Account_Activity.class);
+            startActivity(intent);
+        }
+
+        else if (id == android.R.id.home)
+        {
+            startActivity(new Intent(Login.this,MainActivity.class));
+            finishAffinity();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

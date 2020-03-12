@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity
 
                 fab.setVisibility(View.VISIBLE);
             } else {
-                fab.setVisibility(View.VISIBLE);
+                fab.setVisibility(View.INVISIBLE);
             }
 
         fab.setOnClickListener(new View.OnClickListener() {

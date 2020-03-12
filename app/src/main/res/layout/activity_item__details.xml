@@ -115,7 +115,7 @@
                         android:onClick="viewOnMap"
                         android:textSize="10dp"
                         android:text="View Location"
-                        android:textColor="@color/main_color_icon"
+                        android:textColor="#ff5684"
                         android:layout_marginRight="5dp"
                         android:background="@drawable/view_location_btn_bg"
                         android:layout_width="match_parent"
@@ -294,7 +294,7 @@
                 <Button
                     android:id="@+id/delete_item"
                     android:text="Delete Item"
-                    android:textColor="@color/main_color_icon"
+                    android:textColor="#ff5684"
                     android:background="@drawable/view_location_btn_bg"
                     android:textStyle="bold"
                     android:layout_width="match_parent"

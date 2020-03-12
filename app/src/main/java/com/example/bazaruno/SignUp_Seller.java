@@ -165,11 +165,11 @@ public class SignUp_Seller extends Fragment {
                     Toast.makeText(getActivity(), "Please Select City", Toast.LENGTH_SHORT).show();
                 }
 
-                //8
+            /*    //8
                 else if (sp_area.getSelectedItemPosition() == 0) {
                     Toast.makeText(getActivity(), "Please Select Area", Toast.LENGTH_SHORT).show();
                 }
-
+*/
 
                 //9
                 else if (sp_bazzar.getSelectedItemPosition() == 0) {
@@ -195,7 +195,7 @@ public class SignUp_Seller extends Fragment {
                     LatLng latLng = getLocationFromAddress(getActivity(), shop_full_address.getText().toString());
                     users.setShop_lat_lang(latLng.latitude + "," + latLng.longitude);
                     users.setCity(sp_city.getSelectedItem().toString());
-                    users.setCity_area(sp_area.getSelectedItem().toString());
+                    users.setCity_area("123");
                     users.setBazzar(sp_bazzar.getSelectedItem().toString());
                     users.setPassword(pass.getText().toString().trim());
                     users.setStatus("0");
@@ -241,7 +241,6 @@ public class SignUp_Seller extends Fragment {
                                 @SuppressLint("LongLogTag")
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Toast.makeText(getActivity(), "Error while uploading image", Toast.LENGTH_SHORT).show();
                                     Log.d(AppConstant.TAG+" onErrorResponse", error.getMessage());
 
                                 }

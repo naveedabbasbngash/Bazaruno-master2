@@ -137,6 +137,44 @@ public class DBAdapter {
   }
 
 
+    /*
+     * SAVE DATA TO COMPARE
+     * */
+    public boolean saveToNotification(ItemModel spacecraft) {
+        try {
+            db = helper.getWritableDatabase();
+
+            ContentValues cv = new ContentValues();
+            cv.put(Constants.shop_name, spacecraft.getShop_name());
+            cv.put(Constants.main_cat, spacecraft.getMain_cat());
+            cv.put(Constants.shop_id, spacecraft.getShop_Id());
+            cv.put(Constants.sub_cat, spacecraft.getSub_cat());
+            cv.put(Constants.sub_sub_cat, spacecraft.getSub_sub_cat());
+            cv.put(Constants.size, spacecraft.getSize());
+            cv.put(Constants.color, spacecraft.getColor());
+            cv.put(Constants.item_images_url, spacecraft.getItem_images_url());
+            cv.put(Constants.item_price, spacecraft.getItem_price());
+            cv.put(Constants.item_descount, spacecraft.getItem_descount());
+            cv.put(Constants.item_name, spacecraft.getItem_name());
+            cv.put(Constants.item_city, spacecraft.getItem_city());
+            cv.put(Constants.item_bazzar, spacecraft.getItem_bazzar());
+            cv.put(Constants.shop_name, spacecraft.getShop_name());
+            cv.put(Constants.brand_name, spacecraft.getBrand_name());
+
+
+            long result = db.insertWithOnConflict(Constants.TB_NT, null, cv, SQLiteDatabase.CONFLICT_REPLACE);
+            if (result > 0) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            helper.close();
+        }
+
+        return false;
+    }
   /*------------------------------------------------------------------------------------------------*/
 
     /*
@@ -309,6 +347,72 @@ public class DBAdapter {
 }
 
 
+    /*
+     * GET DATA FROM ITEM TABLE
+     * */
+    public ArrayList<ItemModel> retrieveNotification() {
+        ArrayList<ItemModel> spacecrafts = new ArrayList<>();
+
+        String[] columns = {
+                Constants.ROW_ID, Constants.Shop_Id, Constants.shop_name, Constants.main_cat,
+                Constants.sub_cat, Constants.sub_sub_cat, Constants.size, Constants.color,
+                Constants.brand_name, Constants.item_images_url, Constants.item_price, Constants.item_descount,
+                Constants.item_name, Constants.item_city, Constants.item_bazzar,
+        };
+
+        try {
+            db = helper.getWritableDatabase();
+            Cursor c = db.query(Constants.TB_NT, columns, null, null, null, null, null);
+
+            ItemModel s;
+
+            if (c != null) {
+                while (c.moveToNext()) {
+                    String Shop_Id = c.getString(1);
+                    String shop_name = c.getString(2);
+                    String main_cat = c.getString(3);
+                    String sub_cat = c.getString(4);
+                    String sub_sub_cat = c.getString(5);
+                    String size = c.getString(6);
+                    String color = c.getString(7);
+                    String brand_name = c.getString(8);
+                    String item_images_url = c.getString(9);
+                    String item_price = c.getString(10);
+                    String item_descount = c.getString(11);
+                    String item_name = c.getString(12);
+                    String item_city = c.getString(13);
+                    String item_bazzar = c.getString(14);
+
+
+                    s = new ItemModel();
+                    s.setShop_Id(Shop_Id);
+                    s.setShop_name(shop_name);
+                    s.setMain_cat(main_cat);
+                    s.setSub_cat(sub_cat);
+                    s.setSub_sub_cat(sub_sub_cat);
+                    s.setSize(size);
+                    s.setColor(color);
+                    s.setBrand_name(brand_name);
+                    s.setItem_images_url(item_images_url);
+                    s.setItem_price(item_price);
+                    s.setItem_descount(item_descount);
+                    s.setItem_name(item_name);
+                    s.setItem_city(item_city);
+                    s.setItem_bazzar(item_bazzar);
+
+
+                    spacecrafts.add(s);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return spacecrafts;
+    }
+
 
  /*
  * CHECK DUPLICATE IN ITEM TABLE
@@ -447,6 +551,21 @@ public class DBAdapter {
         //Execute sql query to remove from database
         //NOTE: When removing by String in SQL, value must be enclosed with ''
         database.execSQL("DELETE FROM " + Constants.TB_COMPARE);
+
+        //Close the database
+        database.close();
+    }
+
+   /*
+   * romve notification*/
+
+    public void removeNotification(String title) {
+        //Open the database
+        SQLiteDatabase database = helper.getWritableDatabase();
+
+        //Execute sql query to remove from database
+        //NOTE: When removing by String in SQL, value must be enclosed with ''
+        database.execSQL("DELETE FROM " + Constants.TB_NT + " WHERE " + Constants.ROW_ID + "= '" + title + "'");
 
         //Close the database
         database.close();

@@ -14,33 +14,19 @@
     <string-array name="city_array">
         <item>Select City</item>
         <item>Peshawar</item>
-        <item>Kohat</item>
-        <item>Karachi</item>
         <item>Islamabad</item>
-        <item>Lahore</item>
-        <item>Mardan</item>
     </string-array>
 
     <string name="area_spinner">Choose Area</string>
     <string-array name="area_array">
         <item>Select Area</item>
         <item>Peshawar</item>
-        <item>Kohat</item>
-        <item>Karachi</item>
         <item>Islamabad</item>
-        <item>Lahore</item>
-        <item>Mardan</item>
     </string-array>
 
     <string name="bazar_spinner">Choose City</string>
     <string-array name="bazar_array">
         <item>Select Bazar</item>
-        <item>Saddar</item>
-        <item>Main Bazar</item>
-        <item>Multan</item>
-        <item>Ring Road</item>
-        <item>P Bazar</item>
-        <item>Modren Barzar</item>
     </string-array>
     <string name="title_activity_for__man__clothes">For_Man_Clothes</string>
 

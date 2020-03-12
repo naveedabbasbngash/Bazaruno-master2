@@ -89,7 +89,11 @@ public class More_Recycleview extends RecyclerView.Adapter<More_Recycleview.View
             }
             else if (users.getType().matches("buyer")){
 
-                // click for my shop
+            /*    // click for my shop
+                if (getLayoutPosition()==0){
+                    context.startActivity(new Intent(context,Login.class));
+                    context.finishAffinity();
+                }*/
                 if (getLayoutPosition() == 0)
                 {
                     MySharePreferences mySharePreferences2=new MySharePreferences();

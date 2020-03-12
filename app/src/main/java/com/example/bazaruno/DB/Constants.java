@@ -60,8 +60,9 @@ COLUMNS Favorite Shops
     static final String DB_NAME="tv_DB";
     static final String TB_NAME="tv_TB";
     static final String TB_Shop="tv_TS";
+    static final String TB_NT="tv_NT";
     static final String TB_COMPARE="tv_TC";
-    static final int DB_VERSION=1;
+    static final int DB_VERSION=2;
 
     /*
     TABLE CREATION STATEMENT Favorite  Shop
@@ -86,10 +87,20 @@ TABLE CREATION STATEMENT  Favorite Item Table
             ",Com_item_name TEXT NOT NULL);";
 
     /*
+TABLE CREATION STATEMENT  Notifications
+*/
+    static final String CREATE_NT="CREATE TABLE tv_NT(id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "shop_Id TEXT NOT NULL,shop_name TEXT NOT NULL,main_cat TEXT NOT NULL,sub_cat TEXT NOT NULL" +
+            ",sub_sub_cat TEXT NOT NULL,size TEXT NOT NULL,color TEXT NOT NULL,brand_name TEXT NOT NULL,item_images_url TEXT NOT NULL" +
+            ",item_price TEXT NOT NULL,item_descount TEXT NOT NULL,item_name TEXT NOT NULL,item_city TEXT NOT NULL,item_bazzar TEXT NOT NULL);";
+
+
+    /*
     TABLE DELETION STMT
      */
     static final String DROP_TB="DROP TABLE IF EXISTS "+TB_NAME;
     static final String DROP_TS="DROP TABLE IF EXISTS "+TB_Shop;
     static final String DROP_TC="DROP TABLE IF EXISTS "+TB_COMPARE;
+    static final String DROP_NT="DROP TABLE IF EXISTS "+TB_NT;
 
 }
